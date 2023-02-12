@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\UserToken;
 
-class ApiAuthenticate
+class ApiAuthentication
 {
     /**
      * Handle an incoming request.

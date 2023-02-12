@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return($user->tokens);
 //});
 
-Route::middleware('apiAuthenticate')->10group(function () {
+Route::middleware('apiAuthentication')->group(function () {
     // Test route for checking the api middleware
    Route::get('/test', function (Request $request) {
        if($request->type == "user"){
