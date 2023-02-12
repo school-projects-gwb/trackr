@@ -10,11 +10,15 @@ module.exports = {
 
     theme: {
         extend: {
+            colors: {
+                'primary': 'rgb(var(--color-primary) / <alpha-value>)',
+                'secondary': 'rgb(var(--color-secondary) / <alpha-value>)',
+                'darkgray': 'rgb(var(--color-darkgray) / <alpha-value>)'
+            },
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
         },
     },
-
     plugins: [require('@tailwindcss/forms')],
 };

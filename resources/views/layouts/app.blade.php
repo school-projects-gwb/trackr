@@ -14,9 +14,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
 
+    @if (!request()->routeIs('dashboard'))
+        <div class="min-h-screen bg-primary">
+            @include('layouts.navigation')
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
@@ -25,11 +26,18 @@
                     </div>
                 </header>
             @endif
-
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
+    @else
+        <div class="w-full h-full bg-primary flex">
+            @include('layouts.navigation-sidebar')
+            <div class="w-3/4 pt-16 pl-16">
+                <h1 class="text-3xl font-semibold tracking-tight">Dashboard</h1>
+            </div>
+        </div>
+    @endif
     </body>
 </html>
