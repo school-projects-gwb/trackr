@@ -15,7 +15,7 @@
 </head>
 <body class="font-sans antialiased">
 
-<main class="w-full h-full bg-primary flex">
+<main class="w-full h-full bg-primary flex flex-col lg:flex-row">
     <div class="absolute w-full flex justify-center">
         <div class="flex justify-between items-center w-full lg:w-3/4 py-4 px-2">
             <a href="/" class="cursor-pointer"><h1 class="text-3xl font-extrabold">Track<span class="text-darkgray">R</span></h1></a>
