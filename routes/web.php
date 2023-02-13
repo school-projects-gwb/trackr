@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Store\StoreUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,17 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
     Route::post('/users/create', [UserManagementController::class, 'store'])->name('users.store');
     Route::post('/users/update/{user}', [UserManagementController::class, 'update'])->name('users.update');
 });
+
+Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')->group(function() {
+    // GET
+    Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
+    Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');
+    Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit');
+    // POST
+    Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
+    Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

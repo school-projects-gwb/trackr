@@ -1,30 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
-class UserManagementController extends Controller
+class StoreUserController extends Controller
 {
     public function overview()
     {
-        $users = User::role('StoreOwner')->get();
-        return view('admin.users.overview', compact('users'));
+        $currentUserId = Auth::id();
+        $users = User::all()->where('parent_id', $currentUserId);
+        return view('store.users.overview', compact('users'));
     }
 
     public function create()
     {
-        return view('admin.users.create');
+        return view('store.users.create');
     }
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        return view('store.users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -36,7 +38,7 @@ class UserManagementController extends Controller
 
         $user->update($validated);
 
-        return to_route('admin.users.overview');
+        return to_route('store.users.overview');
     }
 
     public function store(Request $request)
@@ -47,14 +49,17 @@ class UserManagementController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $currentUserId = Auth::id();
+
         $user = User::create([
+            'parent_id' => $currentUserId,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('StoreOwner');
+        ]);
 
         event(new Registered($user));
 
-        return redirect('/admin/users');
+        return to_route('store.users.overview');
     }
 }
