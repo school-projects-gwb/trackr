@@ -51,10 +51,10 @@
 
 @role('StoreOwner')
     <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
-        {{ __('Medewerkerbeheer') }}
+        {{ __('Gebruikers') }}
     </x-sidebar-nav-link>
     <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
-        {{ __('Webwinkels') }}
+        {{ __('Winkels') }}
     </x-sidebar-nav-link>
 @endrole
 

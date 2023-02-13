@@ -13,7 +13,7 @@ class UserManagementController extends Controller
 {
     public function overview()
     {
-        $users = User::role('StoreAdmin')->get();;
+        $users = User::role('StoreOwner')->get();;
         return view('admin.users.overview', compact('users'));
     }
 
