@@ -31,6 +31,8 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
 
     Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
 
+    Route::post('/users/create', [UserManagementController::class, 'store'])->name('users.store');
+
 });
 
 Route::middleware('auth')->group(function () {
