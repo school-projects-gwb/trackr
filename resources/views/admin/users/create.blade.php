@@ -3,7 +3,7 @@
 
     <div class="bg-primary overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">
         <div class="flex p-2">
-            <x-link-inline href="{{ route('admin.users.overview') }}">Terug naar overzicht</x-link-inline>
+            <x-link-inline href="{{ route('admin.users.overview') }}">{{ __('Terug naar overzicht') }}</x-link-inline>
         </div>
         <div class="flex p-2 flex-col w-11/12 lg:w-1/2">
             <form method="POST" action="{{ route('admin.users.store') }}">
@@ -47,7 +47,6 @@
                 </div>
 
                 <div class="flex items-center mt-8">
-
                     <x-button-primary>
                         {{ __('Gebruiker aanmaken') }}
                     </x-button-primary>

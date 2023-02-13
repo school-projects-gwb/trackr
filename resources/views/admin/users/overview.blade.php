@@ -35,7 +35,7 @@
                                     <td>
                                         <div class="flex">
                                             <div class="flex space-x-2">
-                                                <x-link-primary type="submit">{{ __('Bewerk') }}</x-link-primary>
+                                                <x-link-primary type="submit" href="{{route('admin.users.edit', $user)}}">{{ __('Bewerk') }}</x-link-primary>
                                                 <form class="" method="POST" action="" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')

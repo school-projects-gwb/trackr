@@ -25,14 +25,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
+    // GET
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
-
     Route::get('/users', [UserManagementController::class, 'overview'])->name('users.overview');
-
     Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
-
+    Route::get('/users/edit/{user}', [UserManagementController::class, 'edit'])->name('users.edit');
+    // POST
     Route::post('/users/create', [UserManagementController::class, 'store'])->name('users.store');
-
+    Route::post('/users/update/{user}', [UserManagementController::class, 'update'])->name('users.update');
 });
 
 Route::middleware('auth')->group(function () {
