@@ -9,8 +9,8 @@
             <button @click="open = !open" class="flex items-center w-full px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-primary focus:text-primary hover:bg-darkgray focus:bg-darkgray focus:outline-none focus:shadow-outline">
                 <div class="rounded-full w-12 h-12 bg-primary mr-2"></div>
                 <div class="flex flex-col text-left">
-                    <span class="font-semibold text-xl">Andrew K.</span>
-                    <span class="text-sm">Webshop Owner</span>
+                    <span class="font-semibold text-xl text-primary">Andrew K.</span>
+                    <span class="text-sm text-primary">Webshop Owner</span>
                 </div>
                 <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="ml-2 inline w-8 h-8 transition-transform duration-200 transform"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -35,10 +35,10 @@
 
 @role('SuperAdmin')
     <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-        {{ __('Dashboard') }}
+        {{ __('Home') }}
     </x-sidebar-nav-link>
 
-    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="request()->routeIs('admin.users.overview')">
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
         {{ __('Gebruikersbeheer') }}
     </x-sidebar-nav-link>
 @endrole
