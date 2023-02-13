@@ -51,7 +51,7 @@ class UserManagementController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('StoreAdmin');
+        ])->assignRole('StoreOwner');
 
         event(new Registered($user));
 

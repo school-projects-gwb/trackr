@@ -10,7 +10,9 @@
                 <div class="rounded-full w-12 h-12 bg-primary mr-2"></div>
                 <div class="flex flex-col text-left">
                     <span class="font-semibold text-xl text-primary">{{ Auth::user()->name }}</span>
-                    <span class="text-sm text-primary">{{Auth::user()->getRoleNames()[0] }}</span>
+                    <span class="text-sm text-primary">
+                        @foreach (Auth::user()->getRoleNames() as $role) {{ $role  }} @endforeach
+                    </span>
                 </div>
                 <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="ml-2 inline w-8 h-8 transition-transform duration-200 transform"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -41,6 +43,29 @@
     <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
         {{ __('Gebruikersbeheer') }}
     </x-sidebar-nav-link>
+@else
+    <x-sidebar-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        {{ __('Home') }}
+    </x-sidebar-nav-link>
 @endrole
+
+@role('StoreOwner')
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+        {{ __('Medewerkerbeheer') }}
+    </x-sidebar-nav-link>
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+        {{ __('Webwinkels') }}
+    </x-sidebar-nav-link>
+@endrole
+
+@can('access store')
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+        {{ __('Pakketten') }}
+    </x-sidebar-nav-link>
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+        {{ __('Pickups') }}
+    </x-sidebar-nav-link>
+@endcan
+
 
 </nav>
