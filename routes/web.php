@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +17,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/users', [UserManagementController::class, 'overview'])->name('users.overview');
+
+    Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
+
+    Route::post('/users/create', [UserManagementController::class, 'store'])->name('users.store');
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
