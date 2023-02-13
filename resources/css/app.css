@@ -5,7 +5,10 @@
 @layer base {
     :root {
         --color-primary: 243 243 243;
+
         --color-secondary: 102 96 251;
+        --color-secondary-light: 124 117 250;
+
         --color-darkgray: 63 63 63;
     }
 }
@@ -13,7 +16,6 @@
 * {
     margin: 0;
     padding: 0;
-    border: 0;
 }
 
 html, body {

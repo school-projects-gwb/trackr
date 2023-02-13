@@ -13,6 +13,7 @@ module.exports = {
             colors: {
                 'primary': 'rgb(var(--color-primary) / <alpha-value>)',
                 'secondary': 'rgb(var(--color-secondary) / <alpha-value>)',
+                'secondary-light': 'rgb(var(--color-secondary-light) / <alpha-value>)',
                 'darkgray': 'rgb(var(--color-darkgray) / <alpha-value>)'
             },
             fontFamily: {

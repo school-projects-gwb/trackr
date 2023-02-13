@@ -32,7 +32,7 @@
 </div>
 
 @role('SuperAdmin')
-    <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+    <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.users')">
         {{ __('Dashboard') }}
     </x-sidebar-nav-link>
 

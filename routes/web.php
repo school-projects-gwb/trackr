@@ -33,7 +33,8 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
 
     Route::get('/users', [UserManagementController::class, 'overview'])->name('users.overview');
 
-//    Route::resource('/users', UserManagementController::class);
+    Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
+
 });
 
 Route::middleware('auth')->group(function () {
