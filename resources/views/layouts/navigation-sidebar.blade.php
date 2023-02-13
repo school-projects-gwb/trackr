@@ -1,7 +1,9 @@
 <nav class="bg-secondary w-full lg:h-screen lg:max-h-screen lg:w-4/12 2xl:w-2/12 pb-4 lg:pb-0">
 
 <div class="w-full flex flex-col items-center justify-center text-center my-2 lg:my-6">
-    <div class="w-3/4 text-primary font-extrabold text-4xl">Track<span class="text-darkgray">R</span></div>
+    <div class="w-3/4 text-primary font-extrabold text-4xl">
+        <a href="/">Track<span class="text-darkgray">R</span></a>
+    </div>
     <div class="w-11/12 flex justify-center items-center lg:mt-4">
         <div @click.away="open = false" class="relative" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center w-full px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-primary focus:text-primary hover:bg-darkgray focus:bg-darkgray focus:outline-none focus:shadow-outline">
@@ -32,7 +34,7 @@
 </div>
 
 @role('SuperAdmin')
-    <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.users')">
+    <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
         {{ __('Dashboard') }}
     </x-sidebar-nav-link>
 

@@ -17,16 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-//Route::get('/admin', function () {
-//    return view('admin.dashboard');
-//})->middleware(['auth', 'role:SuperAdmin'])->name('admin.dashboard');
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
