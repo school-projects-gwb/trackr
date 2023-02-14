@@ -24,12 +24,12 @@ class Address extends Model
         'deleted_at',
     ];
 
-    public function Shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Shipment::class);
     }
 
-    public function Users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'address_user');
     }

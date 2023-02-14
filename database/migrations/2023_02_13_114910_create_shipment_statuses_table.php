@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('shipment_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->foreignId('shipmment_id');
+            $table->foreignId('shipmment_id')->constrained('shipments');
             $table->timestamps();
         });
     }

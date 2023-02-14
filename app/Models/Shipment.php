@@ -17,24 +17,29 @@ class Shipment extends Model
         'tracking_number',
         'weight',
         'address_id',
+        'pickup_id',
         'carrier_id',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
-    public function  Address(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function  address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(Address::class, 'id', 'address_id');
+        return $this->belongsTo(Address::class, 'id', 'address_id');
     }
 
-    public function Carrier(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function carrier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(Carrier::class, 'id', 'carrier_id');
+        return $this->belongsTo(Carrier::class, 'id', 'carrier_id');
     }
 
     public function ShipmentStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ShipmentStatus::class);
+    }
+
+    public function pickup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Pickup::class, 'id', 'pickup_id');
     }
 }
