@@ -53,16 +53,16 @@
     <x-sidebar-nav-link :href="route('store.users.overview')" :active="Route::is('*.users.*')">
         {{ __('Gebruikers') }}
     </x-sidebar-nav-link>
-    <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.users.*')">
+    <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.stores.*')">
         {{ __('Winkels') }}
     </x-sidebar-nav-link>
 @endrole
 
 @can('access store')
-    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.whatever.*')">
         {{ __('Pakketten') }}
     </x-sidebar-nav-link>
-    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.whatever.*')">
         {{ __('Pickups') }}
     </x-sidebar-nav-link>
 @endcan

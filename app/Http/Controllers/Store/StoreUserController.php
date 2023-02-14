@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserWebstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,11 @@ class StoreUserController extends Controller
 {
     public function overview()
     {
-        $currentUserId = Auth::id();
-        $users = User::all();
+        $ownerId = Auth::id();
+        $users = User::whereHas('stores', function ($query) use ($ownerId) {
+            $query->where('owner_id', $ownerId);
+        })->get();
+
         return view('store.users.overview', compact('users'));
     }
 

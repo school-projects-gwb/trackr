@@ -30,33 +30,29 @@ class StoreController extends Controller
 
     public function update(Request $request, Webstore $store)
     {
-//        $validated = $request->validate([
-//            'name' => ['required', 'string', 'max:255'],
-//            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class]
-//        ]);
-//
-//        $user->update($validated);
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $store->update($validated);
 
         return to_route('store.stores.overview');
     }
 
     public function store(Request $request)
     {
-//        $request->validate([
-//            'name' => ['required', 'string', 'max:255'],
-//            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-//            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-//        ]);
-//
-//        $currentUserId = Auth::id();
-//
-//        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//        ]);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
 
-//        event(new Registered($user));
+        $webStore = Webstore::create([
+           'name' => $request->name,
+           'owner_id' => Auth::id()
+        ]);
+
+        $webStore->users()->attach(Auth::user());
+
+        event(new Registered($webStore));
 
         return to_route('store.stores.overview');
     }

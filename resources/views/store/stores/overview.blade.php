@@ -13,35 +13,33 @@
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Naam') }}</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Emailadres') }}</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Rollen') }}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Datum laatste update') }}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Datum creatie') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Acties') }}</th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($users as $user)
+                            @foreach ($stores as $store)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            {{ $user->name }}
+                                            {{ $store->name }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            {{ $user->email }}
+                                            {{ $store->updated_at }}
                                         </div>
                                     </td>
                                     <td>
-                                        @foreach($user->getRoleNames() as $role)
-                                            <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
-                                                {{ $role }}
-                                            </span>
-                                        @endforeach
+                                        <div class="flex items-center">
+                                            {{ $store->created_at }}
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="flex">
                                             <div class="flex space-x-2">
-                                                <x-link-primary type="submit" href="{{route('store.stores.edit', $user)}}">{{ __('Bewerk') }}</x-link-primary>
+                                                <x-link-primary type="submit" href="{{route('store.stores.edit', $store)}}">{{ __('Bewerk') }}</x-link-primary>
                                                 <form class="" method="POST" action="" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')

@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit');
 
     Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
-    Route::get('/stores/create', [StoreUController::class, 'create'])->name('stores.create');
+    Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit');
 
     // POST
