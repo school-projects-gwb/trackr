@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_tokens', function (Blueprint $table) {
-            $table->id();
-            $table->string('token');
+        Schema::create('user_webstore', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users');
-            $table->timestamps();
+            $table->foreignId('webstore_id')->constrained('webstores');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_tokens');
+        Schema::dropIfExists('user_webstore');
     }
 };

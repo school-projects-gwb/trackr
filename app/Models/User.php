@@ -54,4 +54,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserToken::class);
     }
+
+    public function ownedStores(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Webstore::class);
+    }
+
+    public function stores(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Webstore::class, 'user_webstore');
+    }
+
+
 }

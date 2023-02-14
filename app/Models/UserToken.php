@@ -13,7 +13,6 @@ class UserToken extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected $fillable = [
@@ -21,11 +20,11 @@ class UserToken extends Model
         'user_id',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
-    public function user(){
-        return $this->hasOne(User::class, 'id', 'user_id');
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
     public function isValid(string $token): bool{

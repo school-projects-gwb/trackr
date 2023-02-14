@@ -11,8 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->string('tracking_number');
             $table->double('weight');
-            $table->foreignId('address_id');
-            $table->foreignId('carrier_id');
+            $table->foreignId('address_id')->constrained('addresses');
+            $table->foreignId('carrier_id')->constrained('carriers');
+            $table->foreignId('pickup_id')->unsigned()->nullable()->constrained('pickups');
             $table->timestamps();
         });
     }

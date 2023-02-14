@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->string('postal_code');
             $table->string('city');
             $table->string('country');
-            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
