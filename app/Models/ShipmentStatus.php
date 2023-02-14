@@ -25,8 +25,8 @@ class ShipmentStatus extends Model
         'status' => ShipmentStatusEnum::class
     ];
 
-    public function Shipment(){
-        return $this->hasOne(Shipment::class,'id', 'shipment_id');
+    public function shipment(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Shipment::class,'id', 'shipment_id');
     }
-
 }

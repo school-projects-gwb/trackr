@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_tokens', function (Blueprint $table) {
+        Schema::create('webstores', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('name');
+            $table->foreignId('owner_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_tokens');
+        Schema::dropIfExists('webstores');
     }
 };
