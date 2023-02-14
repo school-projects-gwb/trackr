@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\Store\StoreUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,11 +42,18 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
     Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');
     Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit');
+
+    Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
+    Route::get('/stores/create', [StoreUController::class, 'create'])->name('stores.create');
+    Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit');
+
     // POST
     Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
     Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update');
-});
 
+    Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
+    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
