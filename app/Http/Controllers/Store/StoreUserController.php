@@ -15,7 +15,7 @@ class StoreUserController extends Controller
     public function overview()
     {
         $currentUserId = Auth::id();
-        $users = User::all()->where('parent_id', $currentUserId);
+        $users = User::all();
         return view('store.users.overview', compact('users'));
     }
 
@@ -52,7 +52,6 @@ class StoreUserController extends Controller
         $currentUserId = Auth::id();
 
         $user = User::create([
-            'parent_id' => $currentUserId,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
