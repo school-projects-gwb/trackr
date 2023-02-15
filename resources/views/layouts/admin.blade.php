@@ -15,7 +15,7 @@
     </head>
     <body class="font-sans antialiased">
 
-    <div class="w-full h-full bg-primary flex flex-col lg:flex-row">
+    <div class="w-full min-h-full bg-primary flex flex-col lg:flex-row">
         @include('layouts.navigation-sidebar')
         <div class="w-full lg:w-3/4 p-4 lg:pb-0 lg:pr-0 lg:pt-16 lg:pl-16">
             <main>

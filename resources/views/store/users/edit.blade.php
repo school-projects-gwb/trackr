@@ -48,12 +48,6 @@
 
                 <div class="flex items-center mt-8">
                     <x-button-primary>
-                        {{ __('Gebruiker aanmaken') }}
-                    </x-button-primary>
-                </div>
-
-                <div class="flex items-center mt-8">
-                    <x-button-primary>
                         {{ __('Gebruiker opslaan') }}
                     </x-button-primary>
                 </div>
