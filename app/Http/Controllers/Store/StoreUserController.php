@@ -47,18 +47,39 @@ class StoreUserController extends Controller
         for ($i = 0; $i < count($stores); $i++) {
             $stores[$i]['user_in_store'] = $user->stores->whereIn('id', $stores[$i]['id'])->first() != null;
         }
-        
+
         return view('store.users.edit', compact('user', 'stores', 'roles'));
     }
 
     public function update(Request $request, User $user)
     {
+        // todo custom unique email validation (can't save employee when keeping the same email address
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class]
+            'email' => ['required', 'string', 'email', 'max:255']
         ]);
 
+        // Validate stores
+        $selectedStoreIds = $request->store_id;
+        $validStores = Webstore::where('owner_id', Auth::id())->whereIn('id', $request->store_id)->get();
+
+        if (count($selectedStoreIds) != count($validStores)) {
+            // todo invalid STORES input
+        }
+
+        // Validate role
+        $selectedRoleId = $request->role_id;
+        $allowedRoles = $this->getAllowedRoles();
+        $selectedRole = $allowedRoles->where('id', $selectedRoleId)->first();
+
+        if (!$selectedRole) {
+            // todo implement invalid ROLE input
+        }
+
         $user->update($validated);
+
+        $user->stores()->sync($selectedStoreIds);
+        $user->syncRoles($selectedRole);
 
         return to_route('store.users.overview');
     }
@@ -75,7 +96,7 @@ class StoreUserController extends Controller
         $selectedStoreIds = $request->store_id;
         $validStores = Webstore::where('owner_id', Auth::id())->whereIn('id', $request->store_id)->get();
         if (count($selectedStoreIds) != count($validStores)) {
-            // invalid STORES input
+            // todo invalid STORES input
         }
 
         // Validate role
@@ -84,7 +105,7 @@ class StoreUserController extends Controller
         $selectedRole = $allowedRoles->where('id', $selectedRoleId)->first();
 
         if (!$selectedRole) {
-            // invalid ROLE input
+            // todo invalid ROLE input
         }
 
         // Create user and assign role
@@ -94,10 +115,7 @@ class StoreUserController extends Controller
             'password' => Hash::make($request->password),
         ])->assignRole($selectedRole);
 
-        // Attach stores to user
-        foreach ($validStores as $store) {
-            $store->users()->attach($user);
-        }
+        $user->stores()->attach($selectedStoreIds);
 
         event(new Registered($user));
 
