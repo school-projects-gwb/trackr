@@ -36,7 +36,19 @@ class StoreUserController extends Controller
 
     public function edit(User $user)
     {
-        return view('store.users.edit', compact('user'));
+        $stores = Webstore::where('owner_id', Auth::id())->get();
+        $roles = $this->getAllowedRoles();
+
+        // Populate roles with extra column; to check if user is in role
+        for ($i = 0; $i < count($roles); $i++) {
+            $roles[$i]['user_in_role'] = $user->roles->whereIn('id', $roles[$i]['id'])->first() != null;
+        }
+
+        for ($i = 0; $i < count($stores); $i++) {
+            $stores[$i]['user_in_store'] = $user->stores->whereIn('id', $stores[$i]['id'])->first() != null;
+        }
+        
+        return view('store.users.edit', compact('user', 'stores', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -59,12 +71,14 @@ class StoreUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Validate stores
         $selectedStoreIds = $request->store_id;
         $validStores = Webstore::where('owner_id', Auth::id())->whereIn('id', $request->store_id)->get();
         if (count($selectedStoreIds) != count($validStores)) {
             // invalid STORES input
         }
 
+        // Validate role
         $selectedRoleId = $request->role_id;
         $allowedRoles = $this->getAllowedRoles();
         $selectedRole = $allowedRoles->where('id', $selectedRoleId)->first();
@@ -73,14 +87,14 @@ class StoreUserController extends Controller
             // invalid ROLE input
         }
 
+        // Create user and assign role
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+        ])->assignRole($selectedRole);
 
-        $user->assignRole($selectedRole);
-
+        // Attach stores to user
         foreach ($validStores as $store) {
             $store->users()->attach($user);
         }

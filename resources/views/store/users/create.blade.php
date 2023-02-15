@@ -48,7 +48,7 @@
 
                 <div class="mt-4 flex flex-col mt-4">
                     <h2 class="text-xl font-semibold">Webwinkels</h2>
-                    <p class="text-sm mb-2">Voeg je medewerker minimaal aan één webwinkel toe.</p>
+                    <p class="text-sm mb-2">Voeg je gebruiker minimaal aan één webwinkel toe.</p>
                     @foreach ($stores as $store)
                         <div class="my-0.5">
                             <input class="mr-1" id="{{ $store->name . $store->id }}" type="checkbox" name="store_id[]" value="{{ $store->id  }}" />
@@ -60,7 +60,7 @@
 
                 <div class="mt-4 flex flex-col mt-4">
                     <h2 class="text-xl font-semibold">Rollen</h2>
-                    <p class="text-sm mb-2">Geef je medewerker een rol.</p>
+                    <p class="text-sm mb-2">Geef je gebruiker een rol.</p>
                     @foreach ($roles as $role)
                         <div class="my-0.5">
                             <input class="mr-1" id="{{ $role->name . $role->id }}" type="radio" name="role_id" value="{{ $role->id  }}" />
