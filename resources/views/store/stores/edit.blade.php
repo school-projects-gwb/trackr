@@ -16,6 +16,40 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
+                <div class="mt-4 flex flex-col mt-8">
+                    <h2 class="text-xl font-semibold">Gebruikers</h2>
+                    <p class="text-sm mb-2">Gebruikers die toegang hebben tot deze winkel.</p>
+
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Naam') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Rol') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($store->users as $user)
+                            <tr>
+                                <span class="my-0.5 inline w-auto">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ $user->name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @foreach($user->getRoleNames() as $role)
+                                            <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                               {{ $role }}
+                                            </span>
+                                        @endforeach
+                                    </td>
+                                </span>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <x-input-error :messages="$errors->get('user_role')" class="mt-2" />
+                </div>
+
                 <div class="flex items-center mt-8">
                     <x-button-primary>
                         {{ __('Webwinkel opslaan') }}

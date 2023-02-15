@@ -52,9 +52,9 @@
                                         <div class="flex">
                                             <div class="flex space-x-2">
                                                 <x-link-primary type="submit" href="{{route('store.users.edit', $user)}}">{{ __('Bewerk') }}</x-link-primary>
-                                                <form class="" method="POST" action="" onsubmit="return confirm('Are you sure?');">
+                                                <form method="POST" action="{{ route('store.users.delete', $user) }}" onsubmit="return confirm('{{ __('Zeker weten? Deze actie kan niet ongedaan worden!') }}');">
                                                     @csrf
-                                                    @method('DELETE')
+                                                    @method('POST')
                                                     <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
                                                 </form>
                                             </div>

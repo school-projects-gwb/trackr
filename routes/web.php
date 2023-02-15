@@ -50,6 +50,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     // POST
     Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
     Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update');
+    Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete');
 
     Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
     Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update');

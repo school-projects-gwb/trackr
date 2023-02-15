@@ -17,12 +17,7 @@ class StoreUserController extends Controller
 {
     public function overview()
     {
-        $ownerId = Auth::id();
-        $users = User::where('id', '<>', $ownerId)
-            ->whereHas('stores', function ($query) use ($ownerId) {
-            $query->where('owner_id', $ownerId);
-        })->with('stores')->get();
-
+        $users = $this->getAllowedUsers();
         return view('store.users.overview', compact('users'));
     }
 
@@ -77,7 +72,6 @@ class StoreUserController extends Controller
         }
 
         $user->update($validated);
-
         $user->stores()->sync($selectedStoreIds);
         $user->syncRoles($selectedRole);
 
@@ -120,6 +114,27 @@ class StoreUserController extends Controller
         event(new Registered($user));
 
         return to_route('store.users.overview');
+    }
+
+    public function delete(Request $request, User $user) {
+        $allowedUsers = $this->getAllowedUsers();
+
+        if ($allowedUsers->find($user)) {
+            $user->stores()->sync([]); // // todo maybe change relationship to on cascade delete
+            $user->delete();
+        }
+
+        return to_route('store.users.overview');
+    }
+
+    private function getAllowedUsers() {
+        $ownerId = Auth::id();
+        $users = User::where('id', '<>', $ownerId)
+            ->whereHas('stores', function ($query) use ($ownerId) {
+                $query->where('owner_id', $ownerId);
+            })->with('stores')->get();
+
+        return $users;
     }
 
     private function getAllowedRoles() {
