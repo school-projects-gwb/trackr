@@ -8,6 +8,7 @@ use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class StoreController extends Controller
@@ -25,11 +26,15 @@ class StoreController extends Controller
 
     public function edit(Webstore $store)
     {
+        $this->validateStore($store);
+
         return view('store.stores.edit', compact('store'));
     }
 
     public function update(Request $request, Webstore $store)
     {
+        $this->validateStore($store);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
@@ -55,5 +60,11 @@ class StoreController extends Controller
         event(new Registered($webStore));
 
         return to_route('store.stores.overview');
+    }
+
+    private function validateStore(Webstore $store) {
+        if (Gate::denies('validate-store', $store)) {
+            return abort(403, "Je hebt geen toegang tot deze winkel.");
+        }
     }
 }

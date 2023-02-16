@@ -3,7 +3,6 @@
 
 namespace App\Rules;
 
-
 use App\Models\User;
 use App\Models\Webstore;
 use Illuminate\Contracts\Validation\Rule;
@@ -13,7 +12,7 @@ class ValidStoreUserRule implements Rule
 {
     /**
      * Checks whether given user is in a store owned by current Auth user
-     * @param string $attribute ignored
+     * @param string $attribute null
      * @param mixed $value user ID
      * @return bool passing status
      */

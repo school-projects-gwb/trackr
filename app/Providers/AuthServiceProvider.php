@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Rules\ValidStoreRule;
 use App\Rules\ValidStoreUserRule;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -29,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('validate-store-user', function ($user, $model) {
             return (new ValidStoreUserRule())->passes(null, $model->id);
+        });
+
+        Gate::define('validate-store', function ($user, $model) {
+            return (new ValidStoreRule())->passes(null, $model->id);
         });
     }
 }
