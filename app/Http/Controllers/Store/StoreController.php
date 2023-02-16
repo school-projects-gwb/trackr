@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRequest;
 use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -26,22 +27,18 @@ class StoreController extends Controller
         return view('store.stores.edit', compact('store'));
     }
 
-    public function update(Request $request, Webstore $store)
+    public function update(StoreRequest $request, Webstore $store)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255']
-        ]);
+        $validated = $request->validated();
 
         $store->update($validated);
 
         return to_route('store.stores.overview');
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255']
-        ]);
+        $validated = $request->validated();
 
         $webStore = Webstore::create([
            'name' => $request->name,

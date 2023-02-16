@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserCreateRequest;
+use App\Http\Requests\StoreUserUpdateRequest;
 use App\Models\User;
 use App\Models\Webstore;
 use App\Rules\StoresInAuthUser;
@@ -69,15 +71,9 @@ class StoreUserController extends Controller
         return to_route('store.users.overview');
     }
 
-    public function store(Request $request)
+    public function store(StoreUserCreateRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['confirmed', Password::default()],
-            'store_id' => ['required', new StoresInAuthUser],
-            'role_id' => ['required', new StoreUserRoleAllowed]
-        ]);
+        $request->validated();
 
         // Create user and assign role
         $user = User::create([
