@@ -43,7 +43,7 @@
                                                 <form class="" method="POST" action="" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
+                                                    <x-button-secondary type="submit" disabled class="bg-gray-500 text-gray-300 border-0 hover:bg-gray-500 hover:text-gray-300">{{ __('Verwijder') }}</x-button-secondary>
                                                 </form>
                                             </div>
                                         </div>

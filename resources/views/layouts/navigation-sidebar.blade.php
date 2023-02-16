@@ -54,7 +54,7 @@
         {{ __('Gebruikers') }}
     </x-sidebar-nav-link>
     <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.stores.*')">
-        {{ __('Winkels') }}
+        {{ __('Webwinkels') }}
     </x-sidebar-nav-link>
 @endrole
 
