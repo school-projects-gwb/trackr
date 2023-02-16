@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Webstore;
 use App\Rules\StoresInAuthUser;
+use Illuminate\Validation\Rules\Password;
 use App\Rules\StoreUserRoleAllowed;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -73,7 +74,7 @@ class StoreUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['confirmed', Password::default()],
             'store_id' => ['required', new StoresInAuthUser],
             'role_id' => ['required', new StoreUserRoleAllowed]
         ]);
