@@ -8,7 +8,7 @@ use App\Models\Webstore;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class ValidStoreUserRule implements Rule
+class UserInStore implements Rule
 {
     /**
      * Checks whether given user is in a store owned by current Auth user

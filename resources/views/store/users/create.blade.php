@@ -55,7 +55,7 @@
                             <label for="{{ $store->name . $store->id }}">{{ $store->name }}</label>
                         </div>
                     @endforeach
-                    <x-input-error :messages="$errors->get('user_store')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('store_id')" class="mt-2" />
                 </div>
 
                 <div class="mt-4 flex flex-col mt-4">
@@ -67,7 +67,7 @@
                             <label for="{{ $role->name . $role->id }}">{{ $role->name }}</label>
                         </div>
                     @endforeach
-                    <x-input-error :messages="$errors->get('user_role')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
                 </div>
 
                 <div class="flex items-center mt-8">

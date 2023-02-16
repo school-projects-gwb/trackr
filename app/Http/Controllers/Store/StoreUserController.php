@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserWebstore;
 use App\Models\Webstore;
-use App\Rules\ValidStoreUserRule;
+use App\Rules\StoresInAuthUser;
+use App\Rules\StoreUserRoleAllowed;
+use App\Rules\UserInStore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,29 +64,14 @@ class StoreUserController extends Controller
         // todo custom unique email validation (can't save employee when keeping the same email address
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255']
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'store_id' => ['required', new StoresInAuthUser],
+            'role_id' => ['required', new StoreUserRoleAllowed]
         ]);
 
-        // Validate stores
-        $selectedStoreIds = $request->store_id;
-        $validStores = Webstore::where('owner_id', Auth::id())->whereIn('id', $request->store_id)->get();
-
-        if (count($selectedStoreIds) != count($validStores)) {
-            // todo invalid STORES input
-        }
-
-        // Validate role
-        $selectedRoleId = $request->role_id;
-        $allowedRoles = $this->getAllowedRoles();
-        $selectedRole = $allowedRoles->where('id', $selectedRoleId)->first();
-
-        if (!$selectedRole) {
-            // todo implement invalid ROLE input
-        }
-
         $user->update($validated);
-        $user->stores()->sync($selectedStoreIds);
-        $user->syncRoles($selectedRole);
+        $user->stores()->sync($request->store_id);
+        $user->syncRoles($request->role_id);
 
         return to_route('store.users.overview');
     }
@@ -95,32 +82,18 @@ class StoreUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'store_id' => ['required', new StoresInAuthUser],
+            'role_id' => ['required', new StoreUserRoleAllowed]
         ]);
-
-        // Validate stores
-        $selectedStoreIds = $request->store_id;
-        $validStores = Webstore::where('owner_id', Auth::id())->whereIn('id', $request->store_id)->get();
-        if (count($selectedStoreIds) != count($validStores)) {
-            // todo invalid STORES input
-        }
-
-        // Validate role
-        $selectedRoleId = $request->role_id;
-        $allowedRoles = $this->getAllowedRoles();
-        $selectedRole = $allowedRoles->where('id', $selectedRoleId)->first();
-
-        if (!$selectedRole) {
-            // todo invalid ROLE input
-        }
 
         // Create user and assign role
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole($selectedRole);
+        ])->assignRole($request->role_id);
 
-        $user->stores()->attach($selectedStoreIds);
+        $user->stores()->attach($request->store_id);
 
         event(new Registered($user));
 

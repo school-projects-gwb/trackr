@@ -4,9 +4,10 @@
 namespace App\Rules;
 
 use App\Models\Webstore;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class ValidStoreRule
+class StoreInAuthUser implements Rule
 {
     /**
      * Checks whether given store is owned by current Auth user
@@ -30,6 +31,6 @@ class ValidStoreRule
 
     public function message()
     {
-        return 'User not in store.';
+        return 'Deze gebruiker zit niet in je winkel.';
     }
 }

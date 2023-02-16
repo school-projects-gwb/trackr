@@ -27,11 +27,11 @@
                     <p class="text-sm mb-2">Voeg je gebruiker minimaal aan één webwinkel toe.</p>
                     @foreach ($stores as $store)
                         <div class="my-0.5">
-                            <input class="mr-1" id="{{ $store->name . $store->id }}" type="checkbox" name="store_id[]" value="{{ $store->id  }} " {{ $store->user_in_store ? 'checked' : '' }} />
+                            <input class="mr-1" id="{{ $store->name . $store->id }}" type="checkbox" name="store_id[]" value="{{ $store->id }}" {{ $store->user_in_store ? 'checked' : '' }} />
                             <label for="{{ $store->name . $store->id }}">{{ $store->name }}</label>
                         </div>
                     @endforeach
-                    <x-input-error :messages="$errors->get('user_store')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('store_id')" class="mt-2" />
                 </div>
 
                 <div class="mt-4 flex flex-col mt-4">

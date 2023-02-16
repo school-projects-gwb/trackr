@@ -36,7 +36,7 @@ class StoreController extends Controller
         $this->validateStore($store);
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255']
         ]);
 
         $store->update($validated);
@@ -47,7 +47,7 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255']
         ]);
 
         $webStore = Webstore::create([
