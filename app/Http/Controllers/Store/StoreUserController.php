@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserWebstore;
 use App\Models\Webstore;
+use App\Rules\ValidStoreUserRule;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
@@ -17,7 +19,12 @@ class StoreUserController extends Controller
 {
     public function overview()
     {
-        $users = $this->getAllowedUsers();
+        $ownerId = Auth::id();
+        $users = User::where('id', '<>', $ownerId)
+            ->whereHas('stores', function ($query) use ($ownerId) {
+                $query->where('owner_id', $ownerId);
+            })->with('stores')->get();
+
         return view('store.users.overview', compact('users'));
     }
 
@@ -31,6 +38,8 @@ class StoreUserController extends Controller
 
     public function edit(User $user)
     {
+        $this->validateStoreUser($user);
+
         $stores = Webstore::where('owner_id', Auth::id())->get();
         $roles = $this->getAllowedRoles();
 
@@ -48,6 +57,8 @@ class StoreUserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->validateStoreUser($user);
+
         // todo custom unique email validation (can't save employee when keeping the same email address
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -117,27 +128,21 @@ class StoreUserController extends Controller
     }
 
     public function delete(Request $request, User $user) {
-        $allowedUsers = $this->getAllowedUsers();
+        $this->validateStoreUser($user);
 
-        if ($allowedUsers->find($user)) {
-            $user->stores()->sync([]); // // todo maybe change relationship to on cascade delete
-            $user->delete();
-        }
+        $user->stores()->sync([]); // // todo maybe change relationship to on cascade delete
+        $user->delete();
 
         return to_route('store.users.overview');
     }
 
-    private function getAllowedUsers() {
-        $ownerId = Auth::id();
-        $users = User::where('id', '<>', $ownerId)
-            ->whereHas('stores', function ($query) use ($ownerId) {
-                $query->where('owner_id', $ownerId);
-            })->with('stores')->get();
-
-        return $users;
-    }
-
     private function getAllowedRoles() {
         return Role::whereIn('name', ['StoreAdmin', 'StorePacker'])->get();
+    }
+
+    private function validateStoreUser(User $user) {
+        if (Gate::denies('validate-store-user', $user)) {
+            return abort(403, "Je hebt geen toegang tot deze gebruiker.");
+        }
     }
 }

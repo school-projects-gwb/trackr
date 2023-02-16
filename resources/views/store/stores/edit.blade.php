@@ -25,12 +25,12 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Naam') }}</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Rol') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Acties') }}</th>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($store->users as $user)
                             <tr>
-                                <span class="my-0.5 inline w-auto">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         {{ $user->name }}
                                     </td>
@@ -41,7 +41,9 @@
                                             </span>
                                         @endforeach
                                     </td>
-                                </span>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a class="underline font-semibold" target="_blank" href="{{route('store.users.edit', $user)}}">Naar gebruiker</a>
+                                    </td>
                             </tr>
                         @endforeach
                         </tbody>
