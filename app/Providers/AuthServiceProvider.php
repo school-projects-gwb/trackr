@@ -28,11 +28,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('validate-store-user', function ($user, $model) {
+        Gate::define('user-in-store', function ($user, $model) {
             return (new UserInStore())->passes(null, $model->id);
         });
 
-        Gate::define('validate-store', function ($user, $model) {
+        Gate::define('store-in-auth-user', function ($user, $model) {
             return (new StoreInAuthUser())->passes(null, $model->id);
         });
     }

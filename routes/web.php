@@ -39,21 +39,27 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
 
 Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')->group(function() {
     // GET
+
+    // USER
     Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
     Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');
-    Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit');
+    Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit')->middleware('can:user-in-store,user');
 
+    // STORE
     Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
     Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
-    Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit');
+    Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
 
     // POST
-    Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
-    Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update');
-    Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete');
 
+    // USER
+    Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
+    Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update')->middleware('can:user-in-store,user');
+    Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete')->middleware('can:user-in-store,user');
+
+    // STORE
     Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
-    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update');
+    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');;
 });
 
 Route::middleware('auth')->group(function () {

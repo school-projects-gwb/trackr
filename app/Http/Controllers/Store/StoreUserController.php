@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserWebstore;
 use App\Models\Webstore;
 use App\Rules\StoresInAuthUser;
 use App\Rules\StoreUserRoleAllowed;
-use App\Rules\UserInStore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class StoreUserController extends Controller
@@ -40,8 +37,6 @@ class StoreUserController extends Controller
 
     public function edit(User $user)
     {
-        $this->validateStoreUser($user);
-
         $stores = Webstore::where('owner_id', Auth::id())->get();
         $roles = $this->getAllowedRoles();
 
@@ -59,12 +54,9 @@ class StoreUserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $this->validateStoreUser($user);
-
-        // todo custom unique email validation (can't save employee when keeping the same email address
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($user->id)],
             'store_id' => ['required', new StoresInAuthUser],
             'role_id' => ['required', new StoreUserRoleAllowed]
         ]);
@@ -101,9 +93,7 @@ class StoreUserController extends Controller
     }
 
     public function delete(Request $request, User $user) {
-        $this->validateStoreUser($user);
-
-        $user->stores()->sync([]); // // todo maybe change relationship to on cascade delete
+        $user->stores()->sync([]);
         $user->delete();
 
         return to_route('store.users.overview');
@@ -111,11 +101,5 @@ class StoreUserController extends Controller
 
     private function getAllowedRoles() {
         return Role::whereIn('name', ['StoreAdmin', 'StorePacker'])->get();
-    }
-
-    private function validateStoreUser(User $user) {
-        if (Gate::denies('validate-store-user', $user)) {
-            return abort(403, "Je hebt geen toegang tot deze gebruiker.");
-        }
     }
 }
