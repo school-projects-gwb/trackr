@@ -42,4 +42,14 @@ class Shipment extends Model
     {
         return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
     }
+
+    public function scopeGenerateShipmentNumber(){
+        $latestShipmentId = $this->latest()->first()->pluck('id');
+        if($latestShipmentId){
+            $shipmentNumber = '#'.str_pad($latestShipmentId[0] + 1, 8, "0", STR_PAD_LEFT);
+        } else {
+            $shipmentNumber = '#' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        }
+        return $shipmentNumber;
+    }
 }
