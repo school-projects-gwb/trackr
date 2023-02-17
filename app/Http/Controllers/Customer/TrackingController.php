@@ -15,10 +15,11 @@ class TrackingController extends Controller
 
         // todo add verification
 
-        Shipment::where('tracking_number', $trackingId)->whereHas('address', function($query) use ($postalCode) {
+        $s = Shipment::whereHas('address', function($query) use ($postalCode) {
             $query->where('postal_code', $postalCode);
-        })->first();
+        })->get();
 
+        var_dump($s);
 
         return view('customer.tracking.overview', [
             'trackingId' => $trackingId,
