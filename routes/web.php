@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Customer\TrackingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\Store\StoreUserController;
@@ -25,6 +26,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('customer/tracking/overview', [TrackingController::class, 'overview'])->name('customer.tracking.overview');
+Route::get('customer/tracking/not-found', [TrackingController::class, 'notfound'])->name('customer.tracking.not-found');
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
     // GET
