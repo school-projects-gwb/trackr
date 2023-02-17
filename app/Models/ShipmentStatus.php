@@ -27,6 +27,6 @@ class ShipmentStatus extends Model
 
     public function shipment(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Shipment::class,'id', 'shipment_id');
+        return $this->belongsTo(Shipment::class,'shipment_id', 'id');
     }
 }

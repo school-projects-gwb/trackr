@@ -13,18 +13,15 @@ class TrackingController extends Controller
         $trackingId = request('tracking_id');
         $postalCode = request('postal_code');
 
-        // todo add verification
-
-        $s = Shipment::whereHas('address', function($query) use ($postalCode) {
+        $shipment = Shipment::where('tracking_number', $trackingId)->whereHas('address', function($query) use ($postalCode) {
             $query->where('postal_code', $postalCode);
-        })->get();
+        })->first();
 
-        var_dump($s);
-
-        return view('customer.tracking.overview', [
-            'trackingId' => $trackingId,
-            'zipCode' => $postalCode,
-        ]);
+        if (!$shipment) {
+            return view('customer.tracking.not-found');
+        } else {
+            return view('customer.tracking.overview', compact('shipment', 'trackingId', 'postalCode'));
+        }
     }
 
     public function notfound()
