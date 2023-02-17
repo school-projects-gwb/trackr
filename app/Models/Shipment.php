@@ -30,7 +30,7 @@ class Shipment extends Model
 
     public function carrier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Carrier::class, 'id', 'carrier_id');
+        return $this->belongsTo(Carrier::class, 'carrier_id', 'id');
     }
 
     public function ShipmentStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -40,6 +40,6 @@ class Shipment extends Model
 
     public function pickup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Pickup::class, 'id', 'pickup_id');
+        return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
     }
 }
