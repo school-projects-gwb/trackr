@@ -22,3 +22,13 @@
 html, body {
     height: 100%;
 }
+
+.shipment-tracking-icon {
+    margin-left: -2.75rem;
+    @apply absolute bg-gray-400 p-2.5 rounded-full;
+}
+
+.shipment-tracking-icon.completed {
+    margin-left: -2.75rem;
+    @apply absolute bg-secondary p-2.5 rounded-full;
+}

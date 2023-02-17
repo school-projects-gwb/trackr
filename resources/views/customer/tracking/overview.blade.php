@@ -1,3 +1,32 @@
 <x-site-layout>
-    {{ $shipment->shipmentStatuses }}
+    <div class="bg-gray-50 w-full min-h-full flex justify-center pt-24">
+        <div class="flex flex-col">
+            <h1 class="text-4xl font-bold tracking-tight">Status bestelling</h1>
+
+            <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4">
+                <p class="text-gray-700 text-sm font-semibold">Verzender:</p>
+                <p class="mt-1 font-semibold">WinkelNaam, Straatnaam 58 Stad</p>
+
+                <p class="text-gray-700 text-sm font-semibold mt-4">Ontvanger:</p>
+                <p class="mt-1 font-semibold">Voornaam Achternaam, Straatnaam 58 Stad</p>
+            </div>
+            <div class="flex flex-col">
+                @foreach($shipment->shipmentStatuses as $shipmentStatus)
+                    <div class="pl-8 pt-8 border-l-4 border-secondary">
+                        <span class="shipment-tracking-icon completed"></span>
+                        <p>{{ $shipmentStatus->status->getDescription() }}</p>
+                    </div>
+                @endforeach
+
+                @foreach($remainingStatuses as $remainingStatus)
+                        <div class="pl-8 pt-8 border-l-4 border-gray-400">
+                            <span class="shipment-tracking-icon"></span>
+                            <p>{{ $remainingStatus->getDescription() }}</p>
+                        </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+{{--    {{ $shipment->shipmentStatuses }}--}}
 </x-site-layout>

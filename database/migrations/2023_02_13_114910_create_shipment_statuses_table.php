@@ -12,6 +12,8 @@ return new class extends Migration {
             $table->string('status');
             $table->foreignId('shipment_id')->constrained('shipments');
             $table->timestamps();
+            // Make sure combination of status and shipment ID is unique
+            $table->unique(['status', 'shipment_id']);
         });
     }
 
