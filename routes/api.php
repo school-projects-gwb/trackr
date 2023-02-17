@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\UserToken;
+use App\Http\Controllers\Api\ShipmentController;
 use Illuminate\Support\Facades\Hash;
 
 /*
@@ -37,6 +38,8 @@ Route::middleware('apiAuthentication')->group(function () {
            return $user->tokens;
        }
    });
+
+    Route::post('/shipment/create', [ShipmentController::class, 'create']);
 });
 
 Route::get('/makeApiToken', function (Request $request) {
