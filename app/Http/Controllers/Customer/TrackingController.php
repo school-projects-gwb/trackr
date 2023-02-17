@@ -20,6 +20,10 @@ class TrackingController extends Controller
                 $query->orderBy('created_at', 'asc');
             }])->first();
 
+        if (!$shipment) {
+            return view('customer.tracking.not-found');
+        }
+
         $shipmentStatuses = array_column(\App\Enums\ShipmentStatusEnum::cases(), 'value');
         $existingStatuses = $shipment->shipmentStatuses->pluck('status')->toArray();
         $existingStatuses = array_map(function ($status) {
@@ -34,11 +38,7 @@ class TrackingController extends Controller
             return \App\Enums\ShipmentStatusEnum::fromValue($value);
         }, $remainingStatusValues);
 
-        if (!$shipment) {
-            return view('customer.tracking.not-found');
-        } else {
-            return view('customer.tracking.overview', compact('shipment','remainingStatuses'));
-        }
+        return view('customer.tracking.overview', compact('shipment','remainingStatuses'));
     }
 
     public function notfound()

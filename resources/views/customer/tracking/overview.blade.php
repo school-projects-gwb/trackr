@@ -1,8 +1,8 @@
 <x-site-layout>
-    <div class="bg-gray-50 w-full min-h-full flex justify-center pt-24">
-        <div class="flex flex-col">
-            <x-link-inline class="mb-2">Terug naar Home</x-link-inline>
-            <h1 class="text-4xl font-bold tracking-tight">Status bestelling</h1>
+    <div class="bg-gray-50 w-full min-h-full flex justify-center py-24">
+        <div class="flex flex-col px-4">
+            <x-link-inline href="/" class="mb-2">Terug naar Home</x-link-inline>
+            <h1 class="text-4xl font-bold tracking-tight">Status van uw bestelling</h1>
 
             <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4">
                 <p class="text-gray-700 text-sm font-semibold">Afzender:</p>
@@ -20,10 +20,14 @@
                 </p>
             </div>
             <div class="flex flex-col">
+                <h2 class="text-2xl font-semibold tracking-tight my-2">Waar is mijn pakket?</h2>
                 @foreach($shipment->shipmentStatuses as $shipmentStatus)
                     <div class="pl-8 pt-8 border-l-4 border-secondary">
                         <span class="shipment-tracking-icon completed"></span>
-                        <p>{{ $shipmentStatus->status->getDescription() }}</p>
+                        <div class="flex flex-col">
+                            <p>{{ $shipmentStatus->status->getDescription() }}</p>
+                            <p class="text-gray-500">{{ date('Y-m-d H:i', strtotime($shipmentStatus->created_at)) }}</p>
+                        </div>
                     </div>
                 @endforeach
 

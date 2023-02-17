@@ -12,15 +12,15 @@ enum ShipmentStatusEnum: string{
     public function getDescription(): string {
         switch ($this) {
             case self::Registered:
-                return 'Je pakket is ingevoerd in ons systeem.';
+                return 'Ingevoerd in ons systeem.';
             case self::Printed:
-                return 'Je pakket is aangemeld';
+                return 'Aangemeld bij de bezorger.';
             case self::Sorting:
-                return 'Je pakket is in het sorteercentrum.';
+                return 'Verwerkt in het sorteercentrum van de bezorger.';
             case self::Transit:
-                return 'Je pakket is onderweg met de bezorger.';
+                return 'Onderweg met de bezorger.';
             case self::Delivered:
-                return 'Je pakket is bezorgd.';
+                return 'Bezorgd.';
             default:
                 return $this->value;
         }
