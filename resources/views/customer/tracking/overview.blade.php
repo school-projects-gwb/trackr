@@ -1,14 +1,23 @@
 <x-site-layout>
     <div class="bg-gray-50 w-full min-h-full flex justify-center pt-24">
         <div class="flex flex-col">
+            <x-link-inline class="mb-2">Terug naar Home</x-link-inline>
             <h1 class="text-4xl font-bold tracking-tight">Status bestelling</h1>
 
             <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4">
-                <p class="text-gray-700 text-sm font-semibold">Verzender:</p>
+                <p class="text-gray-700 text-sm font-semibold">Afzender:</p>
                 <p class="mt-1 font-semibold">WinkelNaam, Straatnaam 58 Stad</p>
 
                 <p class="text-gray-700 text-sm font-semibold mt-4">Ontvanger:</p>
-                <p class="mt-1 font-semibold">Voornaam Achternaam, Straatnaam 58 Stad</p>
+                <p class="mt-1 font-semibold">
+                    {{ $shipment->address->first_name }}
+                    {{ $shipment->address->last_name }}
+                    -
+                    {{ $shipment->address->streetname }}
+                    {{ $shipment->address->housenumber }},
+                    {{ $shipment->address->postal_code }}
+                    {{ $shipment->address->city }}
+                </p>
             </div>
             <div class="flex flex-col">
                 @foreach($shipment->shipmentStatuses as $shipmentStatus)

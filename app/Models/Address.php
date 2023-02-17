@@ -13,6 +13,8 @@ class Address extends Model
     ];
 
     protected $fillable = [
+        'first_name',
+        'last_name',
         'streetname',
         'housenumber',
         'postal_code',
