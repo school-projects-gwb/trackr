@@ -58,6 +58,4 @@
             </div>
         </div>
     </div>
-
-{{--    {{ $shipment->shipmentStatuses }}--}}
 </x-site-layout>

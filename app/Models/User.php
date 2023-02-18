@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->hasMany(Webstore::class);
     }
 
-    public function savedShipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function savedShipments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Shipment::class, 'user_shipment');
     }

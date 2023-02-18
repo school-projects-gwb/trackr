@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shipment;
-use App\Models\ShipmentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +41,25 @@ class TrackingController extends Controller
         return view('customer.tracking.overview', compact('shipment','remainingStatuses'));
     }
 
+    public function delete(Request $request, $shipmentId)
+    {
+        // Make sure shipment is attached to user, and then delete it
+        $check = Auth::user()->savedShipments->where('id', $shipmentId)->first();
+
+        if ($check) {
+            Auth::user()->savedShipments()->detach($shipmentId);
+        }
+
+        $shipments = $this->getSavedShipments();
+        return view('customer.tracking.overview-saved', compact('shipments'));
+    }
+
+    public function overviewSaved()
+    {
+        $shipments = $this->getSavedShipments();
+        return view('customer.tracking.overview-saved', compact('shipments'));
+    }
+
     public function save(Request $request) {
         $tracking_number = $request->tracking_id;
         $postal_code = $request->postal_code;
@@ -67,5 +85,11 @@ class TrackingController extends Controller
     public function notfound()
     {
         return view('customer.tracking.not-found');
+    }
+
+    private function getSavedShipments() {
+        return Auth::user()->savedShipments()->with(['ShipmentStatuses' => function ($query) {
+            $query->latest('created_at')->take(1);
+        }])->get();
     }
 }

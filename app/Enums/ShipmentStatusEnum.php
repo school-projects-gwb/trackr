@@ -26,6 +26,23 @@ enum ShipmentStatusEnum: string{
         }
     }
 
+    public function getShortLabel(): string {
+        switch ($this) {
+            case self::Registered:
+                return 'Geregistreerd';
+            case self::Printed:
+                return 'Aangemeld';
+            case self::Sorting:
+                return 'Gesorteerd';
+            case self::Transit:
+                return 'Onderweg';
+            case self::Delivered:
+                return 'Bezorgd';
+            default:
+                return $this->value;
+        }
+    }
+
     public static function fromValue(string $searchValue): ?self
     {
         $values = self::cases();
