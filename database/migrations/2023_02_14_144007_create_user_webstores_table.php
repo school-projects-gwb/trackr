@@ -14,8 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_webstore', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('webstore_id')->constrained('webstores');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('webstore_id');
+
+            $table->primary(['user_id', 'webstore_id']);
+
+            $table->foreign('webstore_id')->references('id')->on('webstores')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

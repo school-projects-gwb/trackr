@@ -2,6 +2,9 @@
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Bewaarde bestellingen') }}</h1>
 
     <div class="flex flex-col mt-8">
+        <div class="flex justify-start mb-4">
+            <x-link-secondary href="/">{{ __('Bestellingen zoeken') }}</x-link-secondary>
+        </div>
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

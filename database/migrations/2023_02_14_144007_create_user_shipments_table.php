@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('user_shipment', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shipment_id');
-            $table->timestamps();
 
             $table->primary(['user_id', 'shipment_id']);
 
