@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
 
 Route::get('customer/tracking/overview', [TrackingController::class, 'overview'])->name('customer.tracking.overview');
 Route::get('customer/tracking/not-found', [TrackingController::class, 'notfound'])->name('customer.tracking.not-found');
+Route::post('customer/tracking/save', [TrackingController::class, 'save'])->name('customer.tracking.save');
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
     // GET

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrackingController extends Controller
 {
@@ -39,6 +40,28 @@ class TrackingController extends Controller
         }, $remainingStatusValues);
 
         return view('customer.tracking.overview', compact('shipment','remainingStatuses'));
+    }
+
+    public function save(Request $request) {
+        $tracking_number = $request->tracking_id;
+        $postal_code = $request->postal_code;
+
+        // Get and validate shipment
+        $shipment = Shipment::where('tracking_number', $tracking_number)->whereHas('address', function($query) use ($postal_code) {
+            $query->where('postal_code', $postal_code);
+        })->first();
+
+        if (!$shipment) {
+            return view('customer.tracking.not-found');
+        }
+
+        // Validate whether shipment has already been saved
+        $savedCheck = $shipment->attachedUsers->first();
+        if (!$savedCheck) {
+            $shipment->attachedUsers()->attach(Auth::user());
+        }
+
+        return redirect()->action('App\Http\Controllers\Customer\TrackingController@overview', ['tracking_id' => $tracking_number, 'postal_code' => $postal_code]);
     }
 
     public function notfound()

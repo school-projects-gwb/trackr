@@ -38,9 +38,22 @@
                         </div>
                 @endforeach
 
-                <div class="flex mt-8">
-                    <p>Bestelling bewaren?</p>
-                    <x-link-inline class="ml-2" href="/login">Log in of registreer</x-link-inline>
+                <div class="mt-8 flex">
+                    @if (!Auth::check())
+                        <p>Bestelling bewaren?</p>
+                        <x-link-inline class="ml-2" href="/login">Log in of registreer</x-link-inline>
+                    @else
+                        @if (!$shipment->attachedUsers()->first())
+                            <form method="POST" action="{{ route('customer.tracking.save') }}">
+                                @csrf
+                                <input type="hidden" name="tracking_id" value="{{ $shipment->tracking_number }}" />
+                                <input type="hidden" name="postal_code" value="{{ $shipment->address->postal_code }}" />
+                                <x-button-secondary>Bewaar bestelling</x-button-secondary>
+                            </form>
+                        @else
+                            <p class="text-gray-500 font-semibold">Bestelling bewaard in account.</p>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
