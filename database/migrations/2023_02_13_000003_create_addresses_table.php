@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('streetname');
-            $table->string('housenumber');
+            $table->string('street_name');
+            $table->string('house_number');
             $table->string('postal_code');
             $table->string('city');
             $table->string('country');

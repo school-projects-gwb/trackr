@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRequest;
+use App\Http\Requests\AddressUpdateRequest;
+use App\Http\Requests\StoreCreateRequest;
+use App\Http\Requests\StoreUpdateRequest;
+use App\Models\Address;
 use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -27,25 +30,43 @@ class StoreController extends Controller
         return view('store.stores.edit', compact('store'));
     }
 
-    public function update(StoreRequest $request, Webstore $store)
+    public function update(StoreUpdateRequest $request, Webstore $store)
     {
         $validated = $request->validated();
-
         $store->update($validated);
 
         return to_route('store.stores.overview');
     }
 
-    public function store(StoreRequest $request)
+    public function updateAddress(AddressUpdateRequest $request, Webstore $store)
     {
         $validated = $request->validated();
+        $store->address->update($validated);
 
-        $webStore = Webstore::create([
-           'name' => $request->name,
-           'owner_id' => Auth::id()
-        ]);
+        return to_route('store.stores.overview');
+    }
 
-        $webStore->users()->attach(Auth::user());
+    public function store(StoreCreateRequest $request)
+    {
+        $request->validated();
+        $user = Auth::user();
+
+        $address = new Address;
+        $address->first_name = $request->first_name;
+        $address->last_name = $request->last_name;
+        $address->street_name = $request->street_name;
+        $address->house_number = $request->house_number;
+        $address->postal_code = $request->postal_code;
+        $address->city = $request->city;
+        $address->country = $request->country;
+        $address->save();
+
+        $webStore = new Webstore;
+        $webStore->name = $request->name;
+        $webStore->owner_id = $user->id;
+        $webStore->address()->associate($address);
+        $webStore->save();
+        $webStore->users()->attach($user);
 
         event(new Registered($webStore));
 

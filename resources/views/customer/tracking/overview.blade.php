@@ -9,8 +9,8 @@
                 <p class="mt-1 font-semibold">
                     <b>{{ $shipment->store->name }}</b>
                     -
-                    {{ $shipment->store->address->streetname }}
-                    {{ $shipment->store->address->housenumber }},
+                    {{ $shipment->store->address->street_name }}
+                    {{ $shipment->store->address->house_number }},
                     {{ $shipment->store->address->postal_code }}
                     {{ $shipment->store->address->city }}
                 </p>
@@ -18,8 +18,8 @@
                 <p class="mt-1 font-semibold">
                     <b>{{ $shipment->address->first_name }} {{ $shipment->address->last_name }}</b>
                     -
-                    {{ $shipment->address->streetname }}
-                    {{ $shipment->address->housenumber }},
+                    {{ $shipment->address->street_name }}
+                    {{ $shipment->address->house_number }},
                     {{ $shipment->address->postal_code }}
                     {{ $shipment->address->city }}
                 </p>
