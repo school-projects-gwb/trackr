@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_shipment', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('shipment_id')->constrained('shipments');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('shipment_id');
+            $table->timestamps();
+
+            $table->primary(['user_id', 'shipment_id']);
+
+            $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
