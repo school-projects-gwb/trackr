@@ -7,13 +7,20 @@
             @endif
 
             @if ($isDelivered)
-                <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4 max-w-xl">
+                <div class="flex flex-col bg-secondary-lighter p-8 rounded-xl my-4 max-w-xl">
                     <h1 class="text-4xl font-bold tracking-tight">{{ __('Uw bestelling is bezorgd!') }}</h1>
                     <p class="mt-4 text-lg">{{ __('Laat weten hoe u de bezorging vond verlopen en hoe we onze service kunnen verbeteren.') }}</p>
+                    <form method="POST" action="{{ route('customer.tracking.review', $shipment) }}" class="flex flex-col">
+                        @csrf
+                        <input type="number" name="rating" value="1"/>
+                        <x-input-error :messages="$errors->get('rating')" class="mt-2" />
+                        <label class="mt-4 font-bold text-lg" for="comment">Toelichting</label>
+                        <textarea id="comment" name="comment" class="border-0 bg-white rounded-xl resize-none mb-4 w-1/2" ></textarea>
+                        <x-button-primary class="w-1/2">{{ __('Verstuur beoordeling') }}</x-button-primary>
+                    </form>
                 </div>
             @endif
-
-            <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4">
+            <div class="flex flex-col bg-secondary-lighter p-8 rounded-xl my-4">
                 <p class="text-gray-700 text-sm font-semibold">{{ __('Afzender:') }}</p>
                 <p class="mt-1 font-semibold">
                     <b>{{ $shipment->store->name }}</b>
@@ -33,7 +40,7 @@
                     {{ $shipment->address->city }}
                 </p>
             </div>
-            <div class="flex flex-col @if ($isDelivered) opacity-40 @endif">
+            <div class="flex flex-col @if ($isDelivered) opacity-40 pointer-events-none @endif">
                 <h2 class="text-2xl font-semibold tracking-tight my-2">{{ __('Waar is mijn pakket?') }}</h2>
                 @foreach($shipment->shipmentStatuses as $shipmentStatus)
                     <div class="pl-8 pt-8 border-l-4 border-secondary">

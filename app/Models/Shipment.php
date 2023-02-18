@@ -53,4 +53,9 @@ class Shipment extends Model
     {
         return $this->belongsToMany(User::class, 'user_shipment');
     }
+
+    public function review(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ShipmentReview::class);
+    }
 }

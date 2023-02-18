@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('shipment_reviews', function (Blueprint $table) {
             $table->id();
             $table->integer("rating");
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table
                 ->foreignId('shipment_id')
                 ->constrained('shipments')

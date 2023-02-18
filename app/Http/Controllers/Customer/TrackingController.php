@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shipment;
+use App\Models\ShipmentReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class TrackingController extends Controller
 {
@@ -40,6 +42,30 @@ class TrackingController extends Controller
 
         $isDelivered = count($remainingStatuses) == 0;
         return view('customer.tracking.overview', compact('shipment','remainingStatuses', 'isDelivered'));
+    }
+
+    public function review(Request $request, Shipment $shipment)
+    {
+        $request->validate([
+            'rating' => ['required', 'int', 'min:1', 'max:5'],
+            'comment' => ['nullable', 'string', 'max:255']
+        ]);
+
+        $statuses = $shipment->shipmentStatuses->pluck('status')->toArray();
+        $isDelivered = in_array(\App\Enums\ShipmentStatusEnum::Delivered, $statuses);
+        $hasReview = $shipment->review->first();
+
+        // Make sure shipment is delivered
+        if ($isDelivered && $hasReview == null) {
+            $review = new ShipmentReview;
+            $review->rating = $request->rating;
+            $review->comment = $request->comment;
+            $review->shipment()->associate($shipment);
+            $review->save();
+        }
+
+        return redirect()->action('App\Http\Controllers\Customer\TrackingController@overview',
+            ['tracking_id' => $shipment->tracking_number, 'postal_code' => $shipment->address->postal_code]);
     }
 
     public function delete(Request $request, $shipmentId)
