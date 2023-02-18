@@ -38,7 +38,8 @@ class TrackingController extends Controller
             return \App\Enums\ShipmentStatusEnum::fromValue($value);
         }, $remainingStatusValues);
 
-        return view('customer.tracking.overview', compact('shipment','remainingStatuses'));
+        $isDelivered = count($remainingStatuses) == 0;
+        return view('customer.tracking.overview', compact('shipment','remainingStatuses', 'isDelivered'));
     }
 
     public function delete(Request $request, $shipmentId)
