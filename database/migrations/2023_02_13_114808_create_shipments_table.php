@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('address_id')->constrained('addresses');
             $table->foreignId('carrier_id')->unsigned()->nullable()->constrained('carriers');
             $table->foreignId('pickup_id')->unsigned()->nullable()->constrained('pickups');
+            $table->foreignId('webstore_id')->constrained('webstores');
             $table->timestamps();
         });
     }

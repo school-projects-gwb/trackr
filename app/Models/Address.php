@@ -34,4 +34,9 @@ class Address extends Model
     {
         return $this->belongsToMany(User::class, 'address_user');
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Webstore::class);
+    }
 }

@@ -18,12 +18,13 @@ class Shipment extends Model
         'weight',
         'address_id',
         'pickup_id',
+        'webstore_id',
         'carrier_id',
         'created_at',
         'updated_at',
     ];
 
-    public function  address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Address::class, 'address_id', 'id');
     }
@@ -38,12 +39,18 @@ class Shipment extends Model
         return $this->hasMany(ShipmentStatus::class);
     }
 
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Webstore::class, 'webstore_id', 'id');
+    }
+
     public function pickup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
     }
 
-    public function attachedUsers(){
+    public function attachedUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'user_shipment');
     }
 }

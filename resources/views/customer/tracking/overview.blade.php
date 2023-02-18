@@ -6,7 +6,7 @@
 
             <div class="flex flex-col bg-secondary-lighter p-4 rounded-xl my-4">
                 <p class="text-gray-700 text-sm font-semibold">Afzender:</p>
-                <p class="mt-1 font-semibold">WinkelNaam, Straatnaam 58 Stad</p>
+                <p class="mt-1 font-semibold">{{ $shipment->store->name }}, Straatnaam 58 Stad</p>
 
                 <p class="text-gray-700 text-sm font-semibold mt-4">Ontvanger:</p>
                 <p class="mt-1 font-semibold">
