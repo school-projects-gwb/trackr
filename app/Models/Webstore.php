@@ -29,7 +29,7 @@ class Webstore extends Model
 
     public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Address::class, 'id', 'address_id');
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
