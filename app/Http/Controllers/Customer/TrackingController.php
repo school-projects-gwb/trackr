@@ -18,7 +18,7 @@ class TrackingController extends Controller
             $query->where('postal_code', $postalCode);
         })->with(['shipmentStatuses' => function($query) {
                 $query->orderBy('created_at', 'asc');
-            }])->first();
+            }, 'carrier'])->first();
 
         if (!$shipment) {
             return view('customer.tracking.not-found');

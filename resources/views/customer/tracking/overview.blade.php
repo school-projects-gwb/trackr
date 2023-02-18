@@ -37,6 +37,11 @@
                             <p>{{ $remainingStatus->getDescription() }}</p>
                         </div>
                 @endforeach
+
+                <div class="flex mt-8">
+                    <p>Bestelling bewaren?</p>
+                    <x-link-inline class="ml-2" href="/login">Log in of registreer</x-link-inline>
+                </div>
             </div>
         </div>
     </div>

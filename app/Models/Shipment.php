@@ -42,4 +42,8 @@ class Shipment extends Model
     {
         return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
     }
+
+    public function attachedUsers(){
+        return $this->belongsToMany(User::class, 'user_shipment');
+    }
 }
