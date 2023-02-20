@@ -15,7 +15,6 @@ class ShipmentController extends Controller
     public function create(CeateSipmentRequest $request){
         $requestData = $request->validated();
         foreach ($requestData['data'] as $shipmentData){
-           $carrier = Carrier::where('name', $shipmentData['carrier'])->pluck('id');
            $address = Address::where('street_name', $shipmentData['streetname'])->where('house_number', $shipmentData['housenumber'])->where('postal_code', $shipmentData['postalcode']);
            if(!$address->exists()){
                $address = Address::create([
@@ -32,7 +31,6 @@ class ShipmentController extends Controller
            Shipment::create([
                'weight' => $shipmentData['weight'],
                'address_id' => $address,
-               'carrier_id' => $carrier[0],
                'webstore_id' => $request->webstore_id,
            ]);
         }
