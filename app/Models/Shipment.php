@@ -19,6 +19,7 @@ class Shipment extends Model
         'address_id',
         'pickup_id',
         'carrier_id',
+        'webstore_id',
         'created_at',
         'updated_at',
     ];
@@ -31,6 +32,11 @@ class Shipment extends Model
     public function carrier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Carrier::class, 'carrier_id', 'id');
+    }
+
+    public function webstore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Webstore::class, 'webstore_id', 'id');
     }
 
     public function ShipmentStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany

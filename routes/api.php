@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-use App\Models\UserToken;
+use App\Models\WebstoreToken;
 use App\Http\Controllers\Api\ShipmentController;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,7 +31,7 @@ Route::middleware('apiAuthentication')->group(function () {
     // Test route for checking the api middleware
    Route::get('/test', function (Request $request) {
        if($request->type == "user"){
-           $token = UserToken::find($request->id);
+           $token = WebstoreToken::find($request->id);
            return($token->user);
        } else {
            $user = User::find($request->id);

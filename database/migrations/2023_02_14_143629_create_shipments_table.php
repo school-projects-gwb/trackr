@@ -9,11 +9,12 @@ return new class extends Migration {
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('tracking_number');
+            $table->string('tracking_number')->nullable();
             $table->double('weight');
             $table->foreignId('address_id')->constrained('addresses');
             $table->foreignId('carrier_id')->unsigned()->nullable()->constrained('carriers');
             $table->foreignId('pickup_id')->unsigned()->nullable()->constrained('pickups');
+            $table->foreignId('webstore_id')->unsigned()->constrained('webstores');
             $table->timestamps();
         });
     }

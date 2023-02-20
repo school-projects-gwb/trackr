@@ -7,6 +7,7 @@ use App\Http\Requests\Api\CeateSipmentRequest;
 use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\Shipment;
+use App\Models\Webstore;
 use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
@@ -29,10 +30,10 @@ class ShipmentController extends Controller
            }
 
            Shipment::create([
-               'tracking_number' => Shipment::generateShipmentNumber(),
                'weight' => $shipmentData['weight'],
                'address_id' => $address,
-               'carrier_id' => $carrier[0]
+               'carrier_id' => $carrier[0],
+               'webstore_id' => $request->webstore_id,
            ]);
         }
         return response()->json(['succes' => 'Shipments are created'], 201);

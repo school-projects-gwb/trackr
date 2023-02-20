@@ -29,4 +29,14 @@ class Webstore extends Model
         return $this->belongsToMany(User::class, 'user_webstore');
     }
 
+    public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Shipment::class);
+    }
+
+    public function tokens(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(WebstoreToken::class);
+    }
+
 }
