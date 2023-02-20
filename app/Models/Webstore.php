@@ -41,4 +41,9 @@ class Webstore extends Model
     {
         return $this->hasMany(Shipment::class);
     }
+
+    public function tokens(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(WebstoreToken::class);
+    }
 }

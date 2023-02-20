@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\UserToken;
+use App\Models\WebstoreToken;
 
 class ApiAuthentication
 {
@@ -25,12 +25,15 @@ class ApiAuthentication
             return response()->json(['error' => 'Bearer Token is required'], self::UNAUTHORIZED);
         }
 
-        $userToken = new UserToken();
+        $tokenData = explode(':', $request->bearerToken());
+        $userToken = new WebstoreToken();
+
         // Checks the validity of the token
-        if(!$userToken->isValid($request->bearerToken())){
+        if(!$userToken->isValid($tokenData)){
             //Throws 401 error if the token is not valid.
             return response()->json(['error' => 'Bearer Token is not valid'], self::UNAUTHORIZED);
         }
+        $request->merge(['webstore_id' => $tokenData[0]]);
         return $next($request);
     }
 }

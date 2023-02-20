@@ -20,6 +20,7 @@ class Shipment extends Model
         'pickup_id',
         'webstore_id',
         'carrier_id',
+        'webstore_id',
         'created_at',
         'updated_at',
     ];
@@ -32,6 +33,11 @@ class Shipment extends Model
     public function carrier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Carrier::class, 'carrier_id', 'id');
+    }
+
+    public function webstore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Webstore::class, 'webstore_id', 'id');
     }
 
     public function ShipmentStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -47,6 +53,18 @@ class Shipment extends Model
     public function pickup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
+    }
+
+
+    public function scopeGenerateShipmentNumber()
+    {
+        $latestShipmentId = $this->latest()->first()->pluck('id');
+        if ($latestShipmentId) {
+            $shipmentNumber = '#' . str_pad($latestShipmentId[0] + 1, 8, "0", STR_PAD_LEFT);
+        } else {
+            $shipmentNumber = '#' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        }
+        return $shipmentNumber;
     }
 
     public function attachedUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

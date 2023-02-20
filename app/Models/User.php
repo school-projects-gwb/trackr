@@ -50,11 +50,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Address::class, 'address_user');
     }
 
-    public function tokens(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(UserToken::class);
-    }
-
     public function ownedStores(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Webstore::class);
