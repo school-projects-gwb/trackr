@@ -16,11 +16,11 @@ class ShipmentController extends Controller
         $requestData = $request->validated();
         foreach ($requestData['data'] as $shipmentData){
            $carrier = Carrier::where('name', $shipmentData['carrier'])->pluck('id');
-           $address = Address::where('streetname', $shipmentData['streetname'])->where('housenumber', $shipmentData['housenumber'])->where('postal_code', $shipmentData['postalcode']);
+           $address = Address::where('street_name', $shipmentData['streetname'])->where('house_number', $shipmentData['housenumber'])->where('postal_code', $shipmentData['postalcode']);
            if(!$address->exists()){
                $address = Address::create([
-                  'streetname' => $shipmentData['streetname'],
-                  'housenumber' =>  $shipmentData['housenumber'],
+                  'street_name' => $shipmentData['streetname'],
+                  'house_number' =>  $shipmentData['housenumber'],
                    'postal_code' => $shipmentData['postalcode'],
                    'city' => $shipmentData['streetname'],
                    'country' => $shipmentData['country'],
