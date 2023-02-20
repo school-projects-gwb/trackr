@@ -7,21 +7,20 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('shipment_statuses', function (Blueprint $table) {
+        Schema::create('shipment_reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->integer("rating");
+            $table->string('comment')->nullable();
             $table
                 ->foreignId('shipment_id')
                 ->constrained('shipments')
-                ->onDelete('cascade');;
+                ->onDelete('cascade');
             $table->timestamps();
-            // Make sure combination of status and shipment ID is unique
-            $table->unique(['status', 'shipment_id']);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('shipment_statuses');
+        Schema::dropIfExists('shipment_reviews');
     }
 };

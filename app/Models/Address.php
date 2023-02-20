@@ -13,8 +13,10 @@ class Address extends Model
     ];
 
     protected $fillable = [
-        'streetname',
-        'housenumber',
+        'first_name',
+        'last_name',
+        'street_name',
+        'house_number',
         'postal_code',
         'city',
         'country',
@@ -31,5 +33,10 @@ class Address extends Model
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'address_user');
+    }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Webstore::class);
     }
 }

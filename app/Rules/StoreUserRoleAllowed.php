@@ -3,10 +3,7 @@
 
 namespace App\Rules;
 
-
-use App\Models\Webstore;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class StoreUserRoleAllowed implements Rule

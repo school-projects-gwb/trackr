@@ -28,7 +28,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('customer/tracking/overview', [TrackingController::class, 'overview'])->name('customer.tracking.overview');
+Route::get('customer/tracking/overview-saved', [TrackingController::class, 'overviewSaved'])->name('customer.tracking.overview-saved');
 Route::get('customer/tracking/not-found', [TrackingController::class, 'notfound'])->name('customer.tracking.not-found');
+Route::post('customer/tracking/save', [TrackingController::class, 'save'])->name('customer.tracking.save');
+Route::post('customer/tracking/review/{shipment}', [TrackingController::class, 'review'])->name('customer.tracking.review');
+Route::post('customer/tracking/delete/{shipment_id}', [TrackingController::class, 'delete'])->name('customer.tracking.delete');
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
     // GET
@@ -63,7 +67,8 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
 
     // STORE
     Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
-    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');;
+    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
+    Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
 });
 
 Route::middleware('auth')->group(function () {

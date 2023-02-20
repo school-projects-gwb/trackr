@@ -17,15 +17,23 @@ class Webstore extends Model
     protected $fillable = [
         'name',
         'owner_id',
+        'address_id',
         'created_at',
         'updated_at',
     ];
 
-    public function owner(){
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class, 'id', 'owner_id');
     }
 
-    public function users(){
+    public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id', 'id');
+    }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'user_webstore');
     }
 
@@ -38,5 +46,4 @@ class Webstore extends Model
     {
         return $this->hasMany(WebstoreToken::class);
     }
-
 }

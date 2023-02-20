@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(Webstore::class);
     }
 
+    public function savedShipments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Shipment::class, 'user_shipment');
+    }
+
     public function stores(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Webstore::class, 'user_webstore');

@@ -2,7 +2,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <div class="w-full lg:w-1/2 h-full mt-16 lg:mt-0 bg-gray-100 flex justify-center items-center">
+    <div class="w-full lg:w-1/2 h-full mt-16 lg:mt-0 bg-gray-100 flex justify-center items-center  py-24">
         <form class="w-11/12 lg:w-1/2" method="POST" action="{{ route('login') }}">
             <a href="/" class="underline font-semibold text-sm">{{ __('Terug naar Home') }}</a>
             <h1 class="text-4xl font-semibold">Inloggen</h1>

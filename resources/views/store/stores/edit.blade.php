@@ -5,11 +5,10 @@
         <div class="flex p-2">
             <x-link-inline href="{{ route('store.stores.overview') }}">{{ __('Terug naar overzicht') }}</x-link-inline>
         </div>
-        <div class="flex p-2 flex-col w-11/12 lg:w-1/2">
+        <h2 class="text-2xl font-bold tracking-tight my-4">{{ __('Basisgegevens') }}</h2>
+        <div class="flex p-4 flex-col w-11/12 bg-secondary-lighter rounded-xl">
             <form method="POST" action="{{ route('store.stores.update', $store) }}">
             @csrf
-
-            <!-- Name -->
                 <div>
                     <x-input-label for="name" :value="__('Naam')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $store->name }}" required autofocus autocomplete="name" />
@@ -54,7 +53,60 @@
 
                 <div class="flex items-center mt-8">
                     <x-button-primary>
-                        {{ __('Webwinkel opslaan') }}
+                        {{ __('Basisgegevens opslaan') }}
+                    </x-button-primary>
+                </div>
+            </form>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight mb-4 mt-8"><{{ __('Adresgegevens') }}/h2>
+        <div class="flex p-4 flex-col w-11/12 bg-secondary-lighter rounded-xl">
+            <form method="POST" action="{{ route('store.stores.updateAddress', $store) }}">
+                @csrf
+                <div class="mt-4">
+                    <x-input-label for="first_name" :value="__('Voornaam')" />
+                    <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" value="{{ $store->address->first_name }}" required autofocus autocomplete="first_name" />
+                    <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="last_name" :value="__('Achternaam')" />
+                    <x-text-input id="last_anem" class="block mt-1 w-full" type="text" name="last_name" value="{{ $store->address->last_name }}" required autofocus autocomplete="last_name" />
+                    <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="street_name" :value="__('Straatnaam')" />
+                    <x-text-input id="street_name" class="block mt-1 w-full" type="text" name="street_name" value="{{ $store->address->street_name }}" required autofocus autocomplete="street_name" />
+                    <x-input-error :messages="$errors->get('street_name')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="house_number" :value="__('Huisnummer')" />
+                    <x-text-input id="house_number" class="block mt-1 w-full" type="text" name="house_number" value="{{ $store->address->house_number }}" required autofocus autocomplete="house_number" />
+                    <x-input-error :messages="$errors->get('house_number')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="postal_code" :value="__('Postcode')" />
+                    <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" value="{{ $store->address->postal_code }}" required autofocus autocomplete="postal_code" />
+                    <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="city" :value="__('Stad')" />
+                    <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" value="{{ $store->address->city }}" required autofocus autocomplete="city" />
+                    <x-input-error :messages="$errors->get('city')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="country" :value="__('Land')" />
+                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" value="{{ $store->address->country }}" required autofocus autocomplete="country" />
+                    <x-input-error :messages="$errors->get('country')" class="mt-2" />
+                </div>
+
+                <div class="flex items-center mt-8">
+                    <x-button-primary>
+                        {{ __('Adresgegevens opslaan') }}
                     </x-button-primary>
                 </div>
             </form>
