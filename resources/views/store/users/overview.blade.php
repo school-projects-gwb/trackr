@@ -5,6 +5,14 @@
         <div class="flex justify-end p-2">
             <x-link-primary href="{{ route('store.users.create') }}">{{ __('Gebruiker aanmaken') }}</x-link-primary>
         </div>
+
+        <x-table
+            :data="$users"
+            :headers="['Naam', 'Emailadres', 'Toegang winkels', 'Rollen', 'Acties']"
+            :fields="['name', 'email', 'stores', '']"
+            :baseRoute="'store.users'"
+        />
+
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

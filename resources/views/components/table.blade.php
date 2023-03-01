@@ -17,7 +17,17 @@
                         @foreach($data as $item)
                             <tr>
                                 @foreach ($fields as $field)
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->{$field} }}</td>
+                                    @if (!is_object($item->{$field}))
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->{$field} }}</td>
+                                    @else
+                                        @foreach($item->{$field} as $child)
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                                {{ $child->name }}
+                                                </span>
+                                            </td>
+                                        @endforeach
+                                    @endif
                                 @endforeach
                                 <td>
                                     <div class="flex">
