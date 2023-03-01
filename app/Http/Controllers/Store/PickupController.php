@@ -14,16 +14,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ShipmentController extends Controller
+class PickupController extends Controller
 {
     public function overview()
     {
-        return view('store.shipments.overview');
+        return view('store.pickups.overview');
     }
 
     public function create()
     {
-        return view('store.shipments.create');
+        return view('store.pickups.create');
     }
 
     public function edit(Shipment $store)
