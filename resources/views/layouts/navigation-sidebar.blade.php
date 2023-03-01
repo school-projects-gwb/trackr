@@ -1,4 +1,4 @@
-<nav class="sticky top-0 bg-secondary w-full lg:h-screen lg:max-h-screen lg:w-4/12 2xl:w-2/12 pb-4 lg:pb-0">
+<nav class="sticky top-0 bg-secondary w-full lg:h-screen lg:max-h-screen lg:w-3/12 2xl:w-2/12 pb-4 lg:pb-0">
 
 <div class="w-full flex flex-col items-center justify-center text-center my-2 lg:my-6">
     <div class="w-3/4 text-primary font-extrabold text-4xl">
