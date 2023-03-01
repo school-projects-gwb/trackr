@@ -5,6 +5,7 @@ namespace App\View\Components;
 use App\Models\Webstore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\Component;
 
 class StoreSwitcher extends Component
@@ -20,7 +21,9 @@ class StoreSwitcher extends Component
     public function __construct(Request $request)
     {
         $this->selectedStore = Webstore::where('id', $request->cookie('selected_store_id'))->first();
-        $this->userStores = Auth::user()->stores()->where('id', '<>', $this->selectedStore->id)->get();
+        if ($this->selectedStore != null) {
+            $this->userStores = Auth::user()->stores()->where('id', '<>', $this->selectedStore->id)->get();
+        }
     }
 
     /**
