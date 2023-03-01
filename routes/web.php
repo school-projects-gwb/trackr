@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Customer\TrackingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Store\ShipmentController;
 use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\Store\StoreUserController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,11 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
     Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
+
+    // SHIPMENT
+    Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
+    Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
+    Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('can:store-in-auth-user,store');
 
     // POST
 

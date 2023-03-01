@@ -59,7 +59,7 @@
 @endrole
 
 @can('access store')
-    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.whatever.*')">
+    <x-sidebar-nav-link :href="route('store.shipments.overview')" :active="Route::is('*.shipments.*')">
         {{ __('Pakketten') }}
     </x-sidebar-nav-link>
     <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.whatever.*')">
