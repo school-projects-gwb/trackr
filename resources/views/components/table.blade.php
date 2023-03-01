@@ -17,13 +17,14 @@
                         @foreach($data as $item)
                             <tr>
                                 @foreach ($fields as $field)
-                                    @if (!is_object($item->{$field}))
+
+                                    @if (!is_object($item->{$field} && !is_countable($item->{$field})))
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->{$field} }}</td>
                                     @else
                                         @foreach($item->{$field} as $child)
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
-                                                {{ $child->name }}
+                                                    {{ $child->name }}
                                                 </span>
                                             </td>
                                         @endforeach
