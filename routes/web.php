@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Customer\TrackingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Store\PickupController;
+use App\Http\Controllers\Store\ShipmentController;
 use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\Store\StoreUserController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +60,18 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
 
+    // Middleware to ensure valid store is selected
+    Route::middleware('selected-store')->group(function() {
+        // SHIPMENT
+        Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
+        Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
+        Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('can:store-in-auth-user,store');
+
+        // PICKUP
+        Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
+        Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create');
+    });
+
     // POST
 
     // USER
@@ -68,6 +82,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     // STORE
     Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
     Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
+    Route::post('/stores/switch/{store}', [StoreController::class, 'switch'])->name('stores.switch')->middleware('can:store-in-user,store');
     Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
 });
 

@@ -8,7 +8,7 @@ use App\Models\Webstore;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class StoresInAuthUser implements Rule
+class StoresOwnedByAuthUser implements Rule
 {
     public function passes($attribute, $value)
     {

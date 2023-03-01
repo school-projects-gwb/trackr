@@ -7,7 +7,7 @@ use App\Http\Requests\StoreUserCreateRequest;
 use App\Http\Requests\StoreUserUpdateRequest;
 use App\Models\User;
 use App\Models\Webstore;
-use App\Rules\StoresInAuthUser;
+use App\Rules\StoresOwnedByAuthUser;
 use Illuminate\Validation\Rules\Password;
 use App\Rules\StoreUserRoleAllowed;
 use Illuminate\Auth\Events\Registered;
@@ -60,7 +60,7 @@ class StoreUserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($user->id)],
-            'store_id' => ['required', new StoresInAuthUser],
+            'store_id' => ['required', new StoresOwnedByAuthUser],
             'role_id' => ['required', new StoreUserRoleAllowed]
         ]);
 

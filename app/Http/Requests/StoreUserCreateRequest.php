@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
-use App\Rules\StoresInAuthUser;
+use App\Rules\StoresOwnedByAuthUser;
 use App\Rules\StoreUserRoleAllowed;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
@@ -31,7 +31,7 @@ class StoreUserCreateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['confirmed', Password::default()],
-            'store_id' => ['required', new StoresInAuthUser],
+            'store_id' => ['required', new StoresOwnedByAuthUser],
             'role_id' => ['required', new StoreUserRoleAllowed]
         ];
     }
