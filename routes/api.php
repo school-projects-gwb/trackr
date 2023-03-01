@@ -40,6 +40,7 @@ Route::middleware('apiAuthentication')->group(function () {
    });
 
     Route::post('/shipment/create', [ShipmentController::class, 'create']);
+    Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus']);
 });
 
 Route::get('/makeApiToken', function (Request $request) {

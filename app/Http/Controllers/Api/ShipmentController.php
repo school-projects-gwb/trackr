@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ShipmentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CeateSipmentRequest;
+use App\Http\Requests\Api\UpdateShipmentStatusRequest;
 use App\Models\Address;
-use App\Models\Carrier;
 use App\Models\Shipment;
-use App\Models\Webstore;
-use Illuminate\Http\Request;
+use App\Models\ShipmentStatus;
 
 class ShipmentController extends Controller
 {
@@ -34,6 +34,25 @@ class ShipmentController extends Controller
                'webstore_id' => $request->webstore_id,
            ]);
         }
-        return response()->json(['succes' => 'Shipments are created'], 201);
+        return response()->json([
+            'message' => "Shipments are created",],
+            201);
+    }
+
+    public function updateStatus(UpdateShipmentStatusRequest $request){
+        $requestData = $request->validated();
+        if($requestData['shipmentStatus'] == ShipmentStatusEnum::Delivered->value && !ShipmentStatus::where('shipment_id', $requestData['shipmentId'])->where('status', ShipmentStatusEnum::Transit)->exists()) {
+            return response()->json([
+                'message' => "shipmentStatus could not be updated.",
+                'errors' => 'The shipment is not in transit yet.']
+                , 400);
+        }
+        ShipmentStatus::create([
+           'status' => $requestData["shipmentStatus"],
+           'shipment_id' => $requestData["shipmentId"],
+        ]);
+        return response()->json([
+            'message' => "Shipment is updated",],
+            201);
     }
 }
