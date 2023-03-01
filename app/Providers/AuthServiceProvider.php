@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use App\Rules\StoreInAuthUser;
+use App\Rules\StoreInUser;
+use App\Rules\StoreOwnedByAuthUser;
 use App\Rules\UserInStore;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -32,8 +33,12 @@ class AuthServiceProvider extends ServiceProvider
             return (new UserInStore())->passes(null, $model->id);
         });
 
+        Gate::define('store-in-user', function ($store, $model) {
+            return (new StoreInUser())->passes(null, $model->id);
+        });
+
         Gate::define('store-in-auth-user', function ($user, $model) {
-            return (new StoreInAuthUser())->passes(null, $model->id);
+            return (new StoreOwnedByAuthUser())->passes(null, $model->id);
         });
     }
 }

@@ -8,9 +8,11 @@ use App\Http\Requests\StoreCreateRequest;
 use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
 use App\Models\Webstore;
+use http\Env\Response;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class StoreController extends Controller
 {
@@ -71,5 +73,12 @@ class StoreController extends Controller
         event(new Registered($webStore));
 
         return to_route('store.stores.overview');
+    }
+
+    public function switch(Request $request, Webstore $store) {
+        $response = new \Illuminate\Http\Response('Store switched successfully.');
+        $cookie = Cookie::forever('selected_store_id', $store->id);
+        $response->withCookie($cookie);
+        return redirect()->back()->with(['success' => true])->withCookie($cookie);
     }
 }

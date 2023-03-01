@@ -60,7 +60,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
 
     // SHIPMENT
-    Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
+    Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview')->middleware('selected-store');
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('can:store-in-auth-user,store');
 
@@ -74,6 +74,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     // STORE
     Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
     Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
+    Route::post('/stores/switch/{store}', [StoreController::class, 'switch'])->name('stores.switch')->middleware('can:store-in-user,store');
     Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
 });
 

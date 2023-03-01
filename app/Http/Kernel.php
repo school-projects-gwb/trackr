@@ -20,7 +20,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
     ];
 
     /**
@@ -43,6 +43,10 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'selected-store' => [
+            \App\Http\Middleware\SelectedStoreCookie::class
+        ]
     ];
 
     /**
