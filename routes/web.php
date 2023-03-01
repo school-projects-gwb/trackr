@@ -60,9 +60,11 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
 
     // SHIPMENT
-    Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview')->middleware('selected-store');
-    Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
-    Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('can:store-in-auth-user,store');
+    Route::middleware('selected-store')->group(function() {
+        Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
+        Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
+        Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('can:store-in-auth-user,store');
+    });
 
     // POST
 
