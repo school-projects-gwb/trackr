@@ -25,7 +25,8 @@ class StoreUserController extends Controller
         $users = User::where('id', '<>', $ownerId)
             ->whereHas('stores', function ($query) use ($ownerId) {
                 $query->where('owner_id', $ownerId);
-            })->with('stores')->paginate(1);
+            })->with('stores')
+            ->paginate(15);
 
         return view('store.users.overview', compact('users'));
     }

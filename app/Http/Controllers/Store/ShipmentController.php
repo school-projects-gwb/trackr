@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 class ShipmentController extends Controller
 {
     private $defaultSortField = 'name';
-    private $defaultSortDirection = 'asc';
     private $sortableFields = ['id', 'tracking_number', 'created_at', 'carrier'];
 
     public function overview()
@@ -26,7 +25,7 @@ class ShipmentController extends Controller
         $user = Auth::user();
 
         $sortField = request('sort', $this->defaultSortField);
-        $sortDirection = request('dir', $this->defaultSortDirection);
+        $sortDirection = request('dir', 'asc');
         $sortableFields = $this->sortableFields;
 
         $shipments = Shipment::select('shipments.*')
@@ -40,7 +39,7 @@ class ShipmentController extends Controller
                 $query->latest('created_at')->limit(1);
             }])
             ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection)
-            ->paginate(5);
+            ->paginate(15);
 
         return view(
             'store.shipments.overview',

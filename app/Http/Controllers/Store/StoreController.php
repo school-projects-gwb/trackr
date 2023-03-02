@@ -16,14 +16,22 @@ use Illuminate\Support\Facades\Cookie;
 
 class StoreController extends Controller
 {
+    private string $defaultSortField = 'name';
+    private array $sortableFields = ['name', 'created_at', 'updated_at'];
+
     public function overview()
     {
-        $sortField = request('sort', 'name');
+        $sortField = request('sort', $this->defaultSortField);
         $sortDirection = request('dir', 'asc');
+        $sortableFields = $this->sortableFields;
 
-        $stores = Webstore::where('owner_id', Auth::id())->orderBy($sortField, $sortDirection)->paginate(5);
+        $stores = Webstore::where('owner_id', Auth::id())
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(15);
 
-        return view('store.stores.overview', compact('stores', 'sortField', 'sortDirection'));
+        return view(
+            'store.stores.overview',
+            compact('stores', 'sortField', 'sortDirection', 'sortableFields'));
     }
 
     public function create()

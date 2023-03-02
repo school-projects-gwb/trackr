@@ -15,6 +15,7 @@
             :perPage="$stores->perPage()"
             :sortField="$sortField"
             :sortDirection="$sortDirection"
+            :sortableFields="$sortableFields"
         />
     </div>
 </x-admin-layout>
