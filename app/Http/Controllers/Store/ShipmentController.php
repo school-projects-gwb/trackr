@@ -8,10 +8,12 @@ use App\Http\Requests\StoreCreateRequest;
 use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
 use App\Models\Shipment;
+use App\Models\ShipmentStatus;
 use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -36,18 +38,49 @@ class ShipmentController extends Controller
                     $query->where('user_id', $user->id);
                 });
             })
-//            ->whereHas('ShipmentStatuses', function ($query) {
-//                if (1 == 2) {
-//                    $query->where('status', '%')
-//                        ->whereRaw('created_at = (select max(created_at) from shipment_statuses where shipment_id = shipments.id)');
-//                }
-//            })
             ->leftJoin('carriers', 'shipments.carrier_id', '=', 'carriers.id')
             ->with(['ShipmentStatuses' => function ($query) {
-                $query->latest('created_at')->limit(1);
+                $query->orderBy('created_at', 'desc');
             }])
-            ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection)
-            ->paginate(15);
+            ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection);
+
+        if (request('status') != '') {
+            $shipments = $shipments->get();
+        } else {
+            $shipments = $shipments->paginate(15);
+
+            foreach ($shipments as $shipment) {
+                if ($shipment->ShipmentStatuses->count() > 1) {
+                    $shipment->setRelation('ShipmentStatuses', collect([$shipment->ShipmentStatuses->first()]));
+                }
+            }
+        }
+
+
+        if (request('status') != '') {
+            $filteredShipments = $shipments->filter(function ($shipment) {
+                $latestStatus = $shipment->ShipmentStatuses->first();
+
+                if ($latestStatus && $latestStatus->status->value == request('status')) {
+                    $shipment->setRelation('ShipmentStatuses', collect([$latestStatus]));
+                    return true;
+                }
+
+                return false;
+            });
+
+            $perPage = 15;
+            $page = request('page', 1);
+            $offset = ($page - 1) * $perPage;
+
+            $shipments = new LengthAwarePaginator(
+                $filteredShipments->slice($offset, $perPage),
+                $filteredShipments->count(),
+                $perPage,
+                $page,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
+        }
 
         return view(
             'store.shipments.overview',
@@ -79,7 +112,16 @@ class ShipmentController extends Controller
     }
 
     private function getFilterValues() {
-        $filterValues = ['status' => \App\Enums\ShipmentStatusEnum::cases()];
+        $filterValues = [];
+        $statuses = \App\Enums\ShipmentStatusEnum::cases();
+        for($i = 0; $i < count($statuses); $i++) {
+            if ($statuses[$i]->value == request('status')) {
+                unset($statuses[$i]);
+            }
+        }
+
+        $filterValues['status'] = $statuses;
+
         return $filterValues;
     }
 

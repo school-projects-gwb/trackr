@@ -14,19 +14,26 @@
 <div class="flex flex-col mt-8">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            @foreach ($filterValues as $key => $filter)
-                <div class="flex flex-col w-2/12 my-8">
-                    <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {{ strtoupper($key)}}
-                    </label>
-                    <select class="border-gray-300 rounded-xl">
-                        <option>{{ __('Alles') }}</option>
-                        @foreach($filter as $value)
-                            <option>{{$value->getShortLabel()}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            @endforeach
+            <form class="w-full flex items-end mb-8" action="{{route($baseRoute.'.overview')}}" method="GET">
+                <input type="hidden" name="sort" value="{{request('sort')}}"/>
+                <input type="hidden" name="dir" value="{{request('dir')}}"/>
+                @foreach ($filterValues as $key => $filter)
+                    <div class="flex flex-col w-2/12 px-2">
+                        <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{ strtoupper($key)}}
+                        </label>
+                        <select name="{{ $key }}" class="border-gray-300 rounded-xl">
+                            <option value="{{ request($key) }}">
+                                {{request($key) == '' ? 'Alles' : request($key) }}
+                            </option>
+                            @foreach($filter as $value)
+                                <option value="{{ $value }}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endforeach
+                <x-button-primary type="submit">Filters toepassen</x-button-primary>
+            </form>
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -70,11 +77,11 @@
                                     @else
                                         @if (is_countable($item->{$field}))
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                            @foreach($item->{$field} as $child)
-                                                <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
-                                                    {{ $child->tableDisplayField() }}
-                                                </span>
-                                            @endforeach
+                                                @foreach($item->{$field} as $child)
+                                                    <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                                        {{ $child->tableDisplayField() }}
+                                                    </span>
+                                                @endforeach
                                             </td>
                                         @else
                                             <td class="px-6 py-4 whitespace-nowrap">
