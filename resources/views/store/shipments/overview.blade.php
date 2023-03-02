@@ -17,6 +17,8 @@
             :pageLinks="$shipments->links()"
             :currentPage="$shipments->currentPage()"
             :perPage="$shipments->perPage()"
+            :sortField="$sortField"
+            :sortDirection="$sortDirection"
         />
     </div>
 </x-admin-layout>
