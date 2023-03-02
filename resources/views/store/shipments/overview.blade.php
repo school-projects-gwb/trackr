@@ -8,5 +8,12 @@
                 <x-link-primary href="{{ route('store.shipments.create') }}">{{ __('Pakket aanmaken') }}</x-link-primary>
             </div>
         </div>
+
+        <x-table
+            :data="$shipments"
+            :headers="['TrackR ID', 'Vervoerder', 'Datum creatie', 'Acties']"
+            :fields="['tracking_number', 'carrier', 'created_at']"
+            :baseRoute="'store.shipments'"
+        />
     </div>
 </x-admin-layout>

@@ -31,16 +31,24 @@
                                                 </span>
                                             </td>
                                         @endforeach
-                                    @elseif (!is_object($item->{$field}) && !is_countable($item->{$field}))
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->{$field} }}</td>
+                                    @elseif (!is_object($item->{$field}))
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $item->{$field} }}
+                                        </td>
                                     @else
-                                        @foreach($item->{$field} as $child)
+                                        @if (is_countable($item->{$field}))
+                                            @foreach($item->{$field} as $child)
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                                        {{ $child->name }}
+                                                    </span>
+                                                </td>
+                                            @endforeach
+                                        @else
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
-                                                    {{ $child->name }}
-                                                </span>
+                                                {{ $item->{$field}->name ?? $item->{$field} }}
                                             </td>
-                                        @endforeach
+                                        @endif
                                     @endif
                                 @endforeach
                                 <td>

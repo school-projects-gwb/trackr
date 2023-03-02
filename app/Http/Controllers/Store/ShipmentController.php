@@ -18,7 +18,15 @@ class ShipmentController extends Controller
 {
     public function overview()
     {
-        return view('store.shipments.overview');
+        $user = Auth::user();
+
+        $shipments = Shipment::whereHas('store', function ($query) use ($user) {
+            $query->whereHas('users', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        })->get();
+
+        return view('store.shipments.overview', compact('shipments'));
     }
 
     public function create()
