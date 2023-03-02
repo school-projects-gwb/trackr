@@ -8,7 +8,6 @@
                 <x-link-primary href="{{ route('store.shipments.create') }}">{{ __('Pakket aanmaken') }}</x-link-primary>
             </div>
         </div>
-
         <x-table
             :data="$shipments->items()"
             :headers="['ID', 'Tracking Number', 'Status', 'Vervoerder', 'Datum creatie', 'Acties']"
@@ -20,6 +19,7 @@
             :sortField="$sortField"
             :sortDirection="$sortDirection"
             :sortableFields="$sortableFields"
+            :filterValues="$filterValues"
         />
     </div>
 </x-admin-layout>

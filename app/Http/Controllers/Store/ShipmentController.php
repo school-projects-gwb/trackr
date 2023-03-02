@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
-    private $defaultSortField = 'name';
-    private $sortableFields = ['id', 'tracking_number', 'created_at', 'carrier'];
+    private string $defaultSortField = 'created_at';
+    private array $sortableFields = ['id', 'tracking_number', 'created_at', 'carrier'];
 
     public function overview()
     {
@@ -28,12 +28,20 @@ class ShipmentController extends Controller
         $sortDirection = request('dir', 'asc');
         $sortableFields = $this->sortableFields;
 
+        $filterValues = $this->getFilterValues();
+
         $shipments = Shipment::select('shipments.*')
             ->whereHas('store', function ($query) use ($user) {
                 $query->whereHas('users', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 });
             })
+//            ->whereHas('ShipmentStatuses', function ($query) {
+//                if (1 == 2) {
+//                    $query->where('status', '%')
+//                        ->whereRaw('created_at = (select max(created_at) from shipment_statuses where shipment_id = shipments.id)');
+//                }
+//            })
             ->leftJoin('carriers', 'shipments.carrier_id', '=', 'carriers.id')
             ->with(['ShipmentStatuses' => function ($query) {
                 $query->latest('created_at')->limit(1);
@@ -43,7 +51,7 @@ class ShipmentController extends Controller
 
         return view(
             'store.shipments.overview',
-            compact('shipments', 'sortField', 'sortDirection', 'sortableFields'));
+            compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 
     /**
@@ -68,6 +76,11 @@ class ShipmentController extends Controller
         }
 
         return $formattedFieldName;
+    }
+
+    private function getFilterValues() {
+        $filterValues = ['status' => \App\Enums\ShipmentStatusEnum::cases()];
+        return $filterValues;
     }
 
     public function create()

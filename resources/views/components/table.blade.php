@@ -8,11 +8,25 @@
     'itemsPerPage' => '',
     'sortField' => '',
     'sortDirection' => '',
-    'sortableFields' => []
+    'sortableFields' => [],
+    'filterValues' => []
 ])
 <div class="flex flex-col mt-8">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            @foreach ($filterValues as $key => $filter)
+                <div class="flex flex-col w-2/12 my-8">
+                    <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {{ strtoupper($key)}}
+                    </label>
+                    <select class="border-gray-300 rounded-xl">
+                        <option>{{ __('Alles') }}</option>
+                        @foreach($filter as $value)
+                            <option>{{$value->getShortLabel()}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endforeach
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -76,7 +90,7 @@
                                             <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-button-secondary type="submit" disabled class="bg-gray-500 text-gray-300 border-0 hover:bg-gray-500 hover:text-gray-300">{{ __('Verwijder') }}</x-button-secondary>
+                                                <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
                                             </form>
                                         </div>
                                     </div>
