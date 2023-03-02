@@ -2,7 +2,10 @@
     'data' => [],
     'headers' => [],
     'fields' => [],
-    'baseRoute' => ''
+    'baseRoute' => '',
+    'pageLinks' => [],
+    'currentPage' => '',
+    'itemsPerPage' => ''
 ])
 
 <div class="flex flex-col mt-8">
@@ -67,6 +70,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="p-4">
+                    {!! $pageLinks !!}
+                </div>
             </div>
         </div>
     </div>

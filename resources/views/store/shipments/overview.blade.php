@@ -10,10 +10,13 @@
         </div>
 
         <x-table
-            :data="$shipments"
+            :data="$shipments->items()"
             :headers="['TrackR ID', 'Vervoerder', 'Datum creatie', 'Acties']"
             :fields="['tracking_number', 'carrier', 'created_at']"
             :baseRoute="'store.shipments'"
+            :pageLinks="$shipments->links()"
+            :currentPage="$shipments->currentPage()"
+            :perPage="$shipments->perPage()"
         />
     </div>
 </x-admin-layout>

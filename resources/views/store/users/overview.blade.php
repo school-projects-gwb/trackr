@@ -7,10 +7,13 @@
         </div>
 
         <x-table
-            :data="$users"
+            :data="$users->items()"
             :headers="['Naam', 'Emailadres', 'Toegang winkels', 'Rollen', 'Acties']"
             :fields="['name', 'email', 'stores', 'getRoleNames']"
             :baseRoute="'store.users'"
+            :pageLinks="$users->links()"
+            :currentPage="$users->currentPage()"
+            :perPage="$users->perPage()"
         />
     </div>
 </x-admin-layout>

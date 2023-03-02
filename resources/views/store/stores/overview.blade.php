@@ -5,12 +5,14 @@
         <div class="flex justify-end p-2">
             <x-link-primary href="{{ route('store.stores.create') }}">{{ __('Webwinkel aanmaken') }}</x-link-primary>
         </div>
-
         <x-table
-            :data="$stores"
+            :data="$stores->items()"
             :headers="['Naam', 'Datum laatste update', 'Datum creatie', 'Acties']"
             :fields="['name', 'updated_at', 'created_at']"
             :baseRoute="'store.stores'"
+            :pageLinks="$stores->links()"
+            :currentPage="$stores->currentPage()"
+            :perPage="$stores->perPage()"
         />
     </div>
 </x-admin-layout>

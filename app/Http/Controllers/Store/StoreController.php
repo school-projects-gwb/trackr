@@ -18,7 +18,7 @@ class StoreController extends Controller
 {
     public function overview()
     {
-        $stores = Webstore::where('owner_id', Auth::id())->get();
+        $stores = Webstore::where('owner_id', Auth::id())->paginate(1);
         return view('store.stores.overview', compact('stores'));
     }
 

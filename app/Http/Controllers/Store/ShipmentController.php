@@ -24,7 +24,7 @@ class ShipmentController extends Controller
             $query->whereHas('users', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             });
-        })->get();
+        })->paginate(1);
 
         return view('store.shipments.overview', compact('shipments'));
     }
