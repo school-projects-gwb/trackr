@@ -19,16 +19,26 @@ use Spatie\Permission\Models\Role;
 
 class StoreUserController extends Controller
 {
+    private string $defaultSortField = 'name';
+    private array $sortableFields = ['name', 'email'];
+
     public function overview()
     {
+        $sortField = request('sort', $this->defaultSortField);
+        $sortDirection = request('dir', 'asc');
+        $sortableFields = $this->sortableFields;
+
         $ownerId = Auth::id();
         $users = User::where('id', '<>', $ownerId)
             ->whereHas('stores', function ($query) use ($ownerId) {
                 $query->where('owner_id', $ownerId);
             })->with('stores')
+            ->orderBy($sortField, $sortDirection)
             ->paginate(15);
 
-        return view('store.users.overview', compact('users'));
+        return view(
+            'store.users.overview',
+            compact('users', 'sortField', 'sortDirection', 'sortableFields'));
     }
 
     public function create()

@@ -14,6 +14,9 @@
             :pageLinks="$users->links()"
             :currentPage="$users->currentPage()"
             :perPage="$users->perPage()"
+            :sortField="$sortField"
+            :sortDirection="$sortDirection"
+            :sortableFields="$sortableFields"
         />
     </div>
 </x-admin-layout>
