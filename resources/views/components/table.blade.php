@@ -1,4 +1,10 @@
-@props(['data' => [], 'headers' => [], 'fields' => [], 'baseRoute' => ''])
+@props([
+    'data' => [],
+    'headers' => [],
+    'fields' => [],
+    'baseRoute' => ''
+])
+
 <div class="flex flex-col mt-8">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -17,8 +23,15 @@
                         @foreach($data as $item)
                             <tr>
                                 @foreach ($fields as $field)
-
-                                    @if (!is_object($item->{$field} && !is_countable($item->{$field})))
+                                    @if (str_contains($field, "get"))
+                                        @foreach($item->{$field}() as $child)
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                                    {{ $child }}
+                                                </span>
+                                            </td>
+                                        @endforeach
+                                    @elseif (!is_object($item->{$field}) && !is_countable($item->{$field}))
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->{$field} }}</td>
                                     @else
                                         @foreach($item->{$field} as $child)

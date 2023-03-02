@@ -9,7 +9,7 @@
         <x-table
             :data="$users"
             :headers="['Naam', 'Emailadres', 'Toegang winkels', 'Rollen', 'Acties']"
-            :fields="['name', 'email', 'stores', '']"
+            :fields="['name', 'email', 'stores', 'getRoleNames']"
             :baseRoute="'store.users'"
         />
 
