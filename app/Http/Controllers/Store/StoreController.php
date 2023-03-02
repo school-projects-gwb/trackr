@@ -18,8 +18,12 @@ class StoreController extends Controller
 {
     public function overview()
     {
-        $stores = Webstore::where('owner_id', Auth::id())->paginate(1);
-        return view('store.stores.overview', compact('stores'));
+        $sortField = request('sort', 'name');
+        $sortDirection = request('dir', 'asc');
+
+        $stores = Webstore::where('owner_id', Auth::id())->orderBy($sortField, $sortDirection)->paginate(5);
+
+        return view('store.stores.overview', compact('stores', 'sortField', 'sortDirection'));
     }
 
     public function create()

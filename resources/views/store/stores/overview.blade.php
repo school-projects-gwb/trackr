@@ -13,6 +13,8 @@
             :pageLinks="$stores->links()"
             :currentPage="$stores->currentPage()"
             :perPage="$stores->perPage()"
+            :sortField="$sortField"
+            :sortDirection="$sortDirection"
         />
     </div>
 </x-admin-layout>

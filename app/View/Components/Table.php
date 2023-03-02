@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Http\Client\Request;
 use Illuminate\View\Component;
 
 class Table extends Component
@@ -13,7 +14,7 @@ class Table extends Component
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
