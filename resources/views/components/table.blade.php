@@ -7,7 +7,8 @@
     'currentPage' => '',
     'itemsPerPage' => '',
     'sortField' => '',
-    'sortDirection' => ''
+    'sortDirection' => '',
+    'sortableFields' => []
 ])
 <div class="flex flex-col mt-8">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -18,7 +19,7 @@
                     <tr>
                         @for($i = 0; $i < count($headers); $i++)
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                @if (isset($fields[$i]))
+                                @if (isset($fields[$i]) && in_array($fields[$i], $sortableFields))
                                 <a href="?sort={{ $fields[$i] }}&dir={{ $sortDirection === 'asc' ? 'desc' : 'asc' }}">
                                     {{ $headers[$i] }}
                                     @if (isset($fields[$i]) && $sortField == $fields[$i])
@@ -54,13 +55,13 @@
                                         </td>
                                     @else
                                         @if (is_countable($item->{$field}))
+                                            <td class="px-6 py-4 whitespace-nowrap">
                                             @foreach($item->{$field} as $child)
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
-                                                        {{ $child->name }}
-                                                    </span>
-                                                </td>
+                                                <span class="bg-gray-100 px-2 py-1 rounded-full uppercase text-sm">
+                                                    {{ $child->tableDisplayField() }}
+                                                </span>
                                             @endforeach
+                                            </td>
                                         @else
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ $item->{$field}->name ?? $item->{$field} }}

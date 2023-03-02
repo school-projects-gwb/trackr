@@ -13,43 +13,62 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
+    private $defaultSortField = 'name';
+    private $defaultSortDirection = 'asc';
+    private $sortableFields = ['id', 'tracking_number', 'created_at', 'carrier'];
+
     public function overview()
     {
         $user = Auth::user();
 
-        $sortField = request('sort', 'name');
-        $sortDirection = request('dir', 'asc');
+        $sortField = request('sort', $this->defaultSortField);
+        $sortDirection = request('dir', $this->defaultSortDirection);
+        $sortableFields = $this->sortableFields;
 
-        $shipments = Shipment::whereHas('store', function ($query) use ($user) {
-            $query->whereHas('users', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            });
-        })
+        $shipments = Shipment::select('shipments.*')
+            ->whereHas('store', function ($query) use ($user) {
+                $query->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                });
+            })
             ->leftJoin('carriers', 'shipments.carrier_id', '=', 'carriers.id')
-            ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection)->paginate(5);
+            ->with(['ShipmentStatuses' => function ($query) {
+                $query->latest('created_at')->limit(1);
+            }])
+            ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection)
+            ->paginate(5);
 
-        return view('store.shipments.overview', compact('shipments', 'sortField', 'sortDirection'));
+        return view(
+            'store.shipments.overview',
+            compact('shipments', 'sortField', 'sortDirection', 'sortableFields'));
     }
 
     /**
-     * @param $fieldName field to get correctly formatted name of
+     * @param $fieldName fieldName to get correctly formatted name of
      * @return string correctly formatted field name
      */
     public function getQueryTableFieldName($fieldName) {
-        $val = $fieldName;
+        $formattedFieldName = $fieldName;
+
+        if (!in_array($fieldName, $this->sortableFields)) {
+            $formattedFieldName = $this->defaultSortField;
+            return $formattedFieldName;
+        }
 
         switch ($fieldName) {
             case "carrier":
-                $val = "carriers.name";
+                $formattedFieldName = "carriers.name";
                 break;
-            default:
-                $val = $fieldName;
+            case "created_at":
+                $formattedFieldName = "shipments.created_at";
+                break;
         }
 
-        return $val;
+        return $formattedFieldName;
     }
 
     public function create()

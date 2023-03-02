@@ -46,4 +46,8 @@ class Webstore extends Model
     {
         return $this->hasMany(WebstoreToken::class);
     }
+
+    public function tableDisplayField(): string {
+        return $this->name;
+    }
 }

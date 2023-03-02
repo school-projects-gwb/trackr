@@ -29,4 +29,8 @@ class ShipmentStatus extends Model
     {
         return $this->belongsTo(Shipment::class,'shipment_id', 'id');
     }
+
+    public function tableDisplayField(): ShipmentStatusEnum {
+        return $this->status;
+    }
 }

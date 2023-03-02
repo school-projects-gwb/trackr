@@ -11,14 +11,15 @@
 
         <x-table
             :data="$shipments->items()"
-            :headers="['TrackR ID', 'Vervoerder', 'Datum creatie', 'Acties']"
-            :fields="['tracking_number', 'carrier', 'created_at']"
+            :headers="['ID', 'Tracking Number', 'Status', 'Vervoerder', 'Datum creatie', 'Acties']"
+            :fields="['id', 'tracking_number', 'ShipmentStatuses', 'carrier', 'created_at']"
             :baseRoute="'store.shipments'"
             :pageLinks="$shipments->links()"
             :currentPage="$shipments->currentPage()"
             :perPage="$shipments->perPage()"
             :sortField="$sortField"
             :sortDirection="$sortDirection"
+            :sortableFields="$sortableFields"
         />
     </div>
 </x-admin-layout>
