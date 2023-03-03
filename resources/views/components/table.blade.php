@@ -23,11 +23,9 @@
                             {{ strtoupper($key)}}
                         </label>
                         <select name="{{ $key }}" class="border-gray-300 rounded-xl">
-                            <option value="{{ request($key) }}">
-                                {{request($key) == '' ? 'Alles' : request($key) }}
-                            </option>
+                            <option value="">{{ __('Alles') }}</option>
                             @foreach($filter as $value)
-                                <option value="{{ $value }}">{{$value}}</option>
+                                <option value="{{ $value }}" {{ request($key) == $value ? 'selected' : '' }}>{{$value}}</option>
                             @endforeach
                         </select>
                     </div>

@@ -29,6 +29,7 @@ class ShipmentController extends Controller
         $sortField = request('sort', $this->defaultSortField);
         $sortDirection = request('dir', 'asc');
         $sortableFields = $this->sortableFields;
+        $itemsPerPage = 15;
 
         $filterValues = $this->getFilterValues();
 
@@ -45,19 +46,9 @@ class ShipmentController extends Controller
             ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection);
 
         if (request('status') != '') {
+            // Add status filter and filter out all statuses that aren't the latest
             $shipments = $shipments->get();
-        } else {
-            $shipments = $shipments->paginate(15);
 
-            foreach ($shipments as $shipment) {
-                if ($shipment->ShipmentStatuses->count() > 1) {
-                    $shipment->setRelation('ShipmentStatuses', collect([$shipment->ShipmentStatuses->first()]));
-                }
-            }
-        }
-
-
-        if (request('status') != '') {
             $filteredShipments = $shipments->filter(function ($shipment) {
                 $latestStatus = $shipment->ShipmentStatuses->first();
 
@@ -69,17 +60,25 @@ class ShipmentController extends Controller
                 return false;
             });
 
-            $perPage = 15;
             $page = request('page', 1);
-            $offset = ($page - 1) * $perPage;
+            $offset = ($page - 1) * $itemsPerPage;
 
             $shipments = new LengthAwarePaginator(
-                $filteredShipments->slice($offset, $perPage),
+                $filteredShipments->slice($offset, $itemsPerPage),
                 $filteredShipments->count(),
-                $perPage,
+                $itemsPerPage,
                 $page,
                 ['path' => request()->url(), 'query' => request()->query()]
             );
+        } else {
+            // Get paginated collection and filter out all statuses that aren't the latest
+            $shipments = $shipments->paginate($itemsPerPage);
+
+            foreach ($shipments as $shipment) {
+                if ($shipment->ShipmentStatuses->count() > 1) {
+                    $shipment->setRelation('ShipmentStatuses', collect([$shipment->ShipmentStatuses->first()]));
+                }
+            }
         }
 
         return view(
@@ -114,14 +113,12 @@ class ShipmentController extends Controller
     private function getFilterValues() {
         $filterValues = [];
         $statuses = \App\Enums\ShipmentStatusEnum::cases();
-        for($i = 0; $i < count($statuses); $i++) {
-            if ($statuses[$i]->value == request('status')) {
-                unset($statuses[$i]);
-            }
+
+        for ($i = 0; $i < count($statuses); $i++) {
+            $statuses[$i] = $statuses[$i]->value;
         }
 
         $filterValues['status'] = $statuses;
-
         return $filterValues;
     }
 
