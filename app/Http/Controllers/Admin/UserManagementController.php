@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Filters\FullTextFilter;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -20,12 +21,15 @@ class UserManagementController extends Controller
         $sortDirection = request('dir', 'asc');
         $sortableFields = $this->sortableFields;
 
-        $users = User::role('StoreOwner')
-            ->orderBy($sortField, $sortDirection)
-            ->paginate(15);
+        $users = User::role('StoreOwner');
+        $users = FullTextFilter::apply($users, 'name', request('zoektermen'));
+        $users = $users->orderBy($sortField, $sortDirection)->paginate(15);
+
+        $filterValues = [];
+        $filterValues['zoektermen'] = request('zoektermen');
 
         return view('admin.users.overview',
-            compact('users', 'sortField', 'sortDirection', 'sortableFields'));
+            compact('users', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 
     public function create()

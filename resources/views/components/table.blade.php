@@ -17,27 +17,29 @@
             <form class="w-full flex items-end mb-8" action="{{route($baseRoute.'.overview')}}" method="GET">
                 <input type="hidden" name="sort" value="{{request('sort')}}"/>
                 <input type="hidden" name="dir" value="{{request('dir')}}"/>
-                @foreach ($filterValues as $key => $filter)
-                    <div class="flex flex-col w-2/12 px-2">
-                        @if (!is_array($filter))
-                            <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ strtoupper($key)}}
-                            </label>
-                            <x-text-input-border name="{{ $key }}" value="{{$filter}}"></x-text-input-border>
-                        @else
-                            <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ strtoupper($key)}}
-                            </label>
-                            <select name="{{ $key }}" class="border-gray-300 rounded-xl">
-                                <option value="">{{ __('Alles') }}</option>
-                                @foreach($filter as $value)
-                                    <option value="{{ $value }}" {{ request($key) == $value ? 'selected' : '' }}>{{$value}}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                    </div>
-                @endforeach
-                <x-button-primary type="submit">Filters toepassen</x-button-primary>
+                @if (count($filterValues) > 0)
+                    @foreach ($filterValues as $key => $filter)
+                        <div class="flex flex-col w-2/12 px-2">
+                            @if (!is_array($filter))
+                                <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ strtoupper($key)}}
+                                </label>
+                                <x-text-input-border name="{{ $key }}" value="{{$filter}}"></x-text-input-border>
+                            @else
+                                <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ strtoupper($key)}}
+                                </label>
+                                <select name="{{ $key }}" class="border-gray-300 rounded-xl">
+                                    <option value="">{{ __('Alles') }}</option>
+                                    @foreach($filter as $value)
+                                        <option value="{{ $value }}" {{ request($key) == $value ? 'selected' : '' }}>{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
+                    @endforeach
+                    <x-button-primary type="submit">Filters toepassen</x-button-primary>
+                @endif
             </form>
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
