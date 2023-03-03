@@ -11,10 +11,21 @@ use Illuminate\Validation\Rules;
 
 class UserManagementController extends Controller
 {
+    private string $defaultSortField = 'name';
+    private array $sortableFields = ['name', 'email'];
+
     public function overview()
     {
-        $users = User::role('StoreOwner')->get();
-        return view('admin.users.overview', compact('users'));
+        $sortField = request('sort', $this->defaultSortField);
+        $sortDirection = request('dir', 'asc');
+        $sortableFields = $this->sortableFields;
+
+        $users = User::role('StoreOwner')
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(15);
+
+        return view('admin.users.overview',
+            compact('users', 'sortField', 'sortDirection', 'sortableFields'));
     }
 
     public function create()

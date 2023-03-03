@@ -29,8 +29,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('customer/tracking/overview-tracking', [TrackingController::class, 'overviewTracking'])->name('customer.tracking.overview-tracking');
 Route::get('customer/tracking/overview', [TrackingController::class, 'overview'])->name('customer.tracking.overview');
-Route::get('customer/tracking/overview-saved', [TrackingController::class, 'overviewSaved'])->name('customer.tracking.overview-saved');
 Route::get('customer/tracking/not-found', [TrackingController::class, 'notfound'])->name('customer.tracking.not-found');
 Route::post('customer/tracking/save', [TrackingController::class, 'save'])->name('customer.tracking.save');
 Route::post('customer/tracking/review/{shipment}', [TrackingController::class, 'review'])->name('customer.tracking.review');
@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
     // POST
     Route::post('/users/create', [UserManagementController::class, 'store'])->name('users.store');
     Route::post('/users/update/{user}', [UserManagementController::class, 'update'])->name('users.update');
+    Route::post('/users/delete/{user}', [UserManagementController::class, 'delete'])->name('users.delete');
 });
 
 Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')->group(function() {

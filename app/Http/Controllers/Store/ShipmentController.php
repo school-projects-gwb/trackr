@@ -22,9 +22,9 @@ class ShipmentController extends Controller
     private string $defaultSortField = 'created_at';
     private array $sortableFields = ['id', 'tracking_number', 'created_at', 'carrier'];
 
-    public function overview()
+    public function overview(Request $request)
     {
-        $user = Auth::user();
+        $selectedStoreId =$request->cookie('selected_store_id');
 
         $sortField = request('sort', $this->defaultSortField);
         $sortDirection = request('dir', 'asc');
@@ -34,55 +34,20 @@ class ShipmentController extends Controller
         $filterValues = $this->getFilterValues();
 
         $shipments = Shipment::select('shipments.*')
-            ->whereHas('store', function ($query) use ($user) {
-                $query->whereHas('users', function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                });
-            })
+            ->where('webstore_id', $selectedStoreId)
             ->leftJoin('carriers', 'shipments.carrier_id', '=', 'carriers.id')
             ->with(['ShipmentStatuses' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
             ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection);
 
-        if (request('status') != '') {
-            // Add status filter and filter out all statuses that aren't the latest
-            $shipments = $shipments->get();
+        $shipments = \App\Filters\ShipmentStatus::apply(request('status'), $shipments, $itemsPerPage);
 
-            $filteredShipments = $shipments->filter(function ($shipment) {
-                $latestStatus = $shipment->ShipmentStatuses->first();
-
-                if ($latestStatus && $latestStatus->status->value == request('status')) {
-                    $shipment->setRelation('ShipmentStatuses', collect([$latestStatus]));
-                    return true;
-                }
-
-                return false;
-            });
-
-            $page = request('page', 1);
-            $offset = ($page - 1) * $itemsPerPage;
-
-            $shipments = new LengthAwarePaginator(
-                $filteredShipments->slice($offset, $itemsPerPage),
-                $filteredShipments->count(),
-                $itemsPerPage,
-                $page,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
-        } else {
-            // Get paginated collection and filter out all statuses that aren't the latest
-            $shipments = $shipments->paginate($itemsPerPage);
-
-            foreach ($shipments as $shipment) {
-                if ($shipment->ShipmentStatuses->count() > 1) {
-                    $shipment->setRelation('ShipmentStatuses', collect([$shipment->ShipmentStatuses->first()]));
-                }
-            }
-        }
+        $filterValues = [];
+        $filterValues['status'] = \App\Filters\ShipmentStatus::values();
 
         return view(
-            'store.shipments.overview',
+            'store.shipments.overview-tracking',
             compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 

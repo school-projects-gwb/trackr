@@ -91,10 +91,12 @@
                                 <td>
                                     <div class="flex">
                                         <div class="flex space-x-2">
-                                            <x-link-primary type="submit" href="{{route($baseRoute.'.edit', $item)}}">{{ __('Bewerk') }}</x-link-primary>
+                                            @if (Route::has($baseRoute.'.edit'))
+                                                <x-link-primary type="submit" href="{{route($baseRoute.'.edit', $item)}}">{{ __('Bewerk') }}</x-link-primary>
+                                            @endif
                                             <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
                                                 @csrf
-                                                @method('DELETE')
+                                                @method('POST')
                                                 <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
                                             </form>
                                         </div>

@@ -11,7 +11,10 @@ use Illuminate\Validation\Rule;
 
 class TrackingController extends Controller
 {
-    public function overview()
+    private string $defaultSortField = 'tracking_number';
+    private array $sortableFields = ['tracking_number'];
+
+    public function overviewTracking()
     {
         $trackingId = request('tracking_id');
         $postalCode = request('postal_code');
@@ -41,7 +44,7 @@ class TrackingController extends Controller
         }, $remainingStatusValues);
 
         $isDelivered = count($remainingStatuses) == 0;
-        return view('customer.tracking.overview', compact('shipment','remainingStatuses', 'isDelivered'));
+        return view('customer.tracking.overview-tracking', compact('shipment','remainingStatuses', 'isDelivered'));
     }
 
     public function review(Request $request, Shipment $shipment)
@@ -77,14 +80,29 @@ class TrackingController extends Controller
             Auth::user()->savedShipments()->detach($shipmentId);
         }
 
-        $shipments = $this->getSavedShipments();
-        return view('customer.tracking.overview-saved', compact('shipments'));
+        return to_route('customer.tracking.overview');
     }
 
-    public function overviewSaved()
+    public function overview()
     {
-        $shipments = $this->getSavedShipments();
-        return view('customer.tracking.overview-saved', compact('shipments'));
+        $sortField = request('sort', $this->defaultSortField);
+        $sortDirection = request('dir', 'asc');
+        $sortableFields = $this->sortableFields;
+        $itemsPerPage = 15;
+
+        $shipments = Auth::user()->savedShipments()
+            ->with(['ShipmentStatuses' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
+            ->orderBy($sortField, $sortDirection);
+
+        $shipments = \App\Filters\ShipmentStatus::apply(request('status'), $shipments, $itemsPerPage);
+
+        $filterValues = [];
+        $filterValues['status'] = \App\Filters\ShipmentStatus::values();
+
+        return view('customer.tracking.overview',
+            compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 
     public function save(Request $request) {
@@ -112,11 +130,5 @@ class TrackingController extends Controller
     public function notfound()
     {
         return view('customer.tracking.not-found');
-    }
-
-    private function getSavedShipments() {
-        return Auth::user()->savedShipments()->with(['ShipmentStatuses' => function ($query) {
-            $query->latest('created_at')->take(1);
-        }])->get();
     }
 }

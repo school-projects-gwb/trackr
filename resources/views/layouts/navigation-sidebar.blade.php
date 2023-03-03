@@ -68,7 +68,7 @@
 @endcan
 
 @role('Customer')
-    <x-sidebar-nav-link :href="route('customer.tracking.overview-saved')" :active="Route::is('*.tracking.*')">
+    <x-sidebar-nav-link :href="route('customer.tracking.overview')" :active="Route::is('*.tracking.*')">
         {{ __('Bewaarde bestellingen') }}
     </x-sidebar-nav-link>
 @endrole

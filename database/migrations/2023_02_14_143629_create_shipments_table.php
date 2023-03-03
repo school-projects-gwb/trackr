@@ -9,7 +9,6 @@ return new class extends Migration {
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('tracking_number')->nullable();
             $table->double('weight');
             $table->foreignId('address_id')->constrained('addresses');
             $table->foreignId('carrier_id')->unsigned()->nullable()->constrained('carriers');
