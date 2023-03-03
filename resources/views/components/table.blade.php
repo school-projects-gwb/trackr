@@ -19,15 +19,22 @@
                 <input type="hidden" name="dir" value="{{request('dir')}}"/>
                 @foreach ($filterValues as $key => $filter)
                     <div class="flex flex-col w-2/12 px-2">
-                        <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            {{ strtoupper($key)}}
-                        </label>
-                        <select name="{{ $key }}" class="border-gray-300 rounded-xl">
-                            <option value="">{{ __('Alles') }}</option>
-                            @foreach($filter as $value)
-                                <option value="{{ $value }}" {{ request($key) == $value ? 'selected' : '' }}>{{$value}}</option>
-                            @endforeach
-                        </select>
+                        @if (!is_array($filter))
+                            <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ strtoupper($key)}}
+                            </label>
+                            <x-text-input-border name="{{ $key }}" value="{{$filter}}"></x-text-input-border>
+                        @else
+                            <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ strtoupper($key)}}
+                            </label>
+                            <select name="{{ $key }}" class="border-gray-300 rounded-xl">
+                                <option value="">{{ __('Alles') }}</option>
+                                @foreach($filter as $value)
+                                    <option value="{{ $value }}" {{ request($key) == $value ? 'selected' : '' }}>{{$value}}</option>
+                                @endforeach
+                            </select>
+                        @endif
                     </div>
                 @endforeach
                 <x-button-primary type="submit">Filters toepassen</x-button-primary>

@@ -6,7 +6,7 @@ namespace App\Filters;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ShipmentStatus
+class ShipmentStatusFilter
 {
     public static function apply($statusFilter, $shipmentCollection, $itemsPerPage) {
         if (request('status') != '') {

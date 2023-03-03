@@ -96,10 +96,10 @@ class TrackingController extends Controller
             }])
             ->orderBy($sortField, $sortDirection);
 
-        $shipments = \App\Filters\ShipmentStatus::apply(request('status'), $shipments, $itemsPerPage);
+        $shipments = \App\Filters\ShipmentStatusFilter::apply(request('status'), $shipments, $itemsPerPage);
 
         $filterValues = [];
-        $filterValues['status'] = \App\Filters\ShipmentStatus::values();
+        $filterValues['status'] = \App\Filters\ShipmentStatusFilter::values();
 
         return view('customer.tracking.overview',
             compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));

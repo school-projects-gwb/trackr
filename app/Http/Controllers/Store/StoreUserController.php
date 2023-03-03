@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Store;
 
+use App\Filters\FullTextFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserCreateRequest;
 use App\Http\Requests\StoreUserUpdateRequest;
@@ -32,13 +33,18 @@ class StoreUserController extends Controller
         $users = User::where('id', '<>', $ownerId)
             ->whereHas('stores', function ($query) use ($ownerId) {
                 $query->where('owner_id', $ownerId);
-            })->with('stores')
-            ->orderBy($sortField, $sortDirection)
-            ->paginate(15);
+            })->with('stores');
+
+        $users = FullTextFilter::apply($users, 'name', request('zoektermen'));
+
+        $users = $users->orderBy($sortField, $sortDirection)->paginate(15);
+
+        $filterValues = [];
+        $filterValues['zoektermen'] = request('zoektermen');
 
         return view(
             'store.users.overview',
-            compact('users', 'sortField', 'sortDirection', 'sortableFields'));
+            compact('users', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 
     public function create()

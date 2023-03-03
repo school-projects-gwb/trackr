@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->foreignId('pickup_id')->unsigned()->nullable()->constrained('pickups');
             $table->foreignId('webstore_id')->constrained('webstores');
             $table->timestamps();
+            // Full text search
+            $table->text('tracking_number')->nullable()->fulltext();
         });
     }
 

@@ -17,6 +17,7 @@
             :sortField="$sortField"
             :sortDirection="$sortDirection"
             :sortableFields="$sortableFields"
+            :filterValues="$filterValues"
         />
     </div>
 </x-admin-layout>

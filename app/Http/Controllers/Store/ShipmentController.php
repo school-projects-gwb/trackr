@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Store;
 
+use App\Filters\FullTextFilter;
+use App\Filters\ShipmentStatusFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressUpdateRequest;
 use App\Http\Requests\StoreCreateRequest;
@@ -31,23 +33,23 @@ class ShipmentController extends Controller
         $sortableFields = $this->sortableFields;
         $itemsPerPage = 15;
 
-        $filterValues = $this->getFilterValues();
-
         $shipments = Shipment::select('shipments.*')
             ->where('webstore_id', $selectedStoreId)
             ->leftJoin('carriers', 'shipments.carrier_id', '=', 'carriers.id')
             ->with(['ShipmentStatuses' => function ($query) {
                 $query->orderBy('created_at', 'desc');
-            }])
-            ->orderBy($this->getQueryTableFieldName($sortField), $sortDirection);
+            }]);
 
-        $shipments = \App\Filters\ShipmentStatus::apply(request('status'), $shipments, $itemsPerPage);
+        $shipments = FullTextFilter::apply($shipments, 'tracking_number', request('zoektermen'));
+        $shipments->orderBy($this->getQueryTableFieldName($sortField), $sortDirection);
+        $shipments = ShipmentStatusFilter::apply(request('status'), $shipments, $itemsPerPage);
 
         $filterValues = [];
-        $filterValues['status'] = \App\Filters\ShipmentStatus::values();
+        $filterValues['status'] = \App\Filters\ShipmentStatusFilter::values();
+        $filterValues['zoektermen'] = request('zoektermen');
 
         return view(
-            'store.shipments.overview-tracking',
+            'store.shipments.overview',
             compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
     }
 
@@ -73,18 +75,6 @@ class ShipmentController extends Controller
         }
 
         return $formattedFieldName;
-    }
-
-    private function getFilterValues() {
-        $filterValues = [];
-        $statuses = \App\Enums\ShipmentStatusEnum::cases();
-
-        for ($i = 0; $i < count($statuses); $i++) {
-            $statuses[$i] = $statuses[$i]->value;
-        }
-
-        $filterValues['status'] = $statuses;
-        return $filterValues;
     }
 
     public function create()
