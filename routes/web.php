@@ -30,12 +30,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Customers
 Route::get('customer/tracking/overview-tracking', [TrackingController::class, 'overviewTracking'])->name('customer.tracking.overview-tracking');
 Route::get('customer/tracking/overview', [TrackingController::class, 'overview'])->name('customer.tracking.overview');
 Route::get('customer/tracking/not-found', [TrackingController::class, 'notfound'])->name('customer.tracking.not-found');
-Route::post('customer/tracking/save', [TrackingController::class, 'save'])->name('customer.tracking.save');
 Route::post('customer/tracking/review/{shipment}', [TrackingController::class, 'review'])->name('customer.tracking.review');
-Route::post('customer/tracking/delete/{shipment_id}', [TrackingController::class, 'delete'])->name('customer.tracking.delete');
+
+Route::middleware(['auth', 'role:Customer'])->group(function() {
+    Route::post('customer/tracking/save', [TrackingController::class, 'save'])->name('customer.tracking.save');
+    Route::post('customer/tracking/delete/{shipment_id}', [TrackingController::class, 'delete'])->name('customer.tracking.delete');
+});
 
 Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')->group(function() {
     // GET
