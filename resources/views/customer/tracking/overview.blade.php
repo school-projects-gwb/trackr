@@ -1,4 +1,5 @@
 <x-admin-layout>
+    @section('title', __( 'Tracking overzicht'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Bewaarde bestellingen') }}</h1>
 
     <div class="flex flex-col mt-8">

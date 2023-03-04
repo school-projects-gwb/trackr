@@ -1,4 +1,5 @@
 <x-admin-layout>
+    @section('title', __( 'Gebruiker bewerken'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Gebruiker bewerken') }}</h1>
 
     <div class="bg-primary overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">

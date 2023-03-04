@@ -1,4 +1,5 @@
 <x-site-layout>
+    @section('title', __( 'Track & Trace'))
     <div class="bg-gray-50 w-full min-h-full flex justify-center py-24">
         <div class="flex flex-col px-4">
             <x-link-inline href="/" class="mb-2">{{ __('Terug naar Home') }}</x-link-inline>

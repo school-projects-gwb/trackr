@@ -11,7 +11,12 @@
     'sortableFields' => [],
     'filterValues' => []
 ])
-<div class="flex flex-col mt-8">
+@if (count($data) == 0)
+    <div class="mt-4 ml-2 text-xl">
+        <b>{{ __("Geen data gevonden.") }}</b>
+    </div>
+@endif
+<div class="flex flex-col {{ count($data) == 0 ? 'opacity-40 pointer-events-none' : 'mt-8' }}">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <form class="w-full flex items-end mb-8" action="{{route($baseRoute.'.overview')}}" method="GET">

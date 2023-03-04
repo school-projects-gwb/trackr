@@ -1,4 +1,5 @@
 <x-admin-layout>
+    @section('title', __( 'Overzicht gebruikers'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Gebruikersbeheer') }}</h1>
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">

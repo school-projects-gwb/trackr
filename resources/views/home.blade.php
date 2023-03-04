@@ -1,4 +1,5 @@
 <x-site-layout>
+    @section('title', __( 'Trackr - Home'))
     <div class="min-h-full w-full xl:w-1/2 bg-gray-100 flex items-center justify-center">
         <div class="flex flex-col w-11/12 xl:w-11/12">
             <div class="flex flex-col items-center xl:items-start mt-8">

@@ -11,6 +11,7 @@ use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
+use App\Models\User;
 use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
@@ -77,23 +78,8 @@ class ShipmentController extends Controller
         return $formattedFieldName;
     }
 
-    public function create()
-    {
-        return view('store.shipments.create');
-    }
-
-    public function edit(Shipment $store)
-    {
-
-    }
-
-    public function update(Request $request, Shipment $store)
-    {
-
-    }
-
-    public function store(Request $request)
-    {
-
+    public function delete(Request $request, Shipment $shipment) {
+        $shipment->delete();
+        return to_route('store.shipments.overview');
     }
 }

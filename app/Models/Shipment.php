@@ -55,7 +55,6 @@ class Shipment extends Model
         return $this->belongsTo(Pickup::class, 'pickup_id', 'id');
     }
 
-
     public function scopeGenerateShipmentNumber()
     {
         $latestShipmentId = $this->latest()->first()->pluck('id');

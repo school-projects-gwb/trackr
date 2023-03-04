@@ -1,4 +1,5 @@
 <x-admin-layout>
+    @section('title', __( 'Profiel bewerken'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Mijn profiel') }}</h1>
         <div class="max-w-7xl mt-8 grid lg:grid-cols-2 gap-8">
 

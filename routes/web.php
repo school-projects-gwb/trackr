@@ -70,9 +70,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::middleware('selected-store')->group(function() {
         // SHIPMENT
         Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
-        Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
-        Route::get('/shipments/edit/{shipment}', [ShipmentController::class, 'edit'])->name('shipments.edit');
-        Route::post('/shipments/delete', [ShipmentController::class, 'delete'])->name('shipments.delete');
+        Route::post('/shipments/delete/{shipment}', [ShipmentController::class, 'delete'])->name('shipments.delete');
 
         // PICKUP
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
