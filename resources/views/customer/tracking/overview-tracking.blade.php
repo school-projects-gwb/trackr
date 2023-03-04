@@ -10,13 +10,13 @@
                 <div class="flex flex-col bg-secondary-lighter p-8 rounded-xl my-4 max-w-xl">
                     <h1 class="text-4xl font-bold tracking-tight">{{ __('Uw bestelling is bezorgd!') }}</h1>
                     <p class="mt-4 text-lg">{{ __('Laat weten hoe u de bezorging vond verlopen en hoe we onze service kunnen verbeteren.') }}</p>
-                    <form method="POST" action="{{ route('customer.tracking.review', $shipment) }}" class="flex flex-col @if($shipment->review->first()) opacity-40 pointer-events-none @endif">
+                    <form method="POST" action="{{ route('customer.tracking.review', $shipment) }}" class="flex flex-col @if($shipment->review != null) opacity-40 pointer-events-none @endif">
                         @csrf
-                        <input class="w-full lg:w-1/2 border-0 rounded-xl" type="number" name="rating" value="1" min="1" max="5" value="{{$shipment->review->rating}}"/>
+                        <input class="w-full lg:w-1/2 border-0 rounded-xl" type="number" name="rating" value="1" min="1" max="5" value="{{ $shipment->review == null ? '' : $shipment->review->rating }}"/>
                         <x-input-error :messages="$errors->get('rating')" class="mt-2" />
                         <label class="mt-4 font-bold text-lg" for="comment">Toelichting</label>
-                        <textarea id="comment" name="comment" class="border-0 bg-white rounded-xl resize-none mb-4 w-full lg:w-1/2">{{ $shipment->review->comment }}</textarea>
-                        @if(!$shipment->review->first())
+                        <textarea id="comment" name="comment" class="border-0 bg-white rounded-xl resize-none mb-4 w-full lg:w-1/2">{{ $shipment->review == null ? '' : $shipment->review->comment }}</textarea>
+                        @if(!$shipment->review != null)
                             <x-button-primary class="w-1/2">{{ __('Verstuur beoordeling') }}</x-button-primary>
                         @else
                             <p class="font-bold text-lg mt-4">Beoordeling verstuurd!</p>

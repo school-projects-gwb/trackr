@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Customer\TrackingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Store\PickupController;
+use App\Http\Controllers\Store\ReviewController;
 use App\Http\Controllers\Store\ShipmentController;
 use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\Store\StoreUserController;
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
         Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create');
     });
+
+    // REVIEW
+    Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview');
 
     // POST
 

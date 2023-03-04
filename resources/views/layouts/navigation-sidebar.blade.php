@@ -56,6 +56,9 @@
     <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.stores.*')">
         {{ __('Webwinkels') }}
     </x-sidebar-nav-link>
+    <x-sidebar-nav-link :href="route('store.reviews.overview')" :active="Route::is('*.reviews.*')">
+        {{ __('Reviews') }}
+    </x-sidebar-nav-link>
 @endrole
 
 @can('access store')

@@ -26,7 +26,7 @@ class ShipmentController extends Controller
 
     public function overview(Request $request)
     {
-        $selectedStoreId =$request->cookie('selected_store_id');
+        $selectedStoreId = $request->cookie('selected_store_id');
 
         $sortField = request('sort', $this->defaultSortField);
         $sortDirection = request('dir', 'asc');

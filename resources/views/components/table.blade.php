@@ -103,11 +103,13 @@
                                             @if (Route::has($baseRoute.'.edit'))
                                                 <x-link-primary type="submit" href="{{route($baseRoute.'.edit', $item)}}">{{ __('Bewerk') }}</x-link-primary>
                                             @endif
-                                            <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
-                                                @csrf
-                                                @method('POST')
-                                                <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
-                                            </form>
+                                            @if (Route::has($baseRoute.'.delete'))
+                                                <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
+                                                </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

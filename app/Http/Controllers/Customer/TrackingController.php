@@ -56,7 +56,7 @@ class TrackingController extends Controller
 
         $statuses = $shipment->shipmentStatuses->pluck('status')->toArray();
         $isDelivered = in_array(\App\Enums\ShipmentStatusEnum::Delivered, $statuses);
-        $hasReview = $shipment->review->first();
+        $hasReview = $shipment->review;
 
         // Make sure shipment is delivered
         if ($isDelivered && $hasReview == null) {
@@ -67,7 +67,7 @@ class TrackingController extends Controller
             $review->save();
         }
 
-        return redirect()->action('App\Http\Controllers\Customer\TrackingController@overview',
+        return redirect()->action('App\Http\Controllers\Customer\TrackingController@overviewTracking',
             ['tracking_id' => $shipment->tracking_number, 'postal_code' => $shipment->address->postal_code]);
     }
 
