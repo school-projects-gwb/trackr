@@ -17,30 +17,9 @@ use Illuminate\Support\Facades\Hash;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-//Route::middleware('apiAuthenticate')->get('/test', function(Request $request){
-//    $user = User::find($request->id);
-//    return($user->tokens);
-//});
-
 Route::middleware('apiAuthentication')->group(function () {
-    // Test route for checking the api middleware
-   Route::get('/test', function (Request $request) {
-       if($request->type == "user"){
-           $token = WebstoreToken::find($request->id);
-           return($token->user);
-       } else {
-           $user = User::find($request->id);
-           return $user->tokens;
-       }
-   });
-
-    Route::post('/shipment/create', [ShipmentController::class, 'create']);
-    Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus']);
+    Route::post('/shipment/create', [ShipmentController::class, 'create'])->middleware('apiRole:api shipment create');
+    Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus'])->middleware('apiRole:api shipment status update');
 });
 
 Route::get('/makeApiToken', function (Request $request) {

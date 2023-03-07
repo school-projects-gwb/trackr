@@ -10,47 +10,51 @@ use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
 use App\Filters\ShipmentStatusFilter;
+use App\Models\WebstoreToken;
+use Carbon\Carbon;
 
 class ShipmentController extends Controller
 {
     public function create(CeateSipmentRequest $request){
+        try {
+            $shipmentsData = $request->validated()['data'];
+            $webstoreToken = WebstoreToken::findOrFail($request->webstoreToken_id);
 
-        $requestData = $request->validated();
-        foreach ($requestData['data'] as $shipmentData){
-           $address = Address::where('street_name', $shipmentData['streetname'])->where('house_number', $shipmentData['housenumber'])->where('postal_code', $shipmentData['postalcode']);
-           if(!$address->exists()){
-               $address = Address::create([
-                  'street_name' => $shipmentData['streetname'],
-                  'house_number' =>  $shipmentData['housenumber'],
-                   'postal_code' => $shipmentData['postalcode'],
-                   'city' => $shipmentData['streetname'],
-                   'country' => $shipmentData['country'],
-               ])->id;
-           } else {
-               $address = $address->first()->id;
-           }
+            // retrieve or create addresses in bulk
+            $addresses = collect($shipmentsData)
+                ->map(fn($shipmentData) => Address::firstOrCreate([
+                    'street_name' => $shipmentData['streetname'],
+                    'house_number' => $shipmentData['housenumber'],
+                    'postal_code' => $shipmentData['postalcode'],
+                    'city' => $shipmentData['city'],
+                    'country' => $shipmentData['country']
+                ]));
 
-           Shipment::create([
-               'weight' => $shipmentData['weight'],
-               'address_id' => $address,
-               'webstore_id' => $request->webstore_id,
-           ]);
+            // create all the shipments in bulk
+            $shipments = $addresses->zip($shipmentsData)
+                ->map(fn($items) => [
+                    'weight' => $items[1]['weight'],
+                    'address_id' => $items[0]->id,
+                    'webstore_id' => $webstoreToken->webstore_id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+            Shipment::insert($shipments->toArray());
+
+            return response()->json([
+                'message' => "Shipments are created"
+            ], 201);
+        } catch (Exception $e) {
+            logger()->error($e);
+            return response()->json([
+                'message' => "An error occurred while creating shipments"
+            ], 500);
         }
-        return response()->json([
-            'message' => "Shipments are created",],
-            201);
     }
 
     public function updateStatus(UpdateShipmentStatusRequest $request){
-        $shipmentStatusses =
         $requestData = $request->validated();
-//        dd(  array_search($requestData['shipmentStatus'], $shipmentStatusses));
-        if($requestData['shipmentStatus'] == ShipmentStatusEnum::Delivered->value && !ShipmentStatus::where('shipment_id', $requestData['shipmentId'])->where('status', ShipmentStatusEnum::Transit)->exists()) {
-            return response()->json([
-                'message' => "shipmentStatus could not be updated.",
-                'errors' => 'The shipment is not in transit yet.']
-                , 400);
-        }
         ShipmentStatus::create([
            'status' => $requestData["shipmentStatus"],
            'shipment_id' => $requestData["shipmentId"],

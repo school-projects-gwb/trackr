@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class WebstoreToken extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
+    public $guard_name = 'api';
     protected $dates = [
         'created_at',
         'updated_at',
