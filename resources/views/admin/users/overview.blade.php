@@ -7,18 +7,18 @@
         </div>
 
         <x-table
-            :data="$users->items()"
-            :headers="['Naam', 'Emailadres', 'Acties']"
-            :fields="['name', 'email']"
-            :baseRoute="'admin.users'"
-            :pageLinks="$users->links()"
-            :currentPage="$users->currentPage()"
-            :perPage="$users->perPage()"
-            :sortField="$sortField"
-            :sortDirection="$sortDirection"
-            :sortableFields="$sortableFields"
-            :filterValues="$filterValues"
-        />
+        :data="$users->items()"
+        :headers="['Naam', 'Emailadres', 'Acties']"
+        :fields="['name', 'email']"
+        :baseRoute="'admin.users'"
+        :pageLinks="$users->links()"
+        :currentPage="$users->currentPage()"
+        :perPage="$users->perPage()"
+        :sortField="$sortField"
+        :sortDirection="$sortDirection"
+        :sortableFields="$sortableFields"
+        :filterValues="$filterValues"
+    />
     </div>
 
 </x-admin-layout>

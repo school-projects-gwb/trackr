@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Enums\ShipmentStatusEnum;
+use App\Rules\ShipmentStatusUpdateAllowed;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -27,7 +28,7 @@ class UpdateShipmentStatusRequest extends FormRequest
     {
         return [
             'shipmentId' => ['required', 'integer'],
-            'shipmentStatus' => ['required', "unique:shipment_statuses,status,{$this->shipmentId}", new Enum(ShipmentStatusEnum::class)]
+            'shipmentStatus' => ['required', "unique:shipment_statuses,status,{$this->shipmentId}", new Enum(ShipmentStatusEnum::class), new ShipmentStatusUpdateAllowed($this->shipmentId)]
         ];
     }
 }

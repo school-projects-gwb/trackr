@@ -9,10 +9,12 @@ use App\Http\Requests\Api\UpdateShipmentStatusRequest;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
+use App\Filters\ShipmentStatusFilter;
 
 class ShipmentController extends Controller
 {
     public function create(CeateSipmentRequest $request){
+
         $requestData = $request->validated();
         foreach ($requestData['data'] as $shipmentData){
            $address = Address::where('street_name', $shipmentData['streetname'])->where('house_number', $shipmentData['housenumber'])->where('postal_code', $shipmentData['postalcode']);
@@ -40,7 +42,9 @@ class ShipmentController extends Controller
     }
 
     public function updateStatus(UpdateShipmentStatusRequest $request){
+        $shipmentStatusses =
         $requestData = $request->validated();
+//        dd(  array_search($requestData['shipmentStatus'], $shipmentStatusses));
         if($requestData['shipmentStatus'] == ShipmentStatusEnum::Delivered->value && !ShipmentStatus::where('shipment_id', $requestData['shipmentId'])->where('status', ShipmentStatusEnum::Transit)->exists()) {
             return response()->json([
                 'message' => "shipmentStatus could not be updated.",
