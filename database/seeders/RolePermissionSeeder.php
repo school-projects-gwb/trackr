@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -19,6 +20,8 @@ class RolePermissionSeeder extends Seeder
         $storeAccess = Permission::create(['name' => 'access store']);
         $storeRead = Permission::create(['name' => 'write store']);
         $storeWrite = Permission::create(['name' => 'read store']);
+        $apiShipmentCreate = Permission::create(['name' => 'api shipment create', 'guard_name' => 'api']);
+        $apiShipmentStatusUpdate = Permission::create(['name' => 'api shipment status update', 'guard_name' => 'api']);
 
         // Manages store owners
         Role::create(['name' => 'SuperAdmin']);
@@ -34,6 +37,13 @@ class RolePermissionSeeder extends Seeder
         $storePacker = Role::create(['name' => 'StorePacker']);
         $storeAdmin->givePermissionTo($storeAccess);
         $storePacker->givePermissionTo($storeRead);
+
+        $storeApi = Role::create(['name' => 'StoreApi', 'guard_name' => 'api']);
+        $storeApi->givePermissionTo($apiShipmentCreate);
+        $storeApi->givePermissionTo($apiShipmentStatusUpdate);
+
+        $storeCarrierApi = Role::create(['name' => 'StoreCarrierApi', 'guard_name' => 'api']);
+        $storeCarrierApi->givePermissionTo($apiShipmentStatusUpdate);
 
         // Store customers
         Role::create(['name' => 'Customer']);

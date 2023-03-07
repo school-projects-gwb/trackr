@@ -39,8 +39,8 @@ Route::middleware('apiAuthentication')->group(function () {
        }
    });
 
-    Route::post('/shipment/create', [ShipmentController::class, 'create']);
-    Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus']);
+    Route::post('/shipment/create', [ShipmentController::class, 'create'])->middleware('apiRole:api shipment create');
+    Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus'])->middleware('apiRole:api shipment status update');
 });
 
 Route::get('/makeApiToken', function (Request $request) {

@@ -26,14 +26,14 @@ class ApiAuthentication
         }
 
         $tokenData = explode(':', $request->bearerToken());
-        $userToken = new WebstoreToken();
+        $webstoreToken = new WebstoreToken();
 
         // Checks the validity of the token
-        if(!$userToken->isValid($tokenData)){
+        if(!$webstoreToken->isValid($tokenData)){
             //Throws 401 error if the token is not valid.
             return response()->json(['error' => 'Bearer Token is not valid'], self::UNAUTHORIZED);
         }
-        $request->merge(['webstore_id' => $tokenData[0]]);
+        $request->merge(['webstoreToken_id' => $tokenData[0]]);
         return $next($request);
     }
 }
