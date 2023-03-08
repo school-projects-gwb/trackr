@@ -19,18 +19,18 @@ use Illuminate\Support\Facades\Auth;
 
 class LabelController extends Controller
 {
-
-    public function overview()
-    {
-        return view('store.labels.overview');
-    }
-
     public function createForm(Request $request) {
-        $shipments = $this->getShipments($request->shipment_id);
-        $carriers = Carrier::all();
-        $shipmentIds = $request->shipment_id;
+        if ($request->input('action') == 'label') {
+            $shipments = $this->getShipments($request->shipment_id);
+            $carriers = Carrier::all();
+            $shipmentIds = $request->shipment_id;
 
-        return view('store.labels.createForm', compact('shipments', 'carriers', 'shipmentIds'));
+            return view('store.labels.createForm', compact('shipments', 'carriers', 'shipmentIds'));
+        } else if ($request->input('action') == 'print') {
+            dd("HI");
+        } else {
+            return to_route('store.shipments.overview');
+        }
     }
 
     public function store(LabelCreateRequest $request)

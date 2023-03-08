@@ -78,7 +78,6 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
         Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create');
 
         // LABEL
-        Route::get('/labels', [LabelController::class, 'overview'])->name('labels.overview');
         Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware('labeling-allowed');
         Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware('labeling-allowed');
     });

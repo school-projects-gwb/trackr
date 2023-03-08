@@ -37,7 +37,7 @@ class ShipmentController extends Controller
         $filterValues['status'] = \App\Filters\ShipmentStatusFilter::values();
         $filterValues['zoektermen'] = request('zoektermen');
 
-        $selectable = ['actionText' => 'Genereer labels', 'actionRoute' => 'store.labels.createForm'];
+        $selectable = ['actions' => [['label' => 'Genereer labels', 'value' => 'label'], ['label' => 'Print labels', 'value' => 'print']] , 'actionRoute' => 'store.labels.createForm'];
 
         return view(
             'store.shipments.overview',

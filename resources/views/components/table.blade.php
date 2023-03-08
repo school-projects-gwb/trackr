@@ -49,7 +49,9 @@
             </form>
             @if (count($selectable) > 0)
                 <form action="{{route($selectable['actionRoute'])}}" method="GET">
-                <x-button-secondary class="ml-2 mb-8" type="submit">{{ $selectable['actionText'] }}</x-button-secondary>
+                @foreach ($selectable['actions'] as $action)
+                        <x-button-secondary class="ml-2 mb-8" type="submit" name="action" value="{{ $action['value'] }}">{{ $action['label'] }}</x-button-secondary>
+                @endforeach
             @endif
             <form class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">

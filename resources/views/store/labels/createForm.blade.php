@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Labels aanmaken') }}</h1>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4 pb-16">
             <div class="flex p-2 pl-8">
-                <x-link-inline href="{{ route('store.labels.overview') }}">{{ __('Terug naar overzicht') }}</x-link-inline>
+                <x-link-inline href="{{ route('store.shipments.overview') }}">{{ __('Terug naar overzicht') }}</x-link-inline>
             </div>
 
             <div class="mt-4 flex flex-col mt-8 pl-8">

@@ -21,15 +21,19 @@ class StoreLabelingAllowed
     public function handle(Request $request, Closure $next)
     {
         // Make sure shipment_id is present and has at least 1 store ID in it
-        if (!isset($request->shipment_id) && count($request->shipment_id) > 0) {
-            return abort(403);
+        if ($request->shipment_id == null || !is_array($request->shipment_id) || $request->input('action') == null) {
+            abort(403);
         }
 
         foreach ($request->shipment_id as $id) {
             // Make sure shipment exists
             $shipment = Shipment::find($id);
             $selectedStoreId = $request->cookie('selected_store_id');
-            if (!$shipment || $shipment->webstore_id != $selectedStoreId || $shipment->carrier_id != '' || $shipment->tracking_number != '') {
+            if (!$shipment || $shipment->webstore_id != $selectedStoreId) {
+                return abort(403);
+            }
+
+            if ($request->input('action') == 'label' && ($shipment->carrier_id != '' || $shipment->tracking_number != '')) {
                 return abort(403);
             }
         }
