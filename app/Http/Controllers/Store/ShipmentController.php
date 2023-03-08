@@ -6,19 +6,23 @@ use App\Filters\FullTextFilter;
 use App\Filters\ShipmentStatusFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressUpdateRequest;
+use App\Http\Requests\ImportShipmentRequest;
 use App\Http\Requests\StoreCreateRequest;
 use App\Http\Requests\StoreUpdateRequest;
+use App\Imports\ShipmentsImport;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
 use App\Models\User;
 use App\Models\Webstore;
+use App\Services\ShipmentCreationService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 class ShipmentController extends Controller
 {
@@ -81,5 +85,12 @@ class ShipmentController extends Controller
     public function delete(Request $request, Shipment $shipment) {
         $shipment->delete();
         return to_route('store.shipments.overview');
+    }
+
+    public function importShipment(ImportShipmentRequest $request){
+        $shipmentsImport = new ShipmentsImport();
+        Excel::import($shipmentsImport, $request->csvFile);
+        ShipmentCreationService::createShipments($shipmentsImport->getData()->toArray(), $request->cookie('selected_store_id'));
+        return back();
     }
 }
