@@ -27,9 +27,9 @@ class StoreLabelingAllowed
 
         foreach ($request->shipment_id as $id) {
             // Make sure shipment exists
-            $shipmentCheck = Shipment::find($id);
+            $shipment = Shipment::find($id);
             $selectedStoreId = $request->cookie('selected_store_id');
-            if (!$shipmentCheck || $shipmentCheck->webstore_id != $selectedStoreId) {
+            if (!$shipment || $shipment->webstore_id != $selectedStoreId || $shipment->carrier_id != '' || $shipment->tracking_number != '') {
                 return abort(403);
             }
         }

@@ -5,20 +5,8 @@ namespace App\Http\Controllers\Store;
 use App\Filters\FullTextFilter;
 use App\Filters\ShipmentStatusFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddressUpdateRequest;
-use App\Http\Requests\StoreCreateRequest;
-use App\Http\Requests\StoreUpdateRequest;
-use App\Models\Address;
 use App\Models\Shipment;
-use App\Models\ShipmentStatus;
-use App\Models\User;
-use App\Models\Webstore;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
@@ -49,7 +37,7 @@ class ShipmentController extends Controller
         $filterValues['status'] = \App\Filters\ShipmentStatusFilter::values();
         $filterValues['zoektermen'] = request('zoektermen');
 
-        $selectable = ['actionText' => 'Genereer labels', 'actionRoute' => 'store.labels.create'];
+        $selectable = ['actionText' => 'Genereer labels', 'actionRoute' => 'store.labels.createForm'];
 
         return view(
             'store.shipments.overview',

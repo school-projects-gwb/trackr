@@ -44,11 +44,12 @@
                             @endif
                         </div>
                     @endforeach
-                    <x-button-primary type="submit">Filters toepassen</x-button-primary>
+                    <x-button-primary type="submit">{{ __('Filters toepassen') }}</x-button-primary>
                 @endif
             </form>
             @if (count($selectable) > 0)
                 <form action="{{route($selectable['actionRoute'])}}" method="POST">
+                    @csrf
                 <x-button-secondary class="ml-2 mb-8" type="submit">{{ $selectable['actionText'] }}</x-button-secondary>
             @endif
             <form class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

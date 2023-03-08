@@ -68,6 +68,9 @@
     <x-sidebar-nav-link :href="route('store.pickups.overview')" :active="Route::is('*.pickups.*')">
         {{ __('Pickups') }}
     </x-sidebar-nav-link>
+    <x-sidebar-nav-link :href="route('store.labels.overview')" :active="Route::is('*.labels.*')">
+        {{ __('Labels') }}
+    </x-sidebar-nav-link>
 @endcan
 
 @role('Customer')
