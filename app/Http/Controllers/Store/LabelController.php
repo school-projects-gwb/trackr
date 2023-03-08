@@ -9,21 +9,74 @@ use App\Models\Carrier;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
 use Illuminate\Http\Request;
+use TCPDF;
 
 class LabelController extends Controller
 {
     public function createForm(Request $request) {
+        $shipments = $this->getShipments($request->shipment_id);
+
         if ($request->input('action') == 'label') {
-            $shipments = $this->getShipments($request->shipment_id);
             $carriers = Carrier::all();
             $shipmentIds = $request->shipment_id;
 
             return view('store.labels.createForm', compact('shipments', 'carriers', 'shipmentIds'));
         } else if ($request->input('action') == 'print') {
-            dd("HI");
+            $this->printLabels($shipments);
         } else {
             return to_route('store.shipments.overview');
         }
+    }
+
+    private function printLabels($shipments) {
+        $pdf = new TCPDF();
+
+        foreach($shipments as $shipment) {
+            $pdf->AddPage('L');
+
+            // define barcode style
+            $style = array(
+                'position' => '',
+                'align' => 'C',
+                'stretch' => false,
+                'fitwidth' => true,
+                'cellfitalign' => '',
+                'border' => false,
+                'hpadding' => 'auto',
+                'vpadding' => 'auto',
+                'fgcolor' => array(0,0,0),
+                'bgcolor' => false, //array(255,255,255),
+                'text' => true,
+                'font' => 'helvetica',
+                'fontsize' => 18,
+                'stretchtext' => 1
+            );
+
+            $storeAddress = $shipment->store->address;
+            $customerAddress = $shipment->address;
+
+            $pdf->SetFont('helvetica', '', 20);
+            $pdf->Cell(0, 0, 'Afzender:', 0, 1);
+            $pdf->SetFont('helvetica', '', 18);
+            $pdf->Cell(0, 0, $shipment->store->name, 0, 2);
+            $pdf->Cell(0, 0, $storeAddress->street_name . ' ' . $storeAddress->house_number, 0, 3);
+            $pdf->Cell(0, 0, $storeAddress->postal_code . ' ' . $storeAddress->city, 0, 4);
+
+            $pdf->Ln(3 * $pdf->getFontSize());
+
+            $pdf->SetFont('helvetica', '', 20);
+            $pdf->Cell(0, 0, 'Ontvanger:', 0, 10);
+            $pdf->SetFont('helvetica', '', 18);
+            $pdf->Cell(0, 0, $customerAddress->first_name . ' ' . $customerAddress->last_name, 0, 1);
+            $pdf->Cell(0, 0, $customerAddress->street_name . ' ' . $customerAddress->house_number, 0, 2);
+            $pdf->Cell(0, 0, $customerAddress->postal_code . ' ' . $customerAddress->city, 0, 3);
+
+            $pdf->Ln(3 * $pdf->getFontSize());
+            $pdf->Cell(0, 0, $shipment->carrier->name, 0, 1);
+            $pdf->write1DBarcode($shipment->tracking_number, 'C39', 7, 120, 200, 48, 0.4, $style, 'N');
+        }
+
+        $pdf->Output('verzendlabels.pdf', 'D');
     }
 
     public function store(LabelCreateRequest $request)
