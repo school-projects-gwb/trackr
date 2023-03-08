@@ -41,8 +41,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $carrier->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">&euro;5,00.-
-    {{--                                {{ $carrier->package_cost }}--}}
+                                <td class="px-6 py-4 whitespace-nowrap">&euro;{{number_format(floatval($carrier->shipping_cost), 2, ",", ".") }}
                                 </td>
                             </tr>
                         @endforeach
