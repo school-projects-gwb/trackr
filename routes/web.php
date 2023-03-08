@@ -79,7 +79,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
 
         // LABEL
         Route::get('/labels', [LabelController::class, 'overview'])->name('labels.overview');
-        Route::post('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware('labeling-allowed');
+        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware('labeling-allowed');
         Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware('labeling-allowed');
     });
 

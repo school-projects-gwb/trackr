@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressUpdateRequest;
+use App\Http\Requests\LabelCreateRequest;
 use App\Http\Requests\StoreCreateRequest;
 use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
@@ -31,13 +32,10 @@ class LabelController extends Controller
         return view('store.labels.createForm', compact('shipments', 'carriers', 'shipmentIds'));
     }
 
-    public function store(Request $request)
+    public function store(LabelCreateRequest $request)
     {
+        $request->validated();
         $carrier = Carrier::find($request->carrier_id);
-
-        if (!$carrier) {
-            // carrier invalid
-        }
 
         $shipments = $this->getShipments($request->shipment_id);
         foreach($shipments as $shipment) {
