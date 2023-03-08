@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\Store;
 
+use App\Enums\ShipmentStatusEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddressUpdateRequest;
 use App\Http\Requests\LabelCreateRequest;
-use App\Http\Requests\StoreCreateRequest;
-use App\Http\Requests\StoreUpdateRequest;
-use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\Shipment;
 use App\Models\ShipmentStatus;
-use App\Models\Webstore;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LabelController extends Controller
 {
@@ -47,7 +40,7 @@ class LabelController extends Controller
 
             // Update shipment status
             ShipmentStatus::create([
-                'status' => \App\Enums\ShipmentStatusEnum::fromValue('printed'),
+                'status' => ShipmentStatusEnum::Printed,
                 'shipment_id' => $shipment->id
             ]);
         }

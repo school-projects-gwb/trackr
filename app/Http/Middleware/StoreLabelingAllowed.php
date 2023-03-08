@@ -30,11 +30,15 @@ class StoreLabelingAllowed
             $shipment = Shipment::find($id);
             $selectedStoreId = $request->cookie('selected_store_id');
             if (!$shipment || $shipment->webstore_id != $selectedStoreId) {
-                return abort(403);
+                abort(403);
             }
 
             if ($request->input('action') == 'label' && ($shipment->carrier_id != '' || $shipment->tracking_number != '')) {
-                return abort(403);
+                abort(403);
+            }
+
+            if ($request->input('action') == 'print' && ($shipment->carrier_id == '' || $shipment->tracking_number == '')) {
+                abort(403);
             }
         }
 
