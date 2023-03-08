@@ -10,6 +10,7 @@ use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\Shipment;
+use App\Models\ShipmentStatus;
 use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
@@ -39,9 +40,16 @@ class LabelController extends Controller
 
         $shipments = $this->getShipments($request->shipment_id);
         foreach($shipments as $shipment) {
+            // Update shipment
             $shipment->carrier()->associate($carrier);
             $shipment->tracking_number = 'TRACKR' . $shipment->id . $carrier->name;
             $shipment->save();
+
+            // Update shipment status
+            ShipmentStatus::create([
+                'status' => \App\Enums\ShipmentStatusEnum::fromValue('printed'),
+                'shipment_id' => $shipment->id
+            ]);
         }
 
         return to_route('store.labels.overview');
