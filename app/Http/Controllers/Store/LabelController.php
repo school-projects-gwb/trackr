@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store;
 
 use App\Enums\ShipmentStatusEnum;
+use App\Helpers\TrackingNumberGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LabelCreateRequest;
 use App\Models\Carrier;
@@ -88,7 +89,7 @@ class LabelController extends Controller
         foreach($shipments as $shipment) {
             // Update shipment
             $shipment->carrier()->associate($carrier);
-            $shipment->tracking_number = 'TRACKR' . $shipment->id . $carrier->name;
+            $shipment->tracking_number = TrackingNumberGenerator::generate($shipment->id, $carrier->name);
             $shipment->save();
 
             // Update shipment status
@@ -98,7 +99,7 @@ class LabelController extends Controller
             ]);
         }
 
-        return to_route('store.labels.overview');
+        return to_route('store.shipments.overview');
     }
 
     private function getShipments($ids) {

@@ -21,7 +21,7 @@ class StoreLabelingAllowed
     public function handle(Request $request, Closure $next)
     {
         // Make sure shipment_id is present and has at least 1 store ID in it
-        if ($request->shipment_id == null || !is_array($request->shipment_id) || $request->input('action') == null) {
+        if ($request->shipment_id == null || !is_array($request->shipment_id)) {
             abort(403);
         }
 
@@ -33,7 +33,7 @@ class StoreLabelingAllowed
                 abort(403);
             }
 
-            if ($request->input('action') == 'label' && ($shipment->carrier_id != '' || $shipment->tracking_number != '')) {
+            if ($request->input('action') != 'print' && ($shipment->carrier_id != '' || $shipment->tracking_number != '')) {
                 abort(403);
             }
 
