@@ -12,12 +12,7 @@
     'filterValues' => [],
     'selectable' => []
 ])
-@if (count($data) == 0)
-    <div class="mt-4 ml-2 text-xl">
-        <b>{{ __("Geen data gevonden.") }}</b>
-    </div>
-@endif
-<div class="flex flex-col {{ count($data) == 0 ? 'opacity-40 pointer-events-none' : 'mt-8' }}">
+<div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <form class="w-full flex items-end mb-8" action="{{route($baseRoute.'.overview')}}" method="GET">
@@ -53,6 +48,7 @@
                         <x-button-secondary class="ml-2 mb-8" type="submit" name="action" value="{{ $action['value'] }}">{{ $action['label'] }}</x-button-secondary>
                 @endforeach
             @endif
+            <p class="ml-2 mb-2">{{count($data) }} {{__('resultaten')}}</p>
             <form class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
