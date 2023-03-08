@@ -46,6 +46,10 @@ class Kernel extends HttpKernel
 
         'selected-store' => [
             \App\Http\Middleware\SelectedStoreCookie::class
+        ],
+
+        'labeling-allowed' => [
+            \App\Http\Middleware\StoreLabelingAllowed::class
         ]
     ];
 
