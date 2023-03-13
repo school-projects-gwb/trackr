@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressUpdateRequest;
 use App\Http\Requests\StoreCreateRequest;
+use App\Http\Requests\StoreTokenRequest;
 use App\Http\Requests\StoreUpdateRequest;
 use App\Models\Address;
 use App\Models\Webstore;
+use App\Models\WebstoreToken;
 use http\Env\Response;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
+use Spatie\Permission\Models\Role;
 
 class StoreController extends Controller
 {
@@ -41,7 +46,9 @@ class StoreController extends Controller
 
     public function edit(Webstore $store)
     {
-        return view('store.stores.edit', compact('store'));
+        $roles = Role::where('guard_name', 'api')->get();
+        $webstoreTokens = WebstoreToken::where('webstore_id', $store->id)->get();
+        return view('store.stores.edit', compact('store', 'webstoreTokens', 'roles'));
     }
 
     public function update(StoreUpdateRequest $request, Webstore $store)
@@ -85,6 +92,15 @@ class StoreController extends Controller
         event(new Registered($webStore));
 
         return to_route('store.stores.overview');
+    }
+
+    public function storeToken(StoreTokenRequest $request){
+        $requestData = $request->validated();
+        WebstoreToken::create([
+            'token' => Hash::make(bin2hex(random_bytes(32))),
+            'webstore id' => $requestData->store_id
+        ])->assignRole($requestData->role_id);
+        return redirect()->back();
     }
 
     public function switch(Request $request, Webstore $store) {
