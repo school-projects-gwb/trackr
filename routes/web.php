@@ -67,6 +67,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
     Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
 
+
     // Middleware to ensure valid store is selected
     Route::middleware('selected-store')->group(function() {
         // SHIPMENT
@@ -99,6 +100,8 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
     Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
     Route::post('/stores/switch/{store}', [StoreController::class, 'switch'])->name('stores.switch')->middleware('can:store-in-user,store');
     Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
+    Route::post('/stores/createToken', [StoreController::class, 'storeToken'])->name('tokens.create');
+
 });
 
 Route::middleware('auth')->group(function () {

@@ -19,6 +19,7 @@ class WebstoreToken extends Model
 
     protected $fillable = [
         'webstore_id',
+        'token',
         'created_at',
         'updated_at',
     ];

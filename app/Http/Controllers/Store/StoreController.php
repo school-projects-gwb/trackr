@@ -96,11 +96,18 @@ class StoreController extends Controller
 
     public function storeToken(StoreTokenRequest $request){
         $requestData = $request->validated();
-        WebstoreToken::create([
-            'token' => Hash::make(bin2hex(random_bytes(32))),
-            'webstore id' => $requestData->store_id
-        ])->assignRole($requestData->role_id);
-        return redirect()->back();
+        $newToken = bin2hex(random_bytes(32));
+        $webstoreToken = new WebstoreToken();
+        $webstoreToken->token = Hash::make($newToken);
+        $webstoreToken->webstore_id = $requestData['store_id'];
+        $webstoreToken->save();
+        $webstoreToken->assignRole($requestData['role_id']);
+        return redirect()->back()->with([
+            'storeSuccess' => true,
+            'tokenString' => $newToken,
+            'tokenId' => $webstoreToken->id,
+            'tokenRole' => $webstoreToken->roles->first()->name,
+            ]);
     }
 
     public function switch(Request $request, Webstore $store) {
