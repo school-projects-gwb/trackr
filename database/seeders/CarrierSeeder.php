@@ -15,8 +15,8 @@ class CarrierSeeder extends Seeder
      */
     public function run()
     {
-        Carrier::create(['name' => 'dhl']);
-        Carrier::create(['name' => 'postnl']);
-        Carrier::create(['name' => 'dpd']);
+        Carrier::create(['name' => 'DHL', 'shipping_cost' => '6.75']);
+        Carrier::create(['name' => 'PostNL', 'shipping_cost' => '8.50']);
+        Carrier::create(['name' => 'DPD', 'shipping_cost' => '5.50']);
     }
 }

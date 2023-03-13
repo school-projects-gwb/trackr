@@ -9,14 +9,10 @@
     'sortField' => '',
     'sortDirection' => '',
     'sortableFields' => [],
-    'filterValues' => []
+    'filterValues' => [],
+    'selectable' => []
 ])
-@if (count($data) == 0)
-    <div class="mt-4 ml-2 text-xl">
-        <b>{{ __("Geen data gevonden.") }}</b>
-    </div>
-@endif
-<div class="flex flex-col {{ count($data) == 0 ? 'opacity-40 pointer-events-none' : 'mt-8' }}">
+<div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <form class="w-full flex items-end mb-8" action="{{route($baseRoute.'.overview')}}" method="GET">
@@ -43,26 +39,38 @@
                             @endif
                         </div>
                     @endforeach
-                    <x-button-primary type="submit">Filters toepassen</x-button-primary>
+                    <x-button-primary type="submit">{{ __('Filters toepassen') }}</x-button-primary>
                 @endif
             </form>
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            @if (count($selectable) > 0)
+                <form action="{{route($selectable['actionRoute'])}}" method="GET">
+                @foreach ($selectable['actions'] as $action)
+                        <x-button-secondary class="ml-2 mb-8" type="submit" name="action" value="{{ $action['value'] }}">{{ $action['label'] }}</x-button-secondary>
+                @endforeach
+            @endif
+            <p class="ml-2 mb-2">{{count($data) }} {{__('resultaten')}}</p>
+            <form class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                     <tr>
+                        @if (count($selectable) > 0)
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Selecteer') }}
+                            </th>
+                        @endif
                         @for($i = 0; $i < count($headers); $i++)
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 @if (isset($fields[$i]) && in_array($fields[$i], $sortableFields))
-                                <a href="?sort={{ $fields[$i] }}&dir={{ $sortDirection === 'asc' ? 'desc' : 'asc' }}">
-                                    {{ $headers[$i] }}
-                                    @if (isset($fields[$i]) && $sortField == $fields[$i])
-                                        @if ($sortDirection == 'asc')
-                                            <i class="fa fa-caret-up"></i>
-                                        @else
-                                            <i class="fa fa-caret-down"></i>
+                                    <a href="?sort={{ $fields[$i] }}&dir={{ $sortDirection === 'asc' ? 'desc' : 'asc' }}">
+                                        {{ $headers[$i] }}
+                                        @if (isset($fields[$i]) && $sortField == $fields[$i])
+                                            @if ($sortDirection == 'asc')
+                                                <i class="fa fa-caret-up"></i>
+                                            @else
+                                                <i class="fa fa-caret-down"></i>
+                                            @endif
                                         @endif
-                                    @endif
-                                </a>
+                                    </a>
                                 @else
                                     {{ $headers[$i] }}
                                 @endif
@@ -73,6 +81,11 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($data as $item)
                             <tr>
+                                @if (count($selectable) > 0)
+                                    <td class="px-6 py-4 whitespace-nowrap w-1/12">
+                                        <input type="checkbox" name="shipment_id[]" value="{{ $item->id }}">
+                                    </td>
+                                @endif
                                 @foreach ($fields as $field)
                                     @if (str_contains($field, "get"))
                                         @foreach($item->{$field}() as $child)
@@ -104,7 +117,7 @@
                                 @endforeach
                                 <td>
                                     <div class="flex">
-                                        <div class="flex space-x-2">
+                                        <div class="flex">
                                             @if (Route::has($baseRoute.'.edit'))
                                                 <x-link-primary type="submit" href="{{route($baseRoute.'.edit', $item)}}">{{ __('Bewerk') }}</x-link-primary>
                                             @endif
@@ -112,7 +125,7 @@
                                                 <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('POST')
-                                                    <x-button-secondary type="submit">{{ __('Verwijder') }}</x-button-secondary>
+                                                    <x-button-secondary class="ml-2" type="submit">{{ __('Verwijder') }}</x-button-secondary>
                                                 </form>
                                             @endif
                                         </div>
@@ -122,6 +135,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if (count($selectable) > 0)
+                    </form>
+                @endif
                 <div class="p-4">
                     {!! $pageLinks !!}
                 </div>

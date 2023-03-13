@@ -5,6 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Rules\StoreInUser;
 use App\Rules\StoreOwnedByAuthUser;
+use App\Rules\StoreLabelingAllowed;
 use App\Rules\UserInStore;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;

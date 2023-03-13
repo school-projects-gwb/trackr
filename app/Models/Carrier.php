@@ -15,6 +15,7 @@ class Carrier extends Model
 
     protected $fillable = [
         'name',
+        'shipping_cost',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -72,6 +72,7 @@
             :sortDirection="$sortDirection"
             :sortableFields="$sortableFields"
             :filterValues="$filterValues"
+            :selectable="$selectable"
         />
     </div>
 

@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('carriers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->double('shipping_cost', $precision = 4, $scale = 2);
             $table->timestamps();
         });
     }

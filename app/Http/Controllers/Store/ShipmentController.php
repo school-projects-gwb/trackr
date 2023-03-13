@@ -53,9 +53,11 @@ class ShipmentController extends Controller
         $filterValues['status'] = \App\Filters\ShipmentStatusFilter::values();
         $filterValues['zoektermen'] = request('zoektermen');
 
+        $selectable = ['actions' => [['label' => 'Genereer labels', 'value' => 'label'], ['label' => 'Print labels', 'value' => 'print']] , 'actionRoute' => 'store.labels.createForm'];
+
         return view(
             'store.shipments.overview',
-            compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues'));
+            compact('shipments', 'sortField', 'sortDirection', 'sortableFields', 'filterValues', 'selectable'));
     }
 
     /**

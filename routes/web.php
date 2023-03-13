@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Customer\TrackingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Store\LabelController;
 use App\Http\Controllers\Store\PickupController;
 use App\Http\Controllers\Store\ReviewController;
 use App\Http\Controllers\Store\ShipmentController;
@@ -76,6 +77,10 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
         // PICKUP
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
         Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create');
+
+        // LABEL
+        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware('labeling-allowed');
+        Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware('labeling-allowed');
     });
 
     // REVIEW
