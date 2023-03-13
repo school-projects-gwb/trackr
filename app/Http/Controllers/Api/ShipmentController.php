@@ -11,6 +11,7 @@ use App\Models\Shipment;
 use App\Models\ShipmentStatus;
 use App\Filters\ShipmentStatusFilter;
 use App\Models\WebstoreToken;
+use App\Services\ShipmentCreationService;
 use Carbon\Carbon;
 
 class ShipmentController extends Controller
@@ -19,29 +20,7 @@ class ShipmentController extends Controller
         try {
             $shipmentsData = $request->validated()['data'];
             $webstoreToken = WebstoreToken::findOrFail($request->webstoreToken_id);
-
-            // retrieve or create addresses in bulk
-            $addresses = collect($shipmentsData)
-                ->map(fn($shipmentData) => Address::firstOrCreate([
-                    'street_name' => $shipmentData['streetname'],
-                    'house_number' => $shipmentData['housenumber'],
-                    'postal_code' => $shipmentData['postalcode'],
-                    'city' => $shipmentData['city'],
-                    'country' => $shipmentData['country']
-                ]));
-
-            // create all the shipments in bulk
-            $shipments = $addresses->zip($shipmentsData)
-                ->map(fn($items) => [
-                    'weight' => $items[1]['weight'],
-                    'address_id' => $items[0]->id,
-                    'webstore_id' => $webstoreToken->webstore_id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
-
-            Shipment::insert($shipments->toArray());
-
+            ShipmentCreationService::createShipments($shipmentsData, $webstoreToken->webstore_id);
             return response()->json([
                 'message' => "Shipments are created"
             ], 201);

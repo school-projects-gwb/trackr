@@ -72,6 +72,7 @@ Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')-
         // SHIPMENT
         Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
         Route::post('/shipments/delete/{shipment}', [ShipmentController::class, 'delete'])->name('shipments.delete');
+        Route::post('/shipments/import', [ShipmentController::class, 'importShipment'])->name('shipments.import');
 
         // PICKUP
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
