@@ -55,7 +55,7 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
 });
 
 Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')->group(function() {
-    Route::middleware('role:StoreOwner')->group(function() {
+    Route::middleware('can:manage store')->group(function() {
         // USER
         Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
         Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');

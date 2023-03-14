@@ -17,6 +17,7 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
+        $storeManage = Permission::create(['name' => 'manage store']);
         $storeAccess = Permission::create(['name' => 'access store']);
         $storeRead = Permission::create(['name' => 'write store']);
         $storeWrite = Permission::create(['name' => 'read store']);
@@ -27,7 +28,10 @@ class RolePermissionSeeder extends Seeder
         Role::create(['name' => 'SuperAdmin']);
         // Stores
         $storeOwner = Role::create(['name' => 'StoreOwner']);
+        $storeOwner->givePermissionTo($storeManage);
         $storeOwner->givePermissionTo($storeAccess);
+        $storeOwner->givePermissionTo($storeRead);
+        $storeOwner->givePermissionTo($storeWrite);
 
         $storeAdmin = Role::create(['name' => 'StoreAdmin']);
         $storeAdmin->givePermissionTo($storeAccess);
