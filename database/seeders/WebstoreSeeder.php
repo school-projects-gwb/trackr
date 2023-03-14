@@ -17,8 +17,8 @@ class WebstoreSeeder extends Seeder
     {
         Webstore::create([
            'name' => 'Test Store',
-           'owner_id' => 1,
-            'address_id' => 1
-        ]);
+           'owner_id' => 2,
+           'address_id' => 1
+        ])->users()->attach([2, 3, 4]);
     }
 }
