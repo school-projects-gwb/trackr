@@ -84,15 +84,15 @@ Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')
     Route::middleware('selected-store')->group(function() {
         // SHIPMENT
         Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview')->middleware('can:read store');
-        Route::post('/shipments/import', [ShipmentController::class, 'importShipment'])->name('shipments.import')->middleware('can:write store');
+        Route::post('/shipments/import', [ShipmentController::class, 'importShipment'])->name('shipments.import')->middleware('can:read store');
 
         // PICKUP
-        Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
-        Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create')->middleware('can:write store');
+        Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview')->middleware('can:read store');
+        Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create')->middleware('can:read store');
 
         // LABEL
-        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware(['labeling-allowed', 'can:write store']);
-        Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware(['labeling-allowed', 'can:write store']);
+        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware(['labeling-allowed', 'can:read store']);
+        Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware(['labeling-allowed', 'can:read store']);
     });
 
     // POST

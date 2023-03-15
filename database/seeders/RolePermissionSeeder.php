@@ -19,8 +19,8 @@ class RolePermissionSeeder extends Seeder
     {
         $storeManage = Permission::create(['name' => 'manage store']);
         $storeAccess = Permission::create(['name' => 'access store']);
-        $storeRead = Permission::create(['name' => 'write store']);
-        $storeWrite = Permission::create(['name' => 'read store']);
+        $storeRead = Permission::create(['name' => 'read store']);
+        $storeWrite = Permission::create(['name' => 'write store']);
         $apiShipmentCreate = Permission::create(['name' => 'api shipment create', 'guard_name' => 'api']);
         $apiShipmentStatusUpdate = Permission::create(['name' => 'api shipment status update', 'guard_name' => 'api']);
 
@@ -39,7 +39,7 @@ class RolePermissionSeeder extends Seeder
         $storeAdmin->givePermissionTo($storeWrite);
 
         $storePacker = Role::create(['name' => 'StorePacker']);
-        $storeAdmin->givePermissionTo($storeAccess);
+        $storePacker->givePermissionTo($storeAccess);
         $storePacker->givePermissionTo($storeRead);
 
         $storeApi = Role::create(['name' => 'StoreApi', 'guard_name' => 'api']);
