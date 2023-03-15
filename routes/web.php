@@ -54,51 +54,48 @@ Route::middleware(['auth', 'role:SuperAdmin'])->name('admin.')->prefix('admin')-
     Route::post('/users/delete/{user}', [UserManagementController::class, 'delete'])->name('users.delete');
 });
 
-Route::middleware(['auth', 'role:StoreOwner'])->name('store.')->prefix('store')->group(function() {
-    // GET
+Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')->group(function() {
+    Route::middleware('can:manage store')->group(function() {
+        // USER
+        Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
+        Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');
+        Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit')->middleware('can:user-in-store,user');
 
-    // USER
-    Route::get('/users', [StoreUserController::class, 'overview'])->name('users.overview');
-    Route::get('/users/create', [StoreUserController::class, 'create'])->name('users.create');
-    Route::get('/users/edit/{user}', [StoreUserController::class, 'edit'])->name('users.edit')->middleware('can:user-in-store,user');
+        // STORE
+        Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
+        Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
+        Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
+        Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
+        Route::post('/stores/delete', [StoreController::class, 'delete'])->name('stores.delete')->middleware('can:store-in-auth-user,store');
+        Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
+        Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
 
-    // STORE
-    Route::get('/stores', [StoreController::class, 'overview'])->name('stores.overview');
-    Route::get('/stores/create', [StoreController::class, 'create'])->name('stores.create');
-    Route::get('/stores/edit/{store}', [StoreController::class, 'edit'])->name('stores.edit')->middleware('can:store-in-auth-user,store');
+        // USER
+        Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
+        Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update')->middleware('can:user-in-store,user');
+        Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete')->middleware('can:user-in-store,user');
+
+        // REVIEW
+        Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview');
+    });
 
     // Middleware to ensure valid store is selected
     Route::middleware('selected-store')->group(function() {
         // SHIPMENT
-        Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview');
-        Route::post('/shipments/delete/{shipment}', [ShipmentController::class, 'delete'])->name('shipments.delete');
-        Route::post('/shipments/import', [ShipmentController::class, 'importShipment'])->name('shipments.import');
+        Route::get('/shipments', [ShipmentController::class, 'overview'])->name('shipments.overview')->middleware('can:read store');
+        Route::post('/shipments/import', [ShipmentController::class, 'importShipment'])->name('shipments.import')->middleware('can:write store');
 
         // PICKUP
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview');
-        Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create');
+        Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create')->middleware('can:write store');
 
         // LABEL
-        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware('labeling-allowed');
-        Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware('labeling-allowed');
+        Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware(['labeling-allowed', 'can:write store']);
+        Route::post('/labels/create', [LabelController::class, 'store'])->name('labels.create')->middleware(['labeling-allowed', 'can:write store']);
     });
 
-    // REVIEW
-    Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview');
-
     // POST
-
-    // USER
-    Route::post('/users/create', [StoreUserController::class, 'store'])->name('users.store');
-    Route::post('/users/update/{user}', [StoreUserController::class, 'update'])->name('users.update')->middleware('can:user-in-store,user');
-    Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete')->middleware('can:user-in-store,user');
-
-    // STORE
-    Route::post('/stores/create', [StoreController::class, 'store'])->name('stores.store');
-    Route::post('/stores/delete', [StoreController::class, 'delete'])->name('stores.delete')->middleware('can:store-in-auth-user,store');
-    Route::post('/stores/update/{store}', [StoreController::class, 'update'])->name('stores.update')->middleware('can:store-in-auth-user,store');
     Route::post('/stores/switch/{store}', [StoreController::class, 'switch'])->name('stores.switch')->middleware('can:store-in-user,store');
-    Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
 });
 
 Route::middleware('auth')->group(function () {

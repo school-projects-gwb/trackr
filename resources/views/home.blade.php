@@ -15,7 +15,7 @@
                     <x-input-label for="postal_code" :value="__('Postcode')" />
                     <x-text-input name="postal_code" id="postal_code" placeholder="1234 AB" />
                 </div>
-                <x-button-primary class="w-3/4 xl:w-2/12 mt-8 xl:mt-0">
+                <x-button-primary name="submit" class="w-3/4 xl:w-2/12 mt-8 xl:mt-0">
                     {{ __('Zoeken') }}
                 </x-button-primary>
             </form>
