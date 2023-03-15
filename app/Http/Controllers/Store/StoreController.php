@@ -110,6 +110,11 @@ class StoreController extends Controller
             ]);
     }
 
+    public function deleteToken(WebstoreToken $webstoreToken){
+        $webstoreToken->delete();
+        return redirect()->back();
+    }
+
     public function switch(Request $request, Webstore $store) {
         $response = new \Illuminate\Http\Response('Store switched successfully.');
         $cookie = Cookie::forever('selected_store_id', $store->id);

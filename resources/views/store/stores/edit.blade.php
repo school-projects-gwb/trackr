@@ -213,7 +213,12 @@
                             @endforeach
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a class="underline font-semibold" target="_blank" href="{{route('store.users.edit', $user)}}">Verwijder Token</a>
+                            <form class="" method="POST" action="{{route('store.tokens.delete', $webstoreToken->id)}}" onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="underline font-semibold">Verwijder Token</button>
+
+                            </form>
                         </td>
                     </tr>
                 @endforeach
