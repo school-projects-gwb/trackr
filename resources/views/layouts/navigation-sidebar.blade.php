@@ -35,43 +35,39 @@
     </div>
 </div>
 
-@role('SuperAdmin')
-    <x-sidebar-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-        {{ __('Home') }}
-    </x-sidebar-nav-link>
+<x-sidebar-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" id="menu-dashboard">
+    {{ __('Home') }}
+</x-sidebar-nav-link>
 
-    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')">
+@role('SuperAdmin')
+    <x-sidebar-nav-link :href="route('admin.users.overview')" :active="Route::is('*.users.*')" id="menu-user-management">
         {{ __('Gebruikersbeheer') }}
     </x-sidebar-nav-link>
-@else
-    <x-sidebar-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-        {{ __('Home') }}
-    </x-sidebar-nav-link>
 @endrole
 
-@role('StoreOwner')
-    <x-sidebar-nav-link :href="route('store.users.overview')" :active="Route::is('*.users.*')">
+@can('manage store')
+    <x-sidebar-nav-link :href="route('store.users.overview')" :active="Route::is('*.users.*')" id="menu-users">
         {{ __('Gebruikers') }}
     </x-sidebar-nav-link>
-    <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.stores.*')">
+    <x-sidebar-nav-link :href="route('store.stores.overview')" :active="Route::is('*.stores.*')" id="menu-webstores">
         {{ __('Webwinkels') }}
     </x-sidebar-nav-link>
-    <x-sidebar-nav-link :href="route('store.reviews.overview')" :active="Route::is('*.reviews.*')">
+    <x-sidebar-nav-link :href="route('store.reviews.overview')" :active="Route::is('*.reviews.*')" id="menu-reviews">
         {{ __('Reviews') }}
     </x-sidebar-nav-link>
-@endrole
+@endcan
 
 @can('access store')
-    <x-sidebar-nav-link :href="route('store.shipments.overview')" :active="Route::is('*.shipments.*')">
+    <x-sidebar-nav-link :href="route('store.shipments.overview')" :active="Route::is('*.shipments.*')" id="menu-shipments">
         {{ __('Pakketten') }}
     </x-sidebar-nav-link>
-    <x-sidebar-nav-link :href="route('store.pickups.overview')" :active="Route::is('*.pickups.*')">
+    <x-sidebar-nav-link :href="route('store.pickups.overview')" :active="Route::is('*.pickups.*')" id="menu-pickups">
         {{ __('Pickups') }}
     </x-sidebar-nav-link>
 @endcan
 
 @role('Customer')
-    <x-sidebar-nav-link :href="route('customer.tracking.overview')" :active="Route::is('*.tracking.*')">
+    <x-sidebar-nav-link :href="route('customer.tracking.overview')" :active="Route::is('*.tracking.*')" id="menu-saved-shipments">
         {{ __('Bewaarde bestellingen') }}
     </x-sidebar-nav-link>
 @endrole
