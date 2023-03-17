@@ -18,11 +18,14 @@ class WebstoreToken extends Model
     ];
 
     protected $fillable = [
-        'token',
         'webstore_id',
+        'token',
         'created_at',
         'updated_at',
     ];
+
+
+
 
     public function webstore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

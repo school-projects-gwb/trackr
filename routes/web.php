@@ -79,6 +79,7 @@ Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')
         Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview')->middleware('selected-store');
     });
 
+
     // Middleware to ensure valid store is selected
     Route::middleware('selected-store')->group(function() {
         // SHIPMENT
@@ -96,6 +97,9 @@ Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')
 
     // POST
     Route::post('/stores/switch/{store}', [StoreController::class, 'switch'])->name('stores.switch')->middleware('can:store-in-user,store');
+    Route::post('/stores/update-address/{store}', [StoreController::class, 'updateAddress'])->name('stores.updateAddress')->middleware('can:store-in-auth-user,store');
+    Route::post('/stores/createToken', [StoreController::class, 'storeToken'])->name('tokens.create');
+    Route::post('/stores/deleteToken/{webstoreToken}', [StoreController::class, 'deleteToken'])->name('tokens.delete');
 });
 
 Route::middleware('auth')->group(function () {

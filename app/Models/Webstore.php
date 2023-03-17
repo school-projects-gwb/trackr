@@ -9,6 +9,7 @@ class Webstore extends Model
 {
     use HasFactory;
 
+    protected $with = ['tokens'];
     protected $dates = [
         'created_at',
         'updated_at',

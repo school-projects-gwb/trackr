@@ -31,7 +31,8 @@ class CeateSipmentRequest extends FormRequest
             'data.*.postalcode' => 'required|regex:/^(?:NL-)?(\d{4})\s*([A-Z]{2})$/i',
             'data.*.city' => 'required|string',
             'data.*.country' => 'required|string',
-            'data.*.carrier' => 'required|string',
+            'data.*.
+            carrier' => 'required|string',
         ];
     }
 }
