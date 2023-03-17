@@ -49,7 +49,7 @@
                 @endforeach
             @endif
             <p class="ml-2 mb-2">{{count($data) }} {{__('resultaten')}}</p>
-            <form class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                     <tr>
@@ -125,7 +125,7 @@
                                                 <form class="" method="POST" action="{{route($baseRoute.'.delete', $item)}}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('POST')
-                                                    <x-button-secondary class="ml-2" type="submit">{{ __('Verwijder') }}</x-button-secondary>
+                                                    <x-button-secondary name="delete" class="ml-2" type="submit">{{ __('Verwijder') }}</x-button-secondary>
                                                 </form>
                                             @endif
                                         </div>
@@ -136,7 +136,7 @@
                     </tbody>
                 </table>
                 @if (count($selectable) > 0)
-                    </form>
+                    </div>
                 @endif
                 <div class="p-4">
                     {!! $pageLinks !!}

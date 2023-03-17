@@ -18,7 +18,7 @@
                         <label class="mt-4 font-bold text-lg" for="comment">Toelichting</label>
                         <textarea id="comment" name="comment" class="border-0 bg-white rounded-xl resize-none mb-4 w-full lg:w-1/2">{{ $shipment->review == null ? '' : $shipment->review->comment }}</textarea>
                         @if(!$shipment->review != null)
-                            <x-button-primary class="w-1/2">{{ __('Verstuur beoordeling') }}</x-button-primary>
+                            <x-button-primary name="submit" class="w-1/2">{{ __('Verstuur beoordeling') }}</x-button-primary>
                         @else
                             <p class="font-bold text-lg mt-4">Beoordeling verstuurd!</p>
                         @endif
@@ -74,7 +74,7 @@
                                 @csrf
                                 <input type="hidden" name="tracking_id" value="{{ $shipment->tracking_number }}" />
                                 <input type="hidden" name="postal_code" value="{{ $shipment->address->postal_code }}" />
-                                <x-button-secondary>{{ __('Bewaar bestelling') }}</x-button-secondary>
+                                <x-button-secondary name="save-shipment">{{ __('Bewaar bestelling') }}</x-button-secondary>
                             </form>
                         @else
                             <p class="text-gray-500 font-semibold">{{ __('Bestelling bewaard in account.') }}</p>

@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
@@ -11,6 +12,13 @@ use Laravel\Dusk\TestCase as BaseTestCase;
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
 
     /**
      * Prepare for Dusk test execution.

@@ -3,11 +3,14 @@
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class UserDashboardAccessTest extends DuskTestCase
 {
+    use RefreshDatabase;
+
     public function test_store_super_admin_menu_visibility()
     {
         $this->browse(function (Browser $browser) {
@@ -53,6 +56,20 @@ class UserDashboardAccessTest extends DuskTestCase
             $missing = ['#menu-user-management', '#menu-saved-shipments', '#menu-users', '#menu-webstores', '#menu-reviews'];
             // Log in as a user
             $browser->loginAs(3);
+            // Visit the page where the menu is located
+            $browser->visit('/dashboard');
+            $browser->assertVisible($this->stringify($visible));
+            $browser->assertMissing($this->stringify($missing));
+        });
+    }
+
+    public function test_customer_menu_visibility()
+    {
+        $this->browse(function (Browser $browser) {
+            $visible = ['#menu-dashboard', '#menu-saved-shipments'];
+            $missing = ['#menu-user-management', '#menu-shipments', '#menu-pickups', '#menu-users', '#menu-webstores', '#menu-reviews'];
+            // Log in as a user
+            $browser->loginAs(5);
             // Visit the page where the menu is located
             $browser->visit('/dashboard');
             $browser->assertVisible($this->stringify($visible));
