@@ -3,11 +3,14 @@
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class ShipmentTraceTest extends DuskTestCase
 {
+    use RefreshDatabase;
+
     public function test_valid_tracking_info_shows_tracking_page(): void
     {
         $trackingId = 'TRACKR1DH';

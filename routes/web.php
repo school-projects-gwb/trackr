@@ -76,7 +76,7 @@ Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')
         Route::post('/users/delete/{user}', [StoreUserController::class, 'delete'])->name('users.delete')->middleware('can:user-in-store,user');
 
         // REVIEW
-        Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview');
+        Route::get('/reviews', [ReviewController::class, 'overview'])->name('reviews.overview')->middleware('selected-store');
     });
 
 

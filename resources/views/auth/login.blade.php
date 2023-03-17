@@ -43,7 +43,7 @@
             </div>
 
             <div class="flex flex-col items-center mt-4">
-                <x-button-primary class="ml-3 w-full text-xl font-bold">
+                <x-button-primary class="ml-3 w-full text-xl font-bold" name="submit">
                     {{ __('Inloggen') }}
                 </x-button-primary>
 
