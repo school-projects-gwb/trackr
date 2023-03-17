@@ -11,7 +11,7 @@ class UserDashboardAccessTest extends DuskTestCase
 {
     use RefreshDatabase;
 
-    public function test_store_super_admin_menu_visibility()
+    public function testStoreSuperAdminMenuVisibility()
     {
         $this->browse(function (Browser $browser) {
             $visible = ['#menu-dashboard', '#menu-user-management'];
@@ -24,7 +24,7 @@ class UserDashboardAccessTest extends DuskTestCase
         });
     }
 
-    public function test_store_owner_menu_visibility()
+    public function testStoreOwnerMenuVisibility()
     {
         $this->browse(function (Browser $browser) {
             $visible = ['#menu-dashboard', '#menu-users', '#menu-webstores', '#menu-reviews', '#menu-shipments', '#menu-pickups'];
@@ -36,7 +36,7 @@ class UserDashboardAccessTest extends DuskTestCase
         });
     }
 
-    public function test_store_admin_menu_visibility()
+    public function testStoreAdminMenuVisibility()
     {
         $this->browse(function (Browser $browser) {
             $visible = ['#menu-dashboard', '#menu-shipments', '#menu-pickups'];
@@ -49,7 +49,7 @@ class UserDashboardAccessTest extends DuskTestCase
         });
     }
 
-    public function test_store_packer_menu_visibility()
+    public function testStorePackerMenuVisibility()
     {
         $this->browse(function (Browser $browser) {
             $visible = ['#menu-dashboard', '#menu-shipments', '#menu-pickups'];
@@ -63,7 +63,7 @@ class UserDashboardAccessTest extends DuskTestCase
         });
     }
 
-    public function test_customer_menu_visibility()
+    public function testCustomerMenuVisibility()
     {
         $this->browse(function (Browser $browser) {
             $visible = ['#menu-dashboard', '#menu-saved-shipments'];

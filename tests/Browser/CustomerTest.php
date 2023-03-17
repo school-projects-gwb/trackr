@@ -13,7 +13,7 @@ class CustomerTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function test_can_save_shipment(): void
+    public function testCanSaveShipment(): void
     {
         $this->browse(function (Browser $browser) {
             $trackingId = 'TRACKR1DH';
@@ -34,7 +34,7 @@ class CustomerTest extends DuskTestCase
         });
     }
 
-    public function test_can_remove_saved_shipment(): void
+    public function testCanRemoveSavedShipment(): void
     {
         $this->browse(function (Browser $browser) {
             $trackingId = 'TRACKR1DH';
@@ -57,7 +57,7 @@ class CustomerTest extends DuskTestCase
         });
     }
 
-    public function test_can_review_shipment(): void
+    public function testCanReviewShipment(): void
     {
         $shipment = Shipment::create([
             'weight' => '2',

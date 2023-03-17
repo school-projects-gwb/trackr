@@ -10,7 +10,7 @@ class AdminTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function test_create_user_valid(): void
+    public function testCreateUserValid(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
@@ -28,7 +28,7 @@ class AdminTest extends DuskTestCase
         });
     }
 
-    public function test_create_user_invalid(): void
+    public function testCreateUserInvalid(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
@@ -42,7 +42,7 @@ class AdminTest extends DuskTestCase
         });
     }
 
-    public function test_edit_user_valid(): void
+    public function testEditUserValid(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)
@@ -57,7 +57,7 @@ class AdminTest extends DuskTestCase
         });
     }
 
-    public function test_edit_user_email_invalid(): void
+    public function testEditUserEmailInvalid(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(1)

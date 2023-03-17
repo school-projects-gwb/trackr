@@ -11,7 +11,7 @@ class ShipmentTraceTest extends DuskTestCase
 {
     use RefreshDatabase;
 
-    public function test_valid_tracking_info_shows_tracking_page(): void
+    public function testValidTrackingInfoShowsTrackingPage(): void
     {
         $trackingId = 'TRACKR1DH';
         $postalCode = '5555 CW';
@@ -25,7 +25,7 @@ class ShipmentTraceTest extends DuskTestCase
         });
     }
 
-    public function test_invalid_tracking_info_shows_notfound_page(): void
+    public function testInvalidTrackingInfoShowsNotfoundPage(): void
     {
         $trackingId = 'TRACKR1DHinvalidinfo';
         $postalCode = '5555 CWinvalidpostalcode';

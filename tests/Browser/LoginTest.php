@@ -11,7 +11,7 @@ class LoginTest extends DuskTestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_login_correct(): void
+    public function testAdminLoginCorrect(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
@@ -24,7 +24,7 @@ class LoginTest extends DuskTestCase
         });
     }
 
-    public function test_store_user_correct(): void
+    public function testStoreUserCorrect(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
@@ -36,7 +36,7 @@ class LoginTest extends DuskTestCase
             $browser->logout();
         });
     }
-    public function test_login_incorrect(): void
+    public function testLoginIncorrect(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')

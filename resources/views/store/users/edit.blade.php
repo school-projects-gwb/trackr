@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="flex items-center mt-8">
-                    <x-button-primary>
+                    <x-button-primary name="submit">
                         {{ __('Gebruiker opslaan') }}
                     </x-button-primary>
                 </div>

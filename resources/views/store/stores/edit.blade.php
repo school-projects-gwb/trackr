@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="flex items-center mt-8">
-                    <x-button-primary>
+                    <x-button-primary name="submit-name">
                         {{ __('Basisgegevens opslaan') }}
                     </x-button-primary>
                 </div>
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="flex items-center mt-8">
-                    <x-button-primary>
+                    <x-button-primary name="submit-address">
                         {{ __('Adresgegevens opslaan') }}
                     </x-button-primary>
                 </div>
