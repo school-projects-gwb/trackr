@@ -13,7 +13,7 @@ use Tests\DuskTestCase;
  */
 class ShipmentTrackingTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * Make sure tracking page shows correct shipment info

@@ -12,6 +12,8 @@ use Tests\DuskTestCase;
  */
 class StoreSwitchTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     public function testStoreSwitchValid(): void
     {
         $this->browse(function (Browser $browser) {

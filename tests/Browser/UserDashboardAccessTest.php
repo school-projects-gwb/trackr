@@ -13,7 +13,7 @@ use Tests\DuskTestCase;
  */
 class UserDashboardAccessTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function testStoreSuperAdminMenuVisibility()
     {

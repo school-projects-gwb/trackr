@@ -13,7 +13,7 @@ use Tests\DuskTestCase;
  */
 class LoginTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * Make sure admin can log in
