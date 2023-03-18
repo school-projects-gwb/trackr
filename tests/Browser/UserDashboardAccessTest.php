@@ -7,6 +7,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests ability to see, and not see, correct dashboard menu links for each role
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class UserDashboardAccessTest extends DuskTestCase
 {
     use RefreshDatabase;

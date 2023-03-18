@@ -6,10 +6,19 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests Store User functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class StoreUserTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * Make sure user with correct info can be created
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateUserValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -30,6 +39,11 @@ class StoreUserTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure user with incorrect info cannot be created
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateUserInvalid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -46,6 +60,11 @@ class StoreUserTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure user with correct info can be edited
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditUserValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -61,6 +80,11 @@ class StoreUserTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure user with incorrect info cannot be edited
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditUserInvalid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -76,6 +100,11 @@ class StoreUserTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure user can be deleted
+     * @return void
+     * @throws \Throwable
+     */
     public function testDeleteUser(): void
     {
         $this->browse(function (Browser $browser) {

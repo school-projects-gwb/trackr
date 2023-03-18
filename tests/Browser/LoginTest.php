@@ -7,10 +7,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests Login functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class LoginTest extends DuskTestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Make sure admin can log in
+     * @return void
+     * @throws \Throwable
+     */
     public function testAdminLoginCorrect(): void
     {
         $this->browse(function (Browser $browser) {
@@ -24,7 +33,12 @@ class LoginTest extends DuskTestCase
         });
     }
 
-    public function testStoreUserCorrect(): void
+    /**
+     * Make sure store owner can log in
+     * @return void
+     * @throws \Throwable
+     */
+    public function testStoreOwnerCorrect(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
@@ -36,6 +50,12 @@ class LoginTest extends DuskTestCase
             $browser->logout();
         });
     }
+
+    /**
+     * Make sure logging in with incorrect info fails
+     * @return void
+     * @throws \Throwable
+     */
     public function testLoginIncorrect(): void
     {
         $this->browse(function (Browser $browser) {

@@ -39,7 +39,7 @@
                             @endif
                         </div>
                     @endforeach
-                    <x-button-primary type="submit">{{ __('Filters toepassen') }}</x-button-primary>
+                    <x-button-primary name="apply-filters" type="submit">{{ __('Filters toepassen') }}</x-button-primary>
                 @endif
             </form>
             @if (count($selectable) > 0)

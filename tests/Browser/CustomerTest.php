@@ -9,10 +9,20 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests all Customer functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class CustomerTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * Make sure logged in customer can save shipment
+     * and gets redirected to overview page on dashboard
+     * @return void
+     * @throws \Throwable
+     */
     public function testCanSaveShipment(): void
     {
         $this->browse(function (Browser $browser) {
@@ -34,6 +44,12 @@ class CustomerTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure logged in customer can remove saved shipment
+     * and gets redirected to overview page on dashboard
+     * @return void
+     * @throws \Throwable
+     */
     public function testCanRemoveSavedShipment(): void
     {
         $this->browse(function (Browser $browser) {
@@ -57,6 +73,11 @@ class CustomerTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure user can review Delivered shipment
+     * @return void
+     * @throws \Throwable
+     */
     public function testCanReviewShipment(): void
     {
         $shipment = Shipment::create([
@@ -67,9 +88,6 @@ class CustomerTest extends DuskTestCase
             'tracking_number' => 'REVIEWABLE'
         ]);
 
-        $shipment->save();
-
-        $registeredStatus = new ShipmentStatus(['status' => 'registered']);
         $printedStatus = new ShipmentStatus(['status' => 'printed']);
         $sortedStatus = new ShipmentStatus(['status' => 'sorting']);
         $transitStatus = new ShipmentStatus(['status' => 'transit']);

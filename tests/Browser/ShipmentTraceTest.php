@@ -7,10 +7,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class ShipmentTraceTest extends DuskTestCase
+/**
+ * Tests Shipment tracking functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
+class ShipmentTrackingTest extends DuskTestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Make sure tracking page shows correct shipment info
+     * @return void
+     * @throws \Throwable
+     */
     public function testValidTrackingInfoShowsTrackingPage(): void
     {
         $trackingId = 'TRACKR1DH';
@@ -25,6 +34,11 @@ class ShipmentTraceTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure invalid tracking info shows not found page
+     * @return void
+     * @throws \Throwable
+     */
     public function testInvalidTrackingInfoShowsNotfoundPage(): void
     {
         $trackingId = 'TRACKR1DHinvalidinfo';

@@ -48,7 +48,7 @@
                         </tbody>
                 </table>
                 <x-input-error :messages="$errors->get('carrier_id')" class="mt-2" />
-                <x-button-primary class="mt-8" type="submit">{{ __('Labels genereren') }}</x-button-primary>
+                <x-button-primary class="mt-8" type="submit" name="submit">{{ __('Labels genereren') }}</x-button-primary>
             </form>
             </div>
         </div>

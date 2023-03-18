@@ -6,10 +6,19 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests all SuperAdmin functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class AdminTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * Make sure creation user with correct form info fails and redirects back to overview.
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateUserValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -28,6 +37,11 @@ class AdminTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure creation user with incorrect form info fails and redirects back to form page.
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateUserInvalid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -42,6 +56,11 @@ class AdminTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure editing user with correct form info works and redirects back to overview page.
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditUserValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -57,6 +76,11 @@ class AdminTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure editing user with incorrect email fails and redirects back to form page.
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditUserEmailInvalid(): void
     {
         $this->browse(function (Browser $browser) {

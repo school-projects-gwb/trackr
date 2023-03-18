@@ -6,10 +6,19 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
+/**
+ * Tests Store functionality
+ * Requires correct seeding data from @see DatabaseSeeder
+ */
 class StoreTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * Make sure store with correct form info can be created
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateStoreValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -36,6 +45,11 @@ class StoreTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure store with incorrect form info cannot be created
+     * @return void
+     * @throws \Throwable
+     */
     public function testCreateStoreInvalid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -54,6 +68,11 @@ class StoreTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure store with correct name can be edited
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditStoreNameValid(): void
     {
         $this->browse(function (Browser $browser) {
@@ -69,6 +88,11 @@ class StoreTest extends DuskTestCase
         });
     }
 
+    /**
+     * Make sure store with correct address can be edited
+     * @return void
+     * @throws \Throwable
+     */
     public function testEditStoreAddressValid(): void
     {
         $this->browse(function (Browser $browser) {
