@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Customer\TrackingController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Store\LabelController;
 use App\Http\Controllers\Store\PickupController;
@@ -30,6 +31,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 // Customers
 Route::get('customer/tracking/overview-tracking', [TrackingController::class, 'overviewTracking'])->name('customer.tracking.overview-tracking');

@@ -38,5 +38,6 @@
     </div>
     {{ $slot }}
 </main>
+<x-language-switcher class="bottom-0 right-0"></x-language-switcher>
 </body>
 </html>

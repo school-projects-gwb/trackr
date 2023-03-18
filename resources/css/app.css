@@ -33,3 +33,41 @@ html, body {
     margin-left: -2.75rem;
     @apply absolute bg-secondary p-2.5 rounded-full;
 }
+
+.mode-toggler {
+    transition: .25s;
+    @apply absolute bg-secondary h-8 bottom-8 left-8 right-8 rounded-lg;
+}
+
+.text-left-switcher {
+    z-index: 30;
+    position: absolute;
+    @apply bottom-9 left-16 pointer-events-none font-bold text-white;
+}
+
+.text-right-switcher {
+    z-index: 30;
+    position: absolute;
+    @apply right-14 bottom-9 pointer-events-none font-bold text-white;
+}
+
+.mode-toggler:hover {
+    cursor: pointer;
+}
+
+.mode-toggler .mode-toggler-input {
+    visibility: hidden;
+}
+
+.mode-toggler .mode-toggler-ball {
+    @apply h-7 w-1/2 rounded-lg mt-0.5 ml-0.5 bg-darkgray;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: .25s;
+}
+
+.mode-toggler .mode-toggler-input:checked ~ .mode-toggler-ball {
+    transform: translateX(calc(100% - 4px));
+}
