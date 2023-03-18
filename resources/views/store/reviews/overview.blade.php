@@ -8,7 +8,7 @@
         </div>
         <x-table
             :data="$reviews->items()"
-            :headers="['ID', 'Beoordeling', 'Commentaar', 'Geplaatst op', 'Pakket ID']"
+            :headers="['ID', __('Beoordeling'), __('Commentaar'), __('Geplaatst op'), __('Pakket ID')]"
             :fields="['id', 'rating', 'comment', 'created_at', 'shipment_id']"
             :baseRoute="'store.reviews'"
             :pageLinks="$reviews->links()"

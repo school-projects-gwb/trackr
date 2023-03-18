@@ -2,7 +2,7 @@
     <div @click.away="open = false" class="relative" x-data="{ open: false }">
         <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-2 mt-2 text-sm font-semibold bg-transparent border rounded-lg hover:text-primary focus:text-primary hover:bg-primary focus:bg-primary focus:outline-none focus:shadow-outline">
             <div class="flex flex-col text-left">
-                <span class="font-semibold text-md text-black">Geselecteerde winkel</span>
+                <span class="font-semibold text-md text-black">{{__('Geselecteerde winkel')}}</span>
                 <span class="text-gray-600 text-lg" id="selected-store">{{ $selectedStore->name }}</span>
             </div>
             <svg fill="black" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="ml-2 inline w-8 h-8 transition-transform duration-200 transform"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>

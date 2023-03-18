@@ -5,7 +5,7 @@
         <form class="w-11/12 lg:w-1/2" method="POST" action="{{ route('login') }}">
             @csrf
             <a href="/" class="underline font-semibold text-sm">{{ __('Terug naar Home') }}</a>
-            <h1 class="text-4xl font-semibold">Inloggen</h1>
+            <h1 class="text-4xl font-semibold">{{__('Inloggen')}}</h1>
 
             <div class="mt-8">
                 <x-input-label class="text-lg text-black" for="email" :value="__('Emailadres')" />
@@ -44,7 +44,7 @@
                 </x-button-primary>
 
                 <div class="mt-2">
-                    Nog geen account? <a class="underline font-semibold" href="/register">Registreren</a>
+                    {{ __('Nog geen account?') }} <a class="underline font-semibold" href="/register">{{__('Registreren')}}</a>
                 </div>
             </div>
         </form>

@@ -20,7 +20,7 @@
                         @if(!$shipment->review != null)
                             <x-button-primary name="submit" class="w-1/2">{{ __('Verstuur beoordeling') }}</x-button-primary>
                         @else
-                            <p class="font-bold text-lg mt-4">Beoordeling verstuurd!</p>
+                            <p class="font-bold text-lg mt-4">{{ __('Beoordeling verstuurd!') }}</p>
                         @endif
                     </form>
                 </div>

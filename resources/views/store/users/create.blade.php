@@ -1,6 +1,6 @@
 <x-admin-layout>
     @section('title', __( 'Gebruiker aanmaken'))
-    <h1 class="text-3xl font-semibold tracking-tight">Gebruiker aanmaken</h1>
+    <h1 class="text-3xl font-semibold tracking-tight">{{__('Gebruiker aanmaken')}}</h1>
 
     <div class="bg-primary overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">
         <div class="flex p-2">
@@ -38,7 +38,7 @@
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <x-input-label for="password_confirmation" :value="__('Bevestig wachtwoord')" />
+                    <x-input-label for="password_confirmation" :value="__('Wachtwoord Herhaald')" />
 
                     <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                   type="password"
@@ -48,8 +48,8 @@
                 </div>
 
                 <div class="mt-4 flex flex-col mt-4">
-                    <h2 class="text-xl font-semibold">Webwinkels</h2>
-                    <p class="text-sm mb-2">Voeg je gebruiker minimaal aan één webwinkel toe.</p>
+                    <h2 class="text-xl font-semibold">{{__('Webwinkels')}}</h2>
+                    <p class="text-sm mb-2">{{__('Voeg je gebruiker minimaal aan één webwinkel toe.')}}</p>
                     @foreach ($stores as $store)
                         <div class="my-0.5">
                             <input class="mr-1" id="{{ $store->name . $store->id }}" type="checkbox" name="store_id[]" value="{{ $store->id  }}" />
@@ -60,8 +60,8 @@
                 </div>
 
                 <div class="mt-4 flex flex-col mt-4">
-                    <h2 class="text-xl font-semibold">Rollen</h2>
-                    <p class="text-sm mb-2">Geef je gebruiker een rol.</p>
+                    <h2 class="text-xl font-semibold">{{__('Rollen')}}</h2>
+                    <p class="text-sm mb-2">{{__('Geef je gebruiker een rol.')}}</p>
                     @foreach ($roles as $role)
                         <div class="my-0.5">
                             <input class="mr-1" id="{{ $role->name . $role->id }}" type="radio" name="role_id" value="{{ $role->id  }}" />

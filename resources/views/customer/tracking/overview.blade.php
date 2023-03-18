@@ -1,5 +1,5 @@
 <x-admin-layout>
-    @section('title', __( 'Tracking overzicht'))
+    @section('title', __( 'Bewaarde bestellingen'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Bewaarde bestellingen') }}</h1>
 
     <div class="flex flex-col mt-8">
@@ -9,7 +9,7 @@
 
         <x-table
             :data="$shipments->items()"
-            :headers="['TrackR ID', 'Huidige status', 'Acties']"
+            :headers="['TrackR ID', __('Huidige status'), __('Acties')]"
             :fields="['tracking_number', 'ShipmentStatuses']"
             :baseRoute="'customer.tracking'"
             :pageLinks="$shipments->links()"

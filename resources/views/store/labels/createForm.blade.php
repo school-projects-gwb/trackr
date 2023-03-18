@@ -7,8 +7,8 @@
             </div>
 
             <div class="mt-4 flex flex-col mt-8 pl-8">
-                <h2 class="text-xl font-semibold">Pakketten</h2>
-                <p class="text-sm mb-2">De pakket ID's waarvoor de labels zullen worden aangemaakt: </p>
+                <h2 class="text-xl font-semibold">{{__('Pakketten')}}</h2>
+                <p class="text-sm mb-2">{{__('De pakket IDs waarvoor de labels zullen worden aangemaakt:')}}</p>
                 <div>
                     @foreach ($shipments as $shipment)
                         <span class="bg-gray-100 px-2 mx-1 py-1 rounded-full uppercase text-sm">{{ $shipment->id }}</span>
@@ -17,8 +17,7 @@
             </div>
 
             <div class="mt-4 flex flex-col mt-8 pl-8">
-                <h2 class="text-xl font-semibold">Selecteer verzender</h2>
-                <p class="text-sm mb-2">De pakketten waarvoor de labels zullen worden aangemaakt.</p>
+                <h2 class="text-xl font-semibold">{{__('Selecteer verzender')}}</h2>
             <form action="{{route('store.labels.create')}}" method="POST">
                 @csrf
                 <table class="min-w-full divide-y divide-gray-200">

@@ -4,7 +4,7 @@
         <form class="w-11/12 lg:w-1/2" method="POST" action="{{ route('register') }}">
             @csrf
             <a href="/" class="underline font-semibold text-sm">{{ __('Terug naar Home') }}</a>
-            <h1 class="text-4xl font-semibold">Registreren</h1>
+            <h1 class="text-4xl font-semibold">{{__('Registreren')}}</h1>
 
             <div class="mt-8">
                 <x-input-label for="name" :value="__('Naam')" />

@@ -22,14 +22,14 @@
             <div>
                 @if(!Route::is('login') )
                     @guest
-                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('login')">Inloggen</x-link-secondary>
+                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('login')">{{ __('Inloggen') }}</x-link-secondary>
                     @endguest
 
                     @auth
                         @role('SuperAdmin')
-                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('admin.dashboard')">Mijn TrackR</x-link-secondary>
+                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('admin.dashboard')">{{ __('Mijn TrackR') }}</x-link-secondary>
                     @else
-                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('dashboard')">Mijn TrackR</x-link-secondary>
+                        <x-link-secondary class="font-bold text-xl px-8 px-2 rounded-xl" :href="route('dashboard')">{{ __('Mijn TrackR') }}</x-link-secondary>
                         @endrole
                     @endauth
                 @endif

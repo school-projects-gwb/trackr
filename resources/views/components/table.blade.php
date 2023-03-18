@@ -23,12 +23,12 @@
                         <div class="flex flex-col w-2/12 px-2">
                             @if (!is_array($filter))
                                 <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ strtoupper($key)}}
+                                    {{ __(strtoupper($key))}}
                                 </label>
                                 <x-text-input-border name="{{ $key }}" value="{{$filter}}"></x-text-input-border>
                             @else
                                 <label class="mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ strtoupper($key)}}
+                                    {{ __(strtoupper($key))}}
                                 </label>
                                 <select name="{{ $key }}" class="border-gray-300 rounded-xl">
                                     <option value="">{{ __('Alles') }}</option>

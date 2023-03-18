@@ -1,4 +1,5 @@
 <x-admin-layout>
+    @section('title', __( 'Gebruikersbeheer'))
     <h1 class="text-3xl font-semibold tracking-tight">{{ __('Gebruikersbeheer') }}</h1>
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">
@@ -8,7 +9,7 @@
 
         <x-table
         :data="$users->items()"
-        :headers="['Naam', 'Emailadres', 'Acties']"
+        :headers="[__('Naam'), __('Emailadres'), __('Acties')]"
         :fields="['name', 'email']"
         :baseRoute="'admin.users'"
         :pageLinks="$users->links()"

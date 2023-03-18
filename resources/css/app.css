@@ -39,6 +39,10 @@ html, body {
     @apply absolute bg-secondary h-8 bottom-8 left-8 right-8 rounded-lg;
 }
 
+.sidenav .mode-toggler {
+    @apply bg-darkgray;
+}
+
 .text-left-switcher {
     z-index: 30;
     position: absolute;
@@ -66,6 +70,10 @@ html, body {
     top: 0;
     left: 0;
     transition: .25s;
+}
+
+.sidenav .mode-toggler .mode-toggler-ball {
+    @apply bg-secondary;
 }
 
 .mode-toggler .mode-toggler-input:checked ~ .mode-toggler-ball {

@@ -1,4 +1,4 @@
-<form id="switch-form" method="POST" action="{{ route('language.switch', $possibleLanguage['locale']) }}" {{ $attributes->merge(['class' => 'absolute w-52']) }}>
+<form id="switch-form" method="POST" action="{{ route('language.switch', $possibleLanguage['locale']) }}" {{ $attributes->merge(['class' => 'fixed w-52']) }}>
     @csrf
     <span class="text-left-switcher flex items-center">
         {{ 'NL' }}

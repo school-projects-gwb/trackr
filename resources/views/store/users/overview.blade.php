@@ -9,7 +9,7 @@
 
         <x-table
             :data="$users->items()"
-            :headers="['Naam', 'Emailadres', 'Toegang winkels', 'Rollen', 'Acties']"
+            :headers="[__('Naam'), __('Emailadres'), __('Toegang winkels'), __('Rollen'), __('Acties')]"
             :fields="['name', 'email', 'stores', 'getRoleNames']"
             :baseRoute="'store.users'"
             :pageLinks="$users->links()"

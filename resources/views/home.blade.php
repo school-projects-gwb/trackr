@@ -4,7 +4,7 @@
         <div class="flex flex-col w-11/12 xl:w-11/12">
             <div class="flex flex-col items-center xl:items-start mt-8">
                 <h1 class="text-4xl font-bold tracking-tight">Track & Trace</h1>
-                <h3 class="mt-2 text-xl">Vul je gegevens in om je pakket in te zien!</h3>
+                <h3 class="mt-2 text-xl">{{__('Vul je gegevens in om je pakket in te zien!')}}</h3>
             </div>
             <form method="get" action="{{ route('customer.tracking.overview-tracking') }}" class="flex flex-col xl:flex-row items-center xl:items-end mt-8">
                 <div class="w-3/4 xl:w-6/12 flex flex-col mr-0 xl:mr-4">

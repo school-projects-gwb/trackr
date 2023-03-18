@@ -11,22 +11,22 @@ enum ShipmentStatusEnum: string{
 
     public function getDescription(): string {
         return match ($this) {
-            self::Registered => 'Ingevoerd in ons systeem.',
-            self::Printed => 'Aangemeld bij de bezorger.',
-            self::Sorting => 'Verwerkt in het sorteercentrum van de bezorger.',
-            self::Transit => 'Onderweg met de bezorger.',
-            self::Delivered => 'Bezorgd.',
+            self::Registered => __('Ingevoerd in ons systeem.'),
+            self::Printed => __('Aangemeld bij de bezorger.'),
+            self::Sorting => __('Verwerkt in het sorteercentrum van de bezorger.'),
+            self::Transit => __('Onderweg met de bezorger.'),
+            self::Delivered => __('Bezorgd.'),
             default => $this->value,
         };
     }
 
     public function getShortLabel(): string {
         return match ($this) {
-            self::Registered => 'Geregistreerd',
-            self::Printed => 'Aangemeld',
-            self::Sorting => 'Gesorteerd',
-            self::Transit => 'Onderweg',
-            self::Delivered => 'Bezorgd',
+            self::Registered => __('Geregistreerd'),
+            self::Printed => __('Aangemeld'),
+            self::Sorting => __('Gesorteerd'),
+            self::Transit => __('Onderweg'),
+            self::Delivered => __('Bezorgd'),
             default => $this->value,
         };
     }

@@ -12,7 +12,7 @@
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
 
-                        <span>Paketten Importeren</span>
+                        <span>{{__('Paketten Importeren')}}</span>
                     </button>
 
                     <div x-show="modelOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -37,7 +37,7 @@
                                  class="inline-block w-full max-w-xl p-8 my-20 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl"
                             >
                                 <div class="flex items-center justify-between space-x-4">
-                                    <h1 class="text-xl font-medium text-gray-800 ">Importeer CSV</h1>
+                                    <h1 class="text-xl font-medium text-gray-800 ">{{__('Importeer CSV')}}</h1>
 
                                     <button @click="modelOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -51,7 +51,7 @@
                                         <input type="file" name="csvFile">
                                     </div>
 
-                                    <button class="px-4 py-2 bg-secondary hover:bg-secondary-light text-primary rounded-md cursor-pointer w-2/5">Importeer Paketten</button>
+                                    <button class="px-4 py-2 bg-secondary hover:bg-secondary-light text-primary rounded-md cursor-pointer w-2/5">{{__('Importeer Pakketten')}}</button>
                                 </form>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
         </div>
         <x-table
             :data="$shipments->items()"
-            :headers="['ID', 'Tracking Number', 'Status', 'Vervoerder', 'Datum creatie', 'Acties']"
+            :headers="['ID', 'Tracking Number', 'Status', __('Vervoerder'), __('Datum creatie'), __('Acties')]"
             :fields="['id', 'tracking_number', 'ShipmentStatuses', 'carrier', 'created_at']"
             :baseRoute="'store.shipments'"
             :pageLinks="$shipments->links()"

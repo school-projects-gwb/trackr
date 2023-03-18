@@ -1,5 +1,6 @@
 <x-admin-layout>
-    <h1 class="text-3xl font-semibold tracking-tight">Gebruiker aanmaken</h1>
+    @section('title', __( 'Gebruiker aanmaken'))
+    <h1 class="text-3xl font-semibold tracking-tight">{{__('Terug naar overzicht')}}</h1>
 
     <div class="bg-primary overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">
         <div class="flex p-2">
@@ -37,7 +38,7 @@
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <x-input-label for="password_confirmation" :value="__('Bevestig wachtwoord')" />
+                    <x-input-label for="password_confirmation" :value="__('Wachtwoord Herhaald')" />
 
                     <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                   type="password"

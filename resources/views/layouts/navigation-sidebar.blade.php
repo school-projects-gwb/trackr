@@ -74,3 +74,5 @@
 
 
 </nav>
+
+<x-language-switcher class="bottom-0 left-0 sidenav"></x-language-switcher>

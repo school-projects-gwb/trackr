@@ -17,8 +17,8 @@
                 </div>
 
                 <div class="mt-4 flex flex-col mt-8">
-                    <h2 class="text-xl font-semibold">Gebruikers</h2>
-                    <p class="text-sm mb-2">Gebruikers die toegang hebben tot deze winkel.</p>
+                    <h2 class="text-xl font-semibold">{{__('Gebruikers')}}</h2>
+                    <p class="text-sm mb-2">{{__('Gebruikers die toegang hebben tot deze winkel.')}}</p>
 
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -42,7 +42,7 @@
                                     @endforeach
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <a class="underline font-semibold" target="_blank" href="{{route('store.users.edit', $user)}}">Naar gebruiker</a>
+                                    <a class="underline font-semibold" target="_blank" href="{{route('store.users.edit', $user)}}">{{__('Naar gebruiker')}}</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -117,7 +117,7 @@
             <div class="flex flex-row justify-between">
                 <div>
                     <h2 class="text-xl font-semibold">{{ __('API Tokens') }}</h2>
-                    <p class="text-sm mb-2">Web API tokens die toegang hebben tot de data van deze webwinkel</p>
+                    <p class="text-sm mb-2">{{__('Web API tokens die toegang hebben tot de data van deze webwinkel')}}</p>
                 </div>
                 <div x-data="{ modelOpen: false }">
                     <button @click="modelOpen =!modelOpen" class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide px-4 py-2 bg-secondary hover:bg-secondary-light text-primary rounded-md cursor-pointer">
@@ -125,7 +125,7 @@
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
 
-                        <span>Token Aanmaken</span>
+                        <span>{{__('Token Aanmaken')}}</span>
                     </button>
 
                     <div x-show="modelOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -161,8 +161,8 @@
                                 <form class="mt-5 flex flex-col" method="post" action="{{ route('store.tokens.create') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="flex flex-col mb-4">
-                                        <h2 class="text-xl font-semibold">Rollen</h2>
-                                        <p class="text-sm mb-2">Wijs een rol toe aan de API token</p>
+                                        <h2 class="text-xl font-semibold">{{__('Rollen')}}</h2>
+                                        <p class="text-sm mb-2">{{__('Wijs een rol toe aan de API token')}}</p>
                                         <input type="hidden" value="{{$store->id}}" name="store_id">
                                         @foreach ($roles as $role)
                                             <div class="my-0.5">
@@ -173,7 +173,7 @@
                                         <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
                                     </div>
 
-                                    <button class="px-4 py-2 bg-secondary hover:bg-secondary-light text-primary rounded-md cursor-pointer w-2/5">Aanmaken</button>
+                                    <button class="px-4 py-2 bg-secondary hover:bg-secondary-light text-primary rounded-md cursor-pointer w-2/5">{{__('Aanmaken')}}</button>
                                 </form>
                             </div>
                         </div>
@@ -182,8 +182,8 @@
             </div>
             @if(session('storeSuccess'))
                 <div class="mb-4 bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-3" role="alert">
-                    <p class="font-bold">Belangrijke Informatie</p>
-                    <p class="text-sm">Dit zijn de gegevens van uw aangemaakte API Token. Na dat u deze pagina herlaad zijn de gegevens niet meer beschikbaar</p>
+                    <p class="font-bold">{{__('Belangrijke Informatie')}}</p>
+                    <p class="text-sm">{{__('Dit zijn de gegevens van uw aangemaakte API Token. Na dat u deze pagina herlaad zijn de gegevens niet meer beschikbaar')}}</p>
                     <ul>
                         <li>Api Token: {{ session('tokenId') }}:{{ session('tokenString') }}</li>
                         <li>Role: {{ session('tokenRole') }}</li>
@@ -216,7 +216,7 @@
                             <form class="" method="POST" action="{{route('store.tokens.delete', $webstoreToken->id)}}" onsubmit="return confirm('Are you sure?');">
                                 @csrf
                                 @method('POST')
-                                <button type="submit" class="underline font-semibold">Verwijder Token</button>
+                                <button type="submit" class="underline font-semibold">{{__('Verwijder Token')}}</button>
 
                             </form>
                         </td>

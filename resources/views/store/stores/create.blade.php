@@ -1,6 +1,6 @@
 <x-admin-layout>
-    @section('title', __( 'Webwinkel'))
-    <h1 class="text-3xl font-semibold tracking-tight">Webwinkel aanmaken</h1>
+    @section('title', __( 'Webwinkel aanmaken'))
+    <h1 class="text-3xl font-semibold tracking-tight">{{__('Webwinkel aanmaken')}}</h1>
 
     <div class="bg-primary overflow-hidden shadow-sm sm:rounded-lg p-2 mt-4">
         <div class="flex p-2">
@@ -11,7 +11,7 @@
             <form method="POST" action="{{ route('store.stores.store') }}">
                 @csrf
                 <div>
-                    <x-input-label for="name" :value="__('Naam winkel')" />
+                    <x-input-label for="name" :value="__('Naam')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>

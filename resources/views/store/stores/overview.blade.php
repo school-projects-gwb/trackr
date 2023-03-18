@@ -8,7 +8,7 @@
         </div>
         <x-table
             :data="$stores->items()"
-            :headers="['Naam', 'Datum laatste update', 'Datum creatie', 'Acties']"
+            :headers="[__('Naam'), __('Datum laatste update'), __('Datum creatie'), __('Acties')]"
             :fields="['name', 'updated_at', 'created_at']"
             :baseRoute="'store.stores'"
             :pageLinks="$stores->links()"
