@@ -16,9 +16,15 @@ class WebstoreSeeder extends Seeder
     public function run()
     {
         Webstore::create([
-           'name' => 'Test Store',
+           'name' => 'Dol.Bom',
            'owner_id' => 2,
            'address_id' => 1
+        ])->users()->attach([2, 3, 4]);
+
+        Webstore::create([
+            'name' => 'MarktMedia',
+            'owner_id' => 2,
+            'address_id' => 1
         ])->users()->attach([2, 3, 4]);
     }
 }
