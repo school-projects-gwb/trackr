@@ -21,5 +21,7 @@
             </form>
         </div>
     </div>
-    <div class="min-h-full w-full xl:w-1/2 bg-secondary-lighter"></div>
+    <div class="min-h-full w-full xl:w-1/2 bg-secondary-lighter flex items-center justify-center">
+        <img src="{{ asset('images/connected.svg') }}">
+    </div>
 </x-site-layout>
