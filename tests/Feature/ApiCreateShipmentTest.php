@@ -58,7 +58,7 @@ class ApiCreateShipmentTest extends TestCase
         ]);
     }
 
-    public function testShipmentCreateBearerInvalid()
+    public function testShipmentCreateBearerTokenInvalid()
     {
         $shipmentData = [
             "data" => [
@@ -87,6 +87,45 @@ class ApiCreateShipmentTest extends TestCase
             ->json('POST', '/api/shipment/create', $shipmentData);
 
         $response->assertStatus(401);
+
+        $this->assertDatabaseMissing('shipments', [
+            'weight' => '567.0',
+        ]);
+    }
+
+    public function testShipmentCreateBearerStoreInvalid()
+    {
+        $shipmentData = [
+            "data" => [
+                [
+                    "weight" => "567.0",
+                    "streetname" => "fsdfsdfsfs",
+                    "housenumber" => "54",
+                    "postalcode" => "2751av",
+                    "city" => "Zoetermeer",
+                    "country" => "Netherlands"
+                ],
+                [
+                    "weight" => "567.0",
+                    "streetname" => "fsdfsdfsfs",
+                    "housenumber" => "50",
+                    "postalcode" => "2751av",
+                    "city" => "Zoetermeer",
+                    "country" => "Netherlands"
+                ]
+            ]
+        ];
+
+        $token = "2:670511b9d8e2a87093c7f50d1a07bb75e0412f9f2ef406205acc66628498f231xx";
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('POST', '/api/shipment/create', $shipmentData);
+
+        $response->assertStatus(401);
+
+        $this->assertDatabaseMissing('shipments', [
+            'weight' => '567.0',
+        ]);
     }
 
     public function testShipmentCreateIncompleteShipmentData()
@@ -113,5 +152,9 @@ class ApiCreateShipmentTest extends TestCase
             ->json('POST', '/api/shipment/create', $shipmentData);
 
         $response->assertStatus(422);
+
+        $this->assertDatabaseMissing('shipments', [
+            'weight' => '567.0',
+        ]);
     }
 }
