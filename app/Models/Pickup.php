@@ -18,6 +18,7 @@ class Pickup extends Model
     protected $fillable = [
         'pickup_moment',
         'carrier_id',
+        'webstore_id',
         'created_at',
         'updated_at',
     ];
@@ -25,5 +26,15 @@ class Pickup extends Model
     public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    public function carrier()
+    {
+        return $this->hasOne(Carrier::class, 'id', 'carrier_id');
+    }
+
+    public function webstore()
+    {
+        return $this->hasOne(Webstore::class, 'id', 'webstore_id');
     }
 }

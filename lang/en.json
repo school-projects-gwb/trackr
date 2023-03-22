@@ -112,5 +112,12 @@
     "Verwijder account": "Delete account",
     "Weet je zeker dat je je account wil verwijderen?": "Are you sure you want to delete your account?",
     "Je account gaat permanent verloren. Vul je wachtwoord in om het verwijderen van je account te bevestigen,": "All of your info will be permanently lost. Enter your password to confirm.",
-    "Annuleren": "Cancel"
+    "Annuleren": "Cancel",
+    "Af te halen paketnummers": "Parcel numbers to be picked up",
+    "Ophaalmoment": "Pick-up moment",
+    "Afhaal adres": "Pick-up address",
+    "Vervoerder": "Carrier",
+    "Afhaal details": "Pick-up details",
+    "Meer informatie": "More information",
+    "Pickup aanmaken": "Create pick-up"
 }

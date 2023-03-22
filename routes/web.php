@@ -92,6 +92,7 @@ Route::middleware(['auth', 'can:access store'])->name('store.')->prefix('store')
         // PICKUP
         Route::get('/pickups', [PickupController::class, 'overview'])->name('pickups.overview')->middleware('can:read store');
         Route::get('/pickups/create', [PickupController::class, 'create'])->name('pickups.create')->middleware('can:read store');
+        Route::post('/pickups/create', [PickupController::class, 'store'])->name('pickups.store')->middleware('can:read store');
 
         // LABEL
         Route::get('/labels/createForm', [LabelController::class, 'createForm'])->name('labels.createForm')->middleware(['labeling-allowed', 'can:read store']);

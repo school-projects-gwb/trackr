@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('pickup_moment');
             $table->foreignId('carrier_id')->constrained('carriers');
+            $table->foreignId('webstore_id')->constrained('webstores');
             $table->timestamps();
         });
     }
