@@ -33,7 +33,7 @@
                 </div>
                 @foreach($shipments as $shipment)
                     <div class="flex shipmentSelector pb-1" data-carrier="{{ $shipment->carrier_id }}">
-                        <input type="checkbox" class="rounded-md border-gray-400 focus:border-gray-500 focus:ring-transparent mr-1" data-carrier="{{ $shipment->carrier_id }}" id="shipment-{{$loop->index}}" name="shipment_id[{{ $loop->index }}]" value="{{ $shipment->id }}">
+                        <input type="checkbox" class="rounded-md border-gray-400 focus:border-gray-500 focus:ring-transparent mr-1" data-carrier="{{ $shipment->carrier_id }}" id="shipment-{{$loop->index}}" name="shipment_id[]" value="{{ $shipment->id }}">
                         <label class="leading-5" for="shipment-{{$shipment->id}}">Tracking Nr: {{$shipment->tracking_number}}</label>
                     </div>
                 @endforeach
