@@ -174,7 +174,6 @@
 
             function app() {
                 const pickupDates = {!! $pickups->toJson() !!};
-                console.log(pickupDates[2])
                 pickupDates.forEach((e) => {
                     if(e.carrier.name == "DHL"){
                         e.event_theme = 'yellow'
