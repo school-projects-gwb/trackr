@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\Shipment;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
@@ -22,7 +23,9 @@ class ShipmentTrackingTest extends DuskTestCase
      */
     public function testValidTrackingInfoShowsTrackingPage(): void
     {
-        $trackingId = 'TRACKR1DH';
+        $trackingId = Shipment::whereNotNull('tracking_number')
+            ->orderBy('id')
+            ->value('tracking_number');
         $postalCode = '5555 CW';
 
         $this->browse(function (Browser $browser) use ($trackingId, $postalCode) {

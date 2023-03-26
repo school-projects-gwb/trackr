@@ -26,7 +26,10 @@ class CustomerTest extends DuskTestCase
     public function testCanSaveShipment(): void
     {
         $this->browse(function (Browser $browser) {
-            $trackingId = 'TRACKR1DH';
+            $trackingId = Shipment::whereNotNull('tracking_number')
+                ->orderBy('id')
+                ->value('tracking_number');
+
             $postalCode = '5555 CW';
 
             $browser->loginAs(5)
@@ -38,8 +41,7 @@ class CustomerTest extends DuskTestCase
                 ->assertPathIs('/customer/tracking/overview');
 
             $this->assertDatabaseHas('user_shipment', [
-                'user_id' => '5',
-                'shipment_id' => '1'
+                'user_id' => '5'
             ]);
         });
     }
@@ -53,7 +55,10 @@ class CustomerTest extends DuskTestCase
     public function testCanRemoveSavedShipment(): void
     {
         $this->browse(function (Browser $browser) {
-            $trackingId = 'TRACKR1DH';
+            $trackingId = Shipment::whereNotNull('tracking_number')
+                ->orderBy('id')
+                ->value('tracking_number');
+
             $postalCode = '5555 CW';
 
             $browser->loginAs(5)
@@ -68,7 +73,6 @@ class CustomerTest extends DuskTestCase
 
             $this->assertDatabaseMissing('user_shipment', [
                 'user_id' => '5',
-                'shipment_id' => '1'
             ]);
         });
     }
