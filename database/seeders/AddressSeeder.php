@@ -16,12 +16,12 @@ class AddressSeeder extends Seeder
     public function run()
     {
         Address::create([
-            'first_name' => 'Testy',
-            'last_name' => 'van der Test',
-            'street_name' => 'testweg',
+            'first_name' => 'Henk',
+            'last_name' => 'van der Kwab',
+            'street_name' => 'Rijthovenweg',
             'house_number' => '295',
-            'postal_code' => '2711 HV',
-            'city' => 'Testerdam',
+            'postal_code' => '2408 HV',
+            'city' => 'Alphen a/d Rijn',
             'country' => 'the Netherlands'
         ]);
     }
