@@ -10,10 +10,6 @@
         </div>
         <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
             <div class="container mx-auto px-4 py-2 md:py-5">
-                <!-- <div class="font-bold text-gray-800 text-xl mb-4">
-                    Schedule Tasks
-                </div> -->
-
                 <div class="bg-white rounded-lg shadow overflow-hidden">
 
                     <div class="flex items-center justify-between py-2 px-6">
@@ -72,11 +68,6 @@
                                         :class="{'bg-blue-500 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }"
                                     ></div>
                                     <div style="height: 80px;" class="overflow-y-auto mt-1">
-                                        <!-- <div
-                                            class="absolute top-0 right-0 mt-2 mr-2 inline-flex items-center justify-center rounded-full text-sm w-6 h-6 bg-gray-700 text-white leading-none"
-                                            x-show="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length"
-                                            x-text="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length"></div> -->
-
                                         <template x-for="event in events.filter(e => new Date(e.pickup_moment).toDateString() ===  new Date(year, month, date).toDateString() )">
                                             <div
                                                 class="px-2 py-1 rounded-lg mt-1 overflow-hidden border"

@@ -121,4 +121,9 @@ class StoreController extends Controller
         $response->withCookie($cookie);
         return redirect()->back()->with(['success' => true])->withCookie($cookie);
     }
+
+    public function delete(Webstore $store) {
+        $store->delete();
+        return to_route('store.stores.overview');
+    }
 }

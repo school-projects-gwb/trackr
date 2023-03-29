@@ -107,4 +107,21 @@ class StoreTest extends DuskTestCase
             ]);
         });
     }
+
+    /**
+     * Make sure store can be deleted
+     * @return void
+     * @throws \Throwable
+     */
+    public function testDeleteStore(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(2)
+                ->visit('/store/stores')
+                ->waitFor('button[name="delete"]')
+                ->press('button[name="delete"]')
+                ->acceptDialog()
+                ->assertPathIs('/store/stores');
+        });
+    }
 }
