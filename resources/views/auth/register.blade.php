@@ -1,6 +1,6 @@
 <x-site-layout>
 
-    <div class="w-full lg:w-1/2 h-full mt-16 lg:mt-0 bg-gray-100 flex justify-center items-center  py-24">
+    <div class="min-h-full w-full xl:w-1/2 bg-gray-100 flex items-center justify-center">
         <form class="w-11/12 lg:w-1/2" method="POST" action="{{ route('register') }}">
             @csrf
             <a href="/" class="underline font-semibold text-sm">{{ __('Terug naar Home') }}</a>
@@ -41,5 +41,8 @@
                 </x-button-primary>
             </div>
         </form>
+    </div>
+    <div class="min-h-full w-full xl:w-1/2 bg-secondary-lighter flex items-center justify-center">
+        <img class="h-1/5" src="{{ asset('images/welcome.svg') }}">
     </div>
 </x-site-layout>
