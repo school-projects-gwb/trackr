@@ -108,7 +108,7 @@ class StoreUserController extends Controller
 
     public function delete(Request $request, User $user) {
         $user->stores()->sync([]);
-        $user->delete();
+        $user->forceDelete();
 
         return to_route('store.users.overview');
     }

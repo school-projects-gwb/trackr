@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Webstore extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $with = ['tokens'];
     protected $dates = [
         'created_at',
         'updated_at',
+        'deleted_at'
     ];
 
     protected $fillable = [
@@ -21,6 +23,7 @@ class Webstore extends Model
         'address_id',
         'created_at',
         'updated_at',
+        'deleted_at'
     ];
 
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo

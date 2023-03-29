@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('webstores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('owner_id')->constrained('users');
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained('addresses')->onDelete('cascade');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

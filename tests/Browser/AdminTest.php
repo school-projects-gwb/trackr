@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -93,6 +94,30 @@ class AdminTest extends DuskTestCase
             $this->assertDatabaseHas('users', [
                 'email' => 'owner@store.com',
             ]);
+        });
+    }
+
+    /**
+     * Make sure deleting user works and redirects back to overview page.
+     * @return void
+     * @throws \Throwable
+     */
+    public function testDeleteUserValid(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::where('email', 'owner@store.com')->first();
+            $browser->loginAs(1)
+                ->visit('/admin/users')
+                ->waitFor('button[name="delete"]')
+                ->press('button[name="delete"]')
+                ->acceptDialog()
+                ->assertPathIs('/admin/users');
+
+            $this->assertDatabaseMissing('users', [
+                'email' => 'packer@store.com',
+            ]);
+
+            $this->assertSoftDeleted($user);
         });
     }
 }

@@ -20,12 +20,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-            // Full text search
             $table->text('name')->fullText();
-        });
 
-//        DB::statement('ALTER TABLE users ADD FULLTEXT name(name)');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCreateRequest;
 use App\Http\Requests\StoreOwnerCreateRequest;
 use App\Http\Requests\StoreOwnerEditRequest;
 use App\Models\User;
+use App\Models\Webstore;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -67,5 +68,18 @@ class UserManagementController extends Controller
         event(new Registered($user));
 
         return redirect('/admin/users');
+    }
+
+    public function delete(User $user) {
+        $stores = Webstore::where('owner_id', $user->id)->get();
+
+        foreach ($stores as $store) {
+            $store->users()->where('id', '!=', $user->id)->forceDelete();
+            $store->delete();
+        }
+
+        $user->delete();
+
+        return to_route('admin.users.overview');
     }
 }
