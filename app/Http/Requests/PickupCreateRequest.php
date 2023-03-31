@@ -17,7 +17,6 @@ class PickupCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //Validatie voor geselecteerde shipment_id array toevoegen int
             'shipment_id.*' => ['integer'],
             'shipment_id' => ['required', 'array', 'min:1'],
             'pickup_datetime' => ['required', new DateIsTwoDaysInPast, new TimeIsBeforeThree],

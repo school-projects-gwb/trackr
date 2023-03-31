@@ -21,48 +21,4 @@ class ShipmentObserver
             'shipment_id' => $shipment->id
         ]);
     }
-
-    /**
-     * Handle the Shipment "updated" event.
-     *
-     * @param  \App\Models\Shipment  $shipment
-     * @return void
-     */
-    public function updated(Shipment $shipment)
-    {
-        //
-    }
-
-    /**
-     * Handle the Shipment "deleted" event.
-     *
-     * @param  \App\Models\Shipment  $shipment
-     * @return void
-     */
-    public function deleted(Shipment $shipment)
-    {
-        //
-    }
-
-    /**
-     * Handle the Shipment "restored" event.
-     *
-     * @param  \App\Models\Shipment  $shipment
-     * @return void
-     */
-    public function restored(Shipment $shipment)
-    {
-        //
-    }
-
-    /**
-     * Handle the Shipment "force deleted" event.
-     *
-     * @param  \App\Models\Shipment  $shipment
-     * @return void
-     */
-    public function forceDeleted(Shipment $shipment)
-    {
-        //
-    }
 }
