@@ -22,11 +22,3 @@ Route::middleware('apiAuthentication')->group(function () {
     Route::post('/shipment/updateStatus', [ShipmentController::class, 'updateStatus'])->middleware('apiRole:api shipment status update');
 });
 
-Route::get('/makeApiToken', function (Request $request) {
-    $apitoken = bin2hex(random_bytes(32));
-    $data = [
-        'hashedToken' => Hash::make($apitoken),
-        'apiToken' => $apitoken,
-        ];
-    return response()->json($data);
-});
