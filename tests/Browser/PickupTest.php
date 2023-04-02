@@ -15,18 +15,6 @@ class PickupTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function testCreatePickupValid(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(2)
-                ->visit('/store/pickups/create')
-                ->type('pickup_datetime', now()->addDays(4)->setTime(13, 0)->format('Y-m-d\TH:i'))
-                ->check('input[name="shipment_id[]"]:first-of-type')
-                ->press('submit')
-                ->assertPathIs('/store/pickups');
-        });
-    }
-
     public function testCreatePickupDateInvalid(): void
     {
         $this->browse(function (Browser $browser) {

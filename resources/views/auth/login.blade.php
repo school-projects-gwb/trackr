@@ -17,9 +17,6 @@
                 <div class="flex justify-between">
                     @if (Route::has('password.request'))
                         <x-input-label for="password" :value="__('Wachtwoord')" />
-                        <a class="text-sm underline font-semibold" href="{{ route('password.request') }}">
-                            {{ __('Wachtwoord vergeten?') }}
-                        </a>
                     @endif
                 </div>
 
